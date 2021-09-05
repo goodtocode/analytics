@@ -20,7 +20,7 @@ variables:
   - name: 'kvName'
     value: 'kv-analytics-prod-225'
   - name: 'nugetServiceConnection'
-    value: 'gtc-nuget-prod-225'
+    value: 'gtc-nuget-prod-001'
   - name: 'nugetFeeds'
     value: 'select'
   - name: 'nugetType'
