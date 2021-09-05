@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>GoodToCode.Analytics.Activities</AssemblyName>
+    <RootNamespace>GoodToCode.Analytics</RootNamespace>
+    <Product>GoodToCode.Analytics.Activities</Product>
+    <Version>5.20.1</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Company>GoodToCode</Company>
+    <Authors>Robert J. Good</Authors>
+    <PackageTags>.NET C# EF Core DDD Web API Azure Functions</PackageTags>
+    <Description>GoodToCode shared aspect-oriented (AOP) library for cross-cutting utility concerns.</Description>
+    <Copyright>Copyright (c) GoodToCode. All rights reserved.</Copyright>
+    <PackageProjectUrl>https://github.com/goodtocode/analytics</PackageProjectUrl>
+    <PackageIcon>storeicon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/goodtocode/analytics</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageReleaseNotes>https://github.com/goodtocode/analytics/projects/1</PackageReleaseNotes>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>GoodToCode.Analytics.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="storeicon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GoodToCode.Shared.Analytics.CognitiveServices" Version="5.21.248.425" />
+    <PackageReference Include="GoodToCode.Shared.Blob.Excel" Version="5.21.248.425" />
+    <PackageReference Include="GoodToCode.Shared.Persistence.StorageTables" Version="5.21.248.425" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Analytics.Domain\Analytics.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

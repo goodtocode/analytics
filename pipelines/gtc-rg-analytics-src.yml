@@ -1,0 +1,102 @@
+trigger:
+  batch: true
+  branches:
+    include:
+    - '*'
+  paths:
+    include:
+    - infrastructure/*
+    - pipelines/*
+    - src/*
+    - tests/*
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - template: variables/development.yml
+  - name: buildPlatform
+    value: 'Any CPU'
+  - name: buildConfiguration
+    value: 'Release'
+
+stages:
+  - stage: development
+    condition: and(ne(variables['Build.SourceBranch'], 'refs/heads/main'), not(startsWith(variables['Build.SourceBranch'], 'refs/pull')))
+    variables:
+      - template: variables/development.yml
+      
+    jobs:
+      - job: deploy_landing_zone                
+        steps:
+          - template: steps/lz-deploy-steps.yml
+            parameters:
+              armPath: 'infrastructure'
+
+      - job: deploy_infrastructure
+        dependsOn: deploy_landing_zone
+        steps:
+          - template: steps/infrastructure-deploy-steps.yml
+            parameters:
+              armPath: 'infrastructure'
+
+      - job: build_src
+        dependsOn: deploy_infrastructure
+        steps:
+          - template: steps/src-build-steps.yml
+            parameters:
+              armPath: 'infrastructure'
+
+      - job: test_src
+        dependsOn: build_src
+        steps:
+          - template: steps/src-test-steps.yml
+            parameters:
+              armPath: 'infrastructure'
+
+      - job: deploy_nuget
+        dependsOn: test_src
+        steps:
+          - template: steps/nuget-deploy-internal-steps.yml
+            parameters:
+              armPath: 'infrastructure'
+
+  - stage: production
+    condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), startsWith(variables['Build.SourceBranch'], 'refs/pull'))
+    variables:
+      - template: variables/production.yml    
+
+    jobs:
+      - job: deploy_landing_zone
+        steps:
+          - template: steps/lz-deploy-steps.yml
+            parameters:
+              armPath: 'infrastructure'
+
+      - job: deploy_infrastructure
+        dependsOn: deploy_landing_zone
+        steps:
+          - template: steps/infrastructure-deploy-steps.yml
+            parameters:
+              armPath: 'infrastructure'
+
+      - job: build_src
+        dependsOn: deploy_infrastructure
+        steps:
+          - template: steps/src-build-steps.yml
+            parameters:
+              armPath: 'infrastructure'
+
+      - job: test_src
+        dependsOn: build_src
+        steps:
+          - template: steps/src-test-steps.yml
+            parameters:
+              armPath: 'infrastructure'
+
+      - job: deploy_nuget
+        dependsOn: test_src
+        steps:
+          - template: steps/nuget-deploy-external-steps.yml
+            parameters:
+              armPath: 'infrastructure'

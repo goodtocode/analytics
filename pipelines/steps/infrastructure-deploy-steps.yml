@@ -1,0 +1,66 @@
+parameters:
+- name: armPath
+  type: string 
+  default: "."
+
+steps:
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: "Validate $(cogName)"
+    inputs:
+        deploymentScope: "Resource Group"
+        azureResourceManagerConnection: "$(subscriptionName)"
+        subscriptionId: "$(subscriptionId)"
+        action: "Create Or Update Resource Group"
+        resourceGroupName: "$(rgName)"
+        location: "$(locationName)"
+        templateLocation: "Linked artifact"
+        csmFile: "${{ parameters.armPath }}/cog-cognitiveservices.json"        
+        csmParametersFile: "${{ parameters.armPath }}/cog-cognitiveservices.parameters.json"        
+        deploymentMode: "Validation"
+        overrideParameters: -name "$(cogName)"
+
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: "Deploy $(cogName)"
+    inputs:
+        deploymentScope: "Resource Group"
+        azureResourceManagerConnection: "$(subscriptionName)"
+        subscriptionId: "$(subscriptionId)"
+        action: "Create Or Update Resource Group"
+        resourceGroupName: "$(rgName)"
+        location: "$(locationName)"
+        templateLocation: "Linked artifact"
+        csmFile: "${{ parameters.armPath }}/cog-cognitiveservices.json"
+        csmParametersFile: "${{ parameters.armPath }}/cog-cognitiveservices.parameters.json"
+        deploymentMode: "Incremental"
+        overrideParameters: -name "$(cogName)"
+
+
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: "Validate $(cogtextName)"
+    inputs:
+        deploymentScope: "Resource Group"
+        azureResourceManagerConnection: "$(subscriptionName)"
+        subscriptionId: "$(subscriptionId)"
+        action: "Create Or Update Resource Group"
+        resourceGroupName: "$(rgName)"
+        location: "$(locationName)"
+        templateLocation: "Linked artifact"
+        csmFile: "${{ parameters.armPath }}/cogtext-textanalytics.json"
+        csmParametersFile: "${{ parameters.armPath }}/cogtext-textanalytics.parameters.json"
+        deploymentMode: "Validation"
+        overrideParameters: -name "$(cogtextName)" -sku "$(cogtextSku)"
+
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: "Deploy $(cogtextName)"
+    inputs:
+        deploymentScope: "Resource Group"
+        azureResourceManagerConnection: "$(subscriptionName)"
+        subscriptionId: "$(subscriptionId)"
+        action: "Create Or Update Resource Group"
+        resourceGroupName: "$(rgName)"
+        location: "$(locationName)"
+        templateLocation: "Linked artifact"
+        csmFile: "${{ parameters.armPath }}/cogtext-textanalytics.json"
+        csmParametersFile: "${{ parameters.armPath }}/cogtext-textanalytics.parameters.json"
+        deploymentMode: "Incremental"
+        overrideParameters: -name "$(cogtextName)" -sku "$(cogtextSku)"

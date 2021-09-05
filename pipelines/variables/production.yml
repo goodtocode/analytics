@@ -1,0 +1,33 @@
+variables:
+  - group: gtc-rg-analytics-prod
+  - template: common.yml  
+  - name: Environment
+    value: 'Production'
+  - name: rgName
+    value: 'gtc-rg-analytics-prod-225'
+  - name: locationName
+    value: 'West US 2'
+  - name: 'appInsightsName'
+    value: 'appi-analytics-prod-225'
+  - name: 'cogName'
+    value: 'cog-analytics-prod-225'
+  - name: cogsku
+    value: 'S0'
+  - name: cogtextName
+    value: 'cogtext-analytics-prod-225'
+  - name: cogtextSku
+    value: 'S'
+  - name: 'kvName'
+    value: 'kv-analytics-prod-225'
+  - name: 'nugetServiceConnection'
+    value: 'gtc-nuget-prod-001'
+  - name: 'nugetFeeds'
+    value: 'select'
+  - name: 'nugetType'
+    value: 'external'
+  - name: 'nugetId'
+    value: '525a0dbd-3d6d-4f62-aba4-f4d004295d7d'
+  - name: storageName
+    value: 'stanalyticsprod225'
+  - name: workspaceName
+    value: 'work-analytics-prod-225'
