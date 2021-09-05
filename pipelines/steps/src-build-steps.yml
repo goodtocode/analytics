@@ -1,5 +1,5 @@
 parameters:
-- name: armPath 
+- name: armPath
   type: string 
   default: "."
 
@@ -27,6 +27,14 @@ steps:
       projects: |
         $(srcPath)/**/*.csproj
       arguments: '--configuration $(buildConfiguration)'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet pack'
+    inputs:
+      command: pack
+      projects: |
+        $(srcPath)/**/*.csproj
+      arguments: '--output $(Build.ArtifactStagingDirectory)'
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: drop'
