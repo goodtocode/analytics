@@ -22,7 +22,7 @@ namespace GoodToCode.Analytics.Unit.Tests
         private readonly ILogger<RowEntity_Persist_CloudTests> log;
         private readonly StorageTablesServiceConfiguration configStorage;
         private NpoiService serviceExcel;
-        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/AnalysisSimple.xlsx"; } }
+        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public List<TableEntity> SutReturn { get; private set; } = new List<TableEntity>();
@@ -55,7 +55,7 @@ namespace GoodToCode.Analytics.Unit.Tests
                 {
                     SutReturn.Add(await new RowEntityPersistActivity(configStorage).ExecuteAsync(new RowEntity(row.Cells.FirstOrDefault())));
                 }    
-                Assert.IsTrue(SutReturn.Any());
+                Assert.IsTrue(SutReturn.Any(), "No results from service.");
             }
             catch (Exception ex)
             {

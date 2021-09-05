@@ -14,7 +14,7 @@ namespace GoodToCode.Analytics.Unit.Tests
     public class Excel_Load_FileTests
     {
         private readonly NpoiBlobReader reader;
-        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/AnalysisSimple.xlsx"; } }        
+        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }        
 
         public ISheetData SutXls { get; private set; }
         public ISheetData SutXlsx { get; private set; }

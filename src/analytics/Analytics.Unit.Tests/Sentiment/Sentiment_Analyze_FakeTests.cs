@@ -22,9 +22,9 @@ namespace GoodToCode.Analytics.Unit.Tests
         private readonly IConfiguration configuration;
         private readonly ILogger<Sentiment_Analyze_FakeTests> logItem;
         private readonly CognitiveServiceConfiguration configText;
-        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/AnalysisSimple.xlsx"; } }
+        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         private int sheetToTransform = 0;
-        private int colToTransform = 21;
+        private int colToTransform = 3;
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
@@ -50,7 +50,7 @@ namespace GoodToCode.Analytics.Unit.Tests
                 Stream itemToAnalyze = new MemoryStream(bytes);
                 var workflow = new  SentimentAnalyzeActivity(new NpoiService(), new TextAnalyzerServiceFake());
                 var results = await workflow.ExecuteAsync(itemToAnalyze, sheetToTransform, colToTransform);
-                Assert.IsTrue(results.Any());
+                Assert.IsTrue(results.Any(), "No results from analytics service.");
             }
             catch (Exception ex)
             {

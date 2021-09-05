@@ -23,9 +23,9 @@ namespace GoodToCode.Analytics.Unit.Tests
         private readonly ILogger<Opinion_Analyze_FakeTests> logItem;
         private readonly StorageTablesServiceConfiguration configStorage;
         private readonly CognitiveServiceConfiguration configText;
-        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/AnalysisSimple.xlsx"; } }
+        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         private int sheetToTransform = 0;
-        private int colToTransform = 21;
+        private int colToTransform = 3;
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
@@ -55,10 +55,10 @@ namespace GoodToCode.Analytics.Unit.Tests
                 Stream itemToAnalyze = new MemoryStream(bytes);
                 var workflow = new OpinionExtractActivity(new NpoiService(), new TextAnalyzerServiceFake());
                 var results = await workflow.ExecuteAsync(itemToAnalyze, sheetToTransform, colToTransform);
-                Assert.IsTrue(results.Any());
+                Assert.IsTrue(results.Any(), "No results from analytics service.");
                 // Persist
                 var persist = await new OpinionPersistActivity(configStorage).ExecuteAsync(results);
-                Assert.IsTrue(persist.Any());
+                Assert.IsTrue(persist.Any(), "No results from persistence service.");
             }
             catch (Exception ex)
             {
