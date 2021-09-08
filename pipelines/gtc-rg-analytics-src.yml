@@ -22,7 +22,7 @@ variables:
 
 stages:
   - stage: development
-    condition: and(ne(variables['Build.SourceBranch'], 'refs/heads/main'), not(startsWith(variables['Build.SourceBranch'], 'refs/pull')))
+    condition: ne(variables['Build.SourceBranch'], 'refs/heads/main')
     variables:
       - template: variables/development.yml
       
@@ -62,7 +62,7 @@ stages:
               armPath: 'infrastructure'
 
   - stage: production
-    condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), startsWith(variables['Build.SourceBranch'], 'refs/pull'))
+    condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/pull')))
     variables:
       - template: variables/production.yml    
 
