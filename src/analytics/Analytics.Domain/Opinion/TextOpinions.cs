@@ -10,6 +10,8 @@ namespace GoodToCode.Analytics.Domain
         public SentenceOpinion SentenceOpinion { get; set; }
         public SentenceSentiment SentenceSentiment { get; set; }
 
+        public TextOpinions() { }
+
         public TextOpinions(ICellData cell, IOpinionResult result)
         {
             DocumentSentiment = new DocumentOpinion(cell, result.DocumentSentiment);
