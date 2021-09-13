@@ -17,7 +17,7 @@
 //    public class EntityLink_Persist_ActivityTests
 //    {
 //        private readonly IConfiguration configuration;
-//        private readonly ILogger<StorageTablesItemService<RowEntity>> logItem;
+//        private readonly ILogger<StorageTablesService<RowEntity>> logItem;
 //        private readonly StorageTablesServiceConfiguration configStorage;
 //        private readonly CognitiveServiceConfiguration configText;
 //        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
@@ -29,7 +29,7 @@
 
 //        public EntityLink_Persist_ActivityTests()
 //        {
-//            logItem = LoggerFactory.CreateLogger<StorageTablesItemService<RowEntity>>();
+//            logItem = LoggerFactory.CreateLogger<StorageTablesService<RowEntity>>();
 //            configuration = new AppConfigurationFactory().Create();
 //            configStorage = new StorageTablesServiceConfiguration(
 //                configuration[AppConfigurationKeys.StorageTablesConnectionString],
@@ -66,7 +66,7 @@
 //        [TestCleanup]
 //        public void Cleanup()
 //        {
-//            //var service = new StorageTablesItemService<RowEntity>(configStorage);
+//            //var service = new StorageTablesService<RowEntity>(configStorage);
 //            //await service.DeleteTableAsync();
 //        }
 //    }

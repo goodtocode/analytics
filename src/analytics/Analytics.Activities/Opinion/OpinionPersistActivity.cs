@@ -8,17 +8,17 @@ namespace GoodToCode.Analytics.Activities
 {
     public class OpinionPersistActivity
     {
-        private IStorageTablesItemService<DocumentOpinion> serviceDoc;
-        private IStorageTablesItemService<OpinionSentiments> serviceOpinion;
-        private IStorageTablesItemService<SentenceOpinion> serviceSentenceOp;
-        private IStorageTablesItemService<SentenceSentiment> serviceSentenceSen;
+        private IStorageTablesService<DocumentOpinion> serviceDoc;
+        private IStorageTablesService<OpinionSentiments> serviceOpinion;
+        private IStorageTablesService<SentenceOpinion> serviceSentenceOp;
+        private IStorageTablesService<SentenceSentiment> serviceSentenceSen;
 
         public OpinionPersistActivity(IStorageTablesServiceConfiguration config)
         {
-            serviceDoc = new StorageTablesItemService<DocumentOpinion>(config);
-            serviceOpinion = new StorageTablesItemService<OpinionSentiments>(config);
-            serviceSentenceOp = new StorageTablesItemService<SentenceOpinion>(config);
-            serviceSentenceSen = new StorageTablesItemService<SentenceSentiment>(config);
+            serviceDoc = new StorageTablesService<DocumentOpinion>(config);
+            serviceOpinion = new StorageTablesService<OpinionSentiments>(config);
+            serviceSentenceOp = new StorageTablesService<SentenceOpinion>(config);
+            serviceSentenceSen = new StorageTablesService<SentenceSentiment>(config);
         }
 
         public async Task<IEnumerable<TableEntity>> ExecuteAsync(IEnumerable<TextOpinions> entities)
