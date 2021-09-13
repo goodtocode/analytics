@@ -8,11 +8,11 @@ namespace GoodToCode.Analytics.Activities
 {
     public class KeyPhrasePersistActivity
     {
-        private IStorageTablesItemService<KeyPhraseEntity> servicePersist;
+        private IStorageTablesService<KeyPhraseEntity> servicePersist;
 
         public KeyPhrasePersistActivity(IStorageTablesServiceConfiguration config)
         {
-            servicePersist = new StorageTablesItemService<KeyPhraseEntity>(config);
+            servicePersist = new StorageTablesService<KeyPhraseEntity>(config);
         }
 
         public async Task<IEnumerable<TableEntity>> ExecuteAsync(IEnumerable<KeyPhraseEntity> entities)

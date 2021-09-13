@@ -8,11 +8,11 @@ namespace GoodToCode.Analytics.Activities
 {
     public class RowEntityPersistActivity
     {
-        private IStorageTablesItemService<RowEntity> servicePersist;
+        private IStorageTablesService<RowEntity> servicePersist;
 
         public RowEntityPersistActivity(IStorageTablesServiceConfiguration config)
         {
-            servicePersist = new StorageTablesItemService<RowEntity>(config);
+            servicePersist = new StorageTablesService<RowEntity>(config);
         }
 
         public async Task<IEnumerable<TableEntity>> ExecuteAsync(IEnumerable<RowEntity> entities)
