@@ -33,6 +33,14 @@ namespace GoodToCode.Analytics.Activities
             return returnValue;
         }
 
+        public async Task<IEnumerable<NamedEntity>> ExecuteAsync(IEnumerable<ICellData> cellsToAnalyze)
+        {
+            var returnValue = new List<NamedEntity>();
+            foreach (var column in cellsToAnalyze.Where(c => c.CellValue?.Length > 0))
+                returnValue.AddRange(await new NamedEntityExtractActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(column));
+            return returnValue;
+        }
+
         public async Task<IEnumerable<NamedEntity>> ExecuteAsync(ICellData cellToAnalyze)
         {
             var returnValue = new List<NamedEntity>();
