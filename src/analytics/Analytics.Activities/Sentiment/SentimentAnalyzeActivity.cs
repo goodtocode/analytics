@@ -88,6 +88,14 @@ namespace GoodToCode.Analytics.Activities
             return returnValue;
         }
 
+        public async Task<IEnumerable<SentimentEntity>> ExecuteAsync(IEnumerable<ICellData> cellsToAnalyze)
+        {
+            var returnValue = new List<SentimentEntity>();
+            foreach (var column in cellsToAnalyze.Where(c => c.CellValue?.Length > 0))
+                returnValue.AddRange(await new SentimentAnalyzeActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(column));
+            return returnValue;
+        }
+
         public async Task<IEnumerable<SentimentEntity>> ExecuteAsync(ICellData cellToAnalyze)
         {
             var returnValue = new List<SentimentEntity>();
