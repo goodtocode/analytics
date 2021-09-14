@@ -27,8 +27,8 @@ namespace GoodToCode.Analytics.Activities
 
             var sheet = serviceExcel.GetWorkbook(excelStream).GetSheetAt(sheetToAnalyze);
             var sd = sheet.ToSheetData();
-            var columnsToAnalyze = sd.GetColumn(columnToAnalyze);
-            returnValue.AddRange(await new KeyPhraseExtractActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(columnsToAnalyze));
+            var cellsToAnalyze = sd.GetColumn(columnToAnalyze);
+            returnValue.AddRange(await new KeyPhraseExtractActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(cellsToAnalyze));
 
             return returnValue;
         }
@@ -36,8 +36,8 @@ namespace GoodToCode.Analytics.Activities
         public async Task<IEnumerable<KeyPhraseEntity>> ExecuteAsync(IEnumerable<ICellData> cellsToAnalyze)
         {
             var returnValue = new List<KeyPhraseEntity>();
-            foreach (var column in cellsToAnalyze.Where(c => c.CellValue?.Length > 0))
-                returnValue.AddRange(await new KeyPhraseExtractActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(column));
+            foreach (var cell in cellsToAnalyze.Where(c => c.CellValue?.Length > 0))
+                returnValue.AddRange(await new KeyPhraseExtractActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(cell));
             return returnValue;
         }
 

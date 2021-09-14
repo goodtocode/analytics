@@ -81,9 +81,9 @@ namespace GoodToCode.Analytics.Activities
             var returnValue = new List<SentimentEntity>();
             var sheet = serviceExcel.GetWorkbook(excelStream).GetSheetAt(sheetToAnalyze);
             var sd = sheet.ToSheetData();
-            var columnsToAnalyze = sd.GetColumn(columnToAnalyze);
-            foreach (var column in columnsToAnalyze.Where(c => c.CellValue?.Length > 0))
-                returnValue.AddRange(await new SentimentAnalyzeActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(column));
+            var cellsToAnalyze = sd.GetColumn(columnToAnalyze);
+            foreach (var cell in cellsToAnalyze.Where(c => c.CellValue?.Length > 0))
+                returnValue.AddRange(await new SentimentAnalyzeActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(cell));
 
             return returnValue;
         }
@@ -91,8 +91,8 @@ namespace GoodToCode.Analytics.Activities
         public async Task<IEnumerable<SentimentEntity>> ExecuteAsync(IEnumerable<ICellData> cellsToAnalyze)
         {
             var returnValue = new List<SentimentEntity>();
-            foreach (var column in cellsToAnalyze.Where(c => c.CellValue?.Length > 0))
-                returnValue.AddRange(await new SentimentAnalyzeActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(column));
+            foreach (var cell in cellsToAnalyze.Where(c => c.CellValue?.Length > 0))
+                returnValue.AddRange(await new SentimentAnalyzeActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(cell));
             return returnValue;
         }
 

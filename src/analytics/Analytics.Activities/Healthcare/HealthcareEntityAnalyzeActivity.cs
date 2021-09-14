@@ -26,8 +26,8 @@ namespace GoodToCode.Analytics.Activities
 
             var sheet = serviceExcel.GetWorkbook(excelStream).GetSheetAt(sheetToAnalyze);
             var sd = sheet.ToSheetData();
-            var columnsToAnalyze = sd.GetColumn(columnToAnalyze);
-            returnValue.AddRange(await new HealthcareEntityAnalyzeActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(columnsToAnalyze));
+            var cellsToAnalyze = sd.GetColumn(columnToAnalyze);
+            returnValue.AddRange(await new HealthcareEntityAnalyzeActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(cellsToAnalyze));
 
             return returnValue;
         }
@@ -35,8 +35,8 @@ namespace GoodToCode.Analytics.Activities
         public async Task<IEnumerable<HealthcareNamedEntity>> ExecuteAsync(IEnumerable<ICellData> cellsToAnalyze)
         {
             var returnValue = new List<HealthcareNamedEntity>();
-            foreach (var column in cellsToAnalyze.Where(c => c.CellValue?.Length > 0))
-                returnValue.AddRange(await new HealthcareEntityAnalyzeActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(column));
+            foreach (var cell in cellsToAnalyze.Where(c => c.CellValue?.Length > 0))
+                returnValue.AddRange(await new HealthcareEntityAnalyzeActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(cell));
             return returnValue;
         }
 
