@@ -38,7 +38,7 @@ namespace GoodToCode.Analytics.Unit.Tests
 
             try
             { 
-                var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(@"C:\Temp\Q1-100.xlsx");
+                var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutXlsxFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
                 var workflow = new  ExcelColumnSearchActivity(new NpoiService());
                 var results = workflow.Execute(itemToAnalyze, "DocName", "*");
