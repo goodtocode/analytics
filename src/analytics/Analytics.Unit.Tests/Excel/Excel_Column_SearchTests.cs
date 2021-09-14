@@ -20,7 +20,7 @@ namespace GoodToCode.Analytics.Unit.Tests
     public class Excel_Column_SearchTests
     {
         private readonly ILogger<Excel_Column_SearchTests> logItem;
-        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Sheet600.xlsx"; } }
+        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
