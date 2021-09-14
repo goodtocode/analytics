@@ -36,7 +36,7 @@ namespace GoodToCode.Analytics.Activities
         public async Task<IEnumerable<TextOpinions>> ExecuteAsync(IEnumerable<ICellData> cellsToAnalyze)
         {
             var returnValue = new List<TextOpinions>();
-            foreach (var cell in cellsToAnalyze.Where(c => c.CellValue?.Length > 0))
+            foreach (var cell in cellsToAnalyze.Where(c => string.IsNullOrEmpty(c.CellValue) == false))
                 returnValue.AddRange(await new OpinionExtractActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(cell));
             return returnValue;
         }
@@ -44,7 +44,7 @@ namespace GoodToCode.Analytics.Activities
         public async Task<IEnumerable<TextOpinions>> ExecuteAsync(ICellData cellToAnalyze)
         {
             var returnValue = new List<TextOpinions>();
-            if (cellToAnalyze.CellValue?.Length == 0) return returnValue;
+            if (string.IsNullOrWhiteSpace(cellToAnalyze?.CellValue)) return returnValue;
             var analyzeResults = await serviceAnalyzer.ExtractOpinionAsync(cellToAnalyze.CellValue, languageIso);
             foreach (var result in analyzeResults)
                 returnValue.Add(new TextOpinions(cellToAnalyze, result));

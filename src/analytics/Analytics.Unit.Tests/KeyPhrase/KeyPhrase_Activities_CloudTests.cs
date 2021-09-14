@@ -50,7 +50,7 @@ namespace GoodToCode.Analytics.Unit.Tests
 
             try
             {
-                var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(@"D:\temp\NTI2021P-ProgEval-Q1-1-1000.xlsx");// SutXlsxFile);
+                var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutXlsxFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
                 var columns = new ExcelColumnSearchActivity(excelService).Execute(itemToAnalyze, sheetName, sheetSearchChar);
                 var returnedItem = await new KeyPhraseExtractActivity(excelService, analyzerService).ExecuteAsync(columns);

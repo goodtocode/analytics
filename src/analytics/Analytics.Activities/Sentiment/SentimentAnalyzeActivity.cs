@@ -62,14 +62,8 @@ namespace GoodToCode.Analytics.Activities
             if (text?.Length > characterLimit)
                 return false;
 
+            // No nulls/empty
             if (string.IsNullOrWhiteSpace(text) || text?.Length > characterLimit)
-                return false;
-
-            /// Maximum size of a single document (/analyze endpoint)	125K characters as measured by StringInfo.LengthInTextElements. Does not apply to Text Analytics for health.
-
-            // Sentiment Analysis  10 sentences per request
-            var sentences = Regex.Split(text, @"(?<=[\.!\?])\s+");
-            if (sentences.Length > 1000)
                 return false;
 
             return true;
@@ -82,7 +76,7 @@ namespace GoodToCode.Analytics.Activities
             var sheet = serviceExcel.GetWorkbook(excelStream).GetSheetAt(sheetToAnalyze);
             var sd = sheet.ToSheetData();
             var cellsToAnalyze = sd.GetColumn(columnToAnalyze);
-            foreach (var cell in cellsToAnalyze.Where(c => c.CellValue?.Length > 0))
+            foreach (var cell in cellsToAnalyze.Where(c => string.IsNullOrEmpty(c.CellValue) == false))
                 returnValue.AddRange(await new SentimentAnalyzeActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(cell));
 
             return returnValue;
@@ -91,7 +85,7 @@ namespace GoodToCode.Analytics.Activities
         public async Task<IEnumerable<SentimentEntity>> ExecuteAsync(IEnumerable<ICellData> cellsToAnalyze)
         {
             var returnValue = new List<SentimentEntity>();
-            foreach (var cell in cellsToAnalyze.Where(c => c.CellValue?.Length > 0))
+            foreach (var cell in cellsToAnalyze.Where(c => string.IsNullOrEmpty(c.CellValue) == false))
                 returnValue.AddRange(await new SentimentAnalyzeActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(cell));
             return returnValue;
         }
@@ -99,7 +93,7 @@ namespace GoodToCode.Analytics.Activities
         public async Task<IEnumerable<SentimentEntity>> ExecuteAsync(ICellData cellToAnalyze)
         {
             var returnValue = new List<SentimentEntity>();
-            if (cellToAnalyze.CellValue?.Length == 0) return returnValue;
+            if (string.IsNullOrWhiteSpace(cellToAnalyze?.CellValue)) return returnValue;
             var analyzed = await serviceAnalyzer.AnalyzeSentimentSentencesAsync(cellToAnalyze.CellValue, languageIso);
             foreach (var item in analyzed)
                 returnValue.Add(new SentimentEntity(cellToAnalyze, item));
