@@ -22,9 +22,9 @@ namespace GoodToCode.Analytics.Unit.Tests
         private readonly IConfiguration configuration;
         private readonly ILogger<Sentiment_Analyze_FakeTests> logItem;
         private readonly CognitiveServiceConfiguration configText;
-        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
-        private int sheetToTransform = 0;
-        private int colToTransform = 3;
+        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Sheet600.xlsx"; } }
+        private readonly int sheetToTransform = 0;
+        private readonly int colToTransform = 1;
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }

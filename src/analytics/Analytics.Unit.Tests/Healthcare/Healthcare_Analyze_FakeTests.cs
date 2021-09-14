@@ -37,7 +37,7 @@ namespace GoodToCode.Analytics.Unit.Tests
             configuration = new AppConfigurationFactory().Create();
             configStorage = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd_HH:mm}-Healthcare");
+                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-Healthcare");
             configText = new CognitiveServiceConfiguration(
                 configuration[AppConfigurationKeys.CognitiveServicesKeyCredential],
                 configuration[AppConfigurationKeys.CognitiveServicesEndpoint]);

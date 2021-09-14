@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -81,7 +82,7 @@ namespace GoodToCode.Analytics.Activities
             var sheet = serviceExcel.GetWorkbook(excelStream).GetSheetAt(sheetToAnalyze);
             var sd = sheet.ToSheetData();
             var columnsToAnalyze = sd.GetColumn(columnToAnalyze);
-            foreach (var column in columnsToAnalyze)
+            foreach (var column in columnsToAnalyze.Where(c => c.CellValue?.Length > 0))
                 returnValue.AddRange(await new SentimentAnalyzeActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(column));
 
             return returnValue;
@@ -90,6 +91,7 @@ namespace GoodToCode.Analytics.Activities
         public async Task<IEnumerable<SentimentEntity>> ExecuteAsync(ICellData cellToAnalyze)
         {
             var returnValue = new List<SentimentEntity>();
+            if (cellToAnalyze.CellValue?.Length == 0) return returnValue;
             var analyzed = await serviceAnalyzer.AnalyzeSentimentSentencesAsync(cellToAnalyze.CellValue, languageIso);
             foreach (var item in analyzed)
                 returnValue.Add(new SentimentEntity(cellToAnalyze, item));

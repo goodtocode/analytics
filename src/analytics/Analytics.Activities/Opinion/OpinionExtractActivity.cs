@@ -4,6 +4,7 @@ using GoodToCode.Shared.Blob.Abstractions;
 using GoodToCode.Shared.Blob.Excel;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GoodToCode.Analytics.Activities
@@ -35,7 +36,7 @@ namespace GoodToCode.Analytics.Activities
         public async Task<IEnumerable<TextOpinions>> ExecuteAsync(IEnumerable<ICellData> cellsToAnalyze)
         {
             var returnValue = new List<TextOpinions>();
-            foreach (var column in cellsToAnalyze)
+            foreach (var column in cellsToAnalyze.Where(c => c.CellValue?.Length > 0))
                 returnValue.AddRange(await new OpinionExtractActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(column));
             return returnValue;
         }
@@ -43,6 +44,7 @@ namespace GoodToCode.Analytics.Activities
         public async Task<IEnumerable<TextOpinions>> ExecuteAsync(ICellData cellToAnalyze)
         {
             var returnValue = new List<TextOpinions>();
+            if (cellToAnalyze.CellValue?.Length == 0) return returnValue;
             var analyzeResults = await serviceAnalyzer.ExtractOpinionAsync(cellToAnalyze.CellValue, languageIso);
             foreach (var result in analyzeResults)
                 returnValue.Add(new TextOpinions(cellToAnalyze, result));

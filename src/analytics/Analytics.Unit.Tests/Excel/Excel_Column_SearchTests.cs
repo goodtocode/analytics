@@ -17,48 +17,32 @@ using System.Threading.Tasks;
 namespace GoodToCode.Analytics.Unit.Tests
 {
     [TestClass]
-    public class Opinion_Analyze_FakeTests
+    public class Excel_Column_SearchTests
     {
-        private readonly IConfiguration configuration;
-        private readonly ILogger<Opinion_Analyze_FakeTests> logItem;
-        private readonly StorageTablesServiceConfiguration configStorage;
-        private readonly CognitiveServiceConfiguration configText;
+        private readonly ILogger<Excel_Column_SearchTests> logItem;
         private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
-        private readonly int sheetToTransform = 0;
-        private readonly int colToTransform = 3;
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
 
 
-        public Opinion_Analyze_FakeTests()
+        public Excel_Column_SearchTests()
         {
-            logItem = LoggerFactory.CreateLogger<Opinion_Analyze_FakeTests>();
-            configuration = new AppConfigurationFactory().Create();
-            configStorage = new StorageTablesServiceConfiguration(
-                configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-Opinion");
-            configText = new CognitiveServiceConfiguration(
-                configuration[AppConfigurationKeys.CognitiveServicesKeyCredential],
-                configuration[AppConfigurationKeys.CognitiveServicesEndpoint]);
+            logItem = LoggerFactory.CreateLogger<Excel_Column_SearchTests>();
         }
 
         [TestMethod]
-        public async Task Opinion_Analyze_Fake()       
+        public async Task Excel_Column_Search()       
         {
             Assert.IsTrue(File.Exists(SutXlsxFile), $"{SutXlsxFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 
             try
-            {
-                // Analyze
+            { 
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutXlsxFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                var workflow = new OpinionExtractActivity(new NpoiService(), new TextAnalyzerServiceFake());
-                var results = await workflow.ExecuteAsync(itemToAnalyze, sheetToTransform, colToTransform);
+                var workflow = new  ExcelColumnSearchActivity(new NpoiService());
+                var results = workflow.Execute(itemToAnalyze, "DocName", "*");
                 Assert.IsTrue(results.Any(), "No results from analytics service.");
-                // Persist
-                var persist = await new OpinionPersistActivity(configStorage).ExecuteAsync(results);
-                Assert.IsTrue(persist.Any(), "No results from persistence service.");
             }
             catch (Exception ex)
             {
@@ -70,7 +54,6 @@ namespace GoodToCode.Analytics.Unit.Tests
         [TestCleanup]
         public void Cleanup()
         {
-
         }
     }
 }

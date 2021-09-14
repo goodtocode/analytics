@@ -15,9 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GoodToCode.Shared.Analytics.CognitiveServices" Version="5.21.255.2003" />
-    <PackageReference Include="GoodToCode.Shared.Blob.Excel" Version="5.21.255.2003" />
-    <PackageReference Include="GoodToCode.Shared.Persistence.StorageTables" Version="5.21.255.2003" />
+    <PackageReference Include="GoodToCode.Shared.Analytics.CognitiveServices" Version="5.21.257.244" />
+    <PackageReference Include="GoodToCode.Shared.Blob.Excel" Version="5.21.257.244" />
+    <PackageReference Include="GoodToCode.Shared.Persistence.StorageTables" Version="5.21.257.244" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
@@ -38,7 +38,22 @@
     <None Update="Assets\AnalysisSimple.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Assets\IEnumerableRowEntity_5600.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\IEnumerableRowEntity_5600.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\IEnumerableRowEntity_600.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\OpinionFile.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Sheet2900.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Sheet600.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\TestFile.csv">

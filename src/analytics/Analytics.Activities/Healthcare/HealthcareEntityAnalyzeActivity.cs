@@ -4,6 +4,7 @@ using GoodToCode.Shared.Blob.Abstractions;
 using GoodToCode.Shared.Blob.Excel;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GoodToCode.Analytics.Activities
@@ -34,7 +35,7 @@ namespace GoodToCode.Analytics.Activities
         public async Task<IEnumerable<HealthcareNamedEntity>> ExecuteAsync(IEnumerable<ICellData> cellsToAnalyze)
         {
             var returnValue = new List<HealthcareNamedEntity>();
-            foreach (var column in cellsToAnalyze)
+            foreach (var column in cellsToAnalyze.Where(c => c.CellValue?.Length > 0))
                 returnValue.AddRange(await new HealthcareEntityAnalyzeActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(column));
             return returnValue;
         }
@@ -42,6 +43,7 @@ namespace GoodToCode.Analytics.Activities
         public async Task<IEnumerable<HealthcareNamedEntity>> ExecuteAsync(ICellData cellToAnalyze)
         {
             var returnValue = new List<HealthcareNamedEntity>();
+            if (cellToAnalyze.CellValue?.Length == 0) return returnValue;
             var analyzeResults = await serviceAnalyzer.ExtractHealthcareEntitiesAsync(cellToAnalyze.CellValue, "en-US");
             foreach(var result in analyzeResults)
                 returnValue.Add(new HealthcareNamedEntity(cellToAnalyze, result));

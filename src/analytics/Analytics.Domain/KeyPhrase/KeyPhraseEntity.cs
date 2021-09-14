@@ -1,10 +1,12 @@
 ﻿using GoodToCode.Shared.Blob.Abstractions;
+using System.Text.Json.Serialization;
 
 namespace GoodToCode.Analytics.Domain
 {
     public class KeyPhraseEntity : RowEntity, IKeyPhraseEntity
     {
-        public string KeyPhrase { get; set; }
+        [JsonInclude]
+        public string KeyPhrase { get; private set; }
 
         public KeyPhraseEntity() { }
 
