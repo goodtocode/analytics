@@ -1,7 +1,9 @@
 ﻿using GoodToCode.Analytics.Domain;
+using GoodToCode.Shared.Analytics.Abstractions;
 using GoodToCode.Shared.Analytics.CognitiveServices;
 using GoodToCode.Shared.Blob.Abstractions;
 using GoodToCode.Shared.Blob.Excel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -27,8 +29,8 @@ namespace GoodToCode.Analytics.Activities
 
             var sheet = serviceExcel.GetWorkbook(excelStream).GetSheetAt(sheetToAnalyze);
             var sd = sheet.ToSheetData();
-            var columnsToAnalyze = sd.GetColumn(columnToAnalyze);
-            returnValue.AddRange(await new KeyPhraseExtractActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(columnsToAnalyze));
+            var cellsToAnalyze = sd.GetColumn(columnToAnalyze);
+            returnValue.AddRange(await new KeyPhraseExtractActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(cellsToAnalyze));
 
             return returnValue;
         }
@@ -36,18 +38,21 @@ namespace GoodToCode.Analytics.Activities
         public async Task<IEnumerable<KeyPhraseEntity>> ExecuteAsync(IEnumerable<ICellData> cellsToAnalyze)
         {
             var returnValue = new List<KeyPhraseEntity>();
-            foreach (var column in cellsToAnalyze.Where(c => c.CellValue?.Length > 0))
-                returnValue.AddRange(await new KeyPhraseExtractActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(column));
+            foreach (var cell in cellsToAnalyze.Where(c => string.IsNullOrEmpty(c.CellValue) == false))
+                returnValue.AddRange(await new KeyPhraseExtractActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(cell));
             return returnValue;
         }
 
         public async Task<IEnumerable<KeyPhraseEntity>> ExecuteAsync(ICellData cellToAnalyze)
         {
             var returnValue = new List<KeyPhraseEntity>();
-            if (cellToAnalyze.CellValue?.Length == 0) return returnValue;
-            var analyzed = await serviceAnalyzer.ExtractKeyPhrasesAsync(cellToAnalyze.CellValue, languageIso);
+            KeyPhrases analyzed;
+
+            if (string.IsNullOrWhiteSpace(cellToAnalyze?.CellValue)) return returnValue;
+            analyzed = await serviceAnalyzer.ExtractKeyPhrasesAsync(cellToAnalyze.CellValue, languageIso);
             foreach (var phrase in analyzed)
                 returnValue.Add(new KeyPhraseEntity(cellToAnalyze, phrase));
+
             return returnValue;
         }
     }

@@ -27,8 +27,8 @@ namespace GoodToCode.Analytics.Activities
             var sheet = serviceExcel.GetWorkbook(excelStream).GetSheetAt(sheetToAnalyze);
             var sd = sheet.ToSheetData();
             var cellsToAnalyze = sd.GetColumn(columnToAnalyze);
-            foreach (var column in cellsToAnalyze.Where(c => c.CellValue?.Length > 0))
-                returnValue.AddRange(await new NamedEntityExtractActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(column));
+            foreach (var cell in cellsToAnalyze.Where(c => string.IsNullOrEmpty(c.CellValue) == false))
+                returnValue.AddRange(await new NamedEntityExtractActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(cell));
 
             return returnValue;
         }
@@ -36,15 +36,15 @@ namespace GoodToCode.Analytics.Activities
         public async Task<IEnumerable<NamedEntity>> ExecuteAsync(IEnumerable<ICellData> cellsToAnalyze)
         {
             var returnValue = new List<NamedEntity>();
-            foreach (var column in cellsToAnalyze.Where(c => c.CellValue?.Length > 0))
-                returnValue.AddRange(await new NamedEntityExtractActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(column));
+            foreach (var cell in cellsToAnalyze.Where(c => string.IsNullOrEmpty(c.CellValue) == false))
+                returnValue.AddRange(await new NamedEntityExtractActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(cell));
             return returnValue;
         }
 
         public async Task<IEnumerable<NamedEntity>> ExecuteAsync(ICellData cellToAnalyze)
         {
             var returnValue = new List<NamedEntity>();
-            if (cellToAnalyze.CellValue?.Length == 0) return returnValue;
+            if (string.IsNullOrWhiteSpace(cellToAnalyze?.CellValue)) return returnValue;
             var analyzed = await serviceAnalyzer.ExtractEntitiesAsync(cellToAnalyze.CellValue, languageIso);
             foreach (var item in analyzed)
                 returnValue.Add(new NamedEntity(cellToAnalyze, item));
