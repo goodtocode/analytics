@@ -2,9 +2,9 @@
 {
     public interface ITextOpinions
     {
-        DocumentOpinion DocumentSentiment { get; set; }
-        OpinionSentiments OpinionSentiments { get; set; }
-        SentenceOpinion SentenceOpinion { get; set; }
-        SentenceSentiment SentenceSentiment { get; set; }
+        DocumentOpinion DocumentSentiment { get; }
+        OpinionSentiments OpinionSentiments { get; }
+        SentenceOpinion SentenceOpinion { get;  }
+        SentenceSentiment SentenceSentiment { get; }
     }
 }

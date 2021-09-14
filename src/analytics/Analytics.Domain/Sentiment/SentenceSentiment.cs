@@ -1,17 +1,24 @@
 ﻿using GoodToCode.Shared.Analytics.Abstractions;
 using GoodToCode.Shared.Blob.Abstractions;
 using System;
+using System.Text.Json.Serialization;
 
 namespace GoodToCode.Analytics.Domain
 {
     public class SentenceSentiment : RowEntity, ISentenceSentiment
     {
-        public string AnalyzedText { get; }
-        public string Sentiment { get; }
-        public double Negative { get; }
-        public double Neutral { get; }
-        public double Positive { get; }
-        public string LanguageIso { get; }
+        [JsonInclude]
+        public string AnalyzedText { get; private set; }
+        [JsonInclude]
+        public string Sentiment { get; private set; }
+        [JsonInclude]
+        public double Negative { get; private set; }
+        [JsonInclude]
+        public double Neutral { get; private set; }
+        [JsonInclude]
+        public double Positive { get; private set; }
+        [JsonInclude]
+        public string LanguageIso { get; private set; }
 
         public SentenceSentiment() { }
 

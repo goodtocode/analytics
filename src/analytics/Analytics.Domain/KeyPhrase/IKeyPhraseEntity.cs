@@ -2,6 +2,6 @@
 {
     public interface IKeyPhraseEntity : IRowEntity
     {
-        string KeyPhrase { get; set; }
+        string KeyPhrase { get; }
     }
 }

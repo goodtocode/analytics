@@ -1,15 +1,22 @@
 ﻿using GoodToCode.Shared.Blob.Abstractions;
 using System;
+using System.Text.Json.Serialization;
 
 namespace GoodToCode.Analytics.Domain
 {
     public class RowEntity : IRowEntity
     {
+        [JsonInclude]
         public string PartitionKey { get; private set; }
+        [JsonInclude]
         public string RowKey { get; private set; }
+        [JsonInclude]
         public string SheetName { get; private set; }
+        [JsonInclude]
         public string ColumnName { get; private set; }
+        [JsonInclude]
         public int RowIndex { get; private set; }
+        [JsonInclude]
         public string CellValue { get; private set; }
 
         public RowEntity() { }

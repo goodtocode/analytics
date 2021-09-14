@@ -17,12 +17,7 @@ namespace GoodToCode.Analytics.Activities
 
         public async Task<IEnumerable<TableEntity>> ExecuteAsync(IEnumerable<HealthcareNamedEntity> entities)
         {
-            var returnValue = new List<TableEntity>();
-
-            foreach (var entity in entities)
-                returnValue.Add(await servicePersist.AddItemAsync(entity));
-
-            return returnValue;
+            return await servicePersist.AddItemsAsync(entities);
         }
 
         public async Task<TableEntity> ExecuteAsync(HealthcareNamedEntity entity)

@@ -17,39 +17,31 @@ using System.Threading.Tasks;
 namespace GoodToCode.Analytics.Unit.Tests
 {
     [TestClass]
-    public class Sentiment_Analyze_FakeTests
+    public class Excel_Column_SearchTests
     {
-        private readonly IConfiguration configuration;
-        private readonly ILogger<Sentiment_Analyze_FakeTests> logItem;
-        private readonly CognitiveServiceConfiguration configText;
+        private readonly ILogger<Excel_Column_SearchTests> logItem;
         private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Sheet600.xlsx"; } }
-        private readonly int sheetToTransform = 0;
-        private readonly int colToTransform = 1;
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
 
-        public Sentiment_Analyze_FakeTests()
+
+        public Excel_Column_SearchTests()
         {
-            logItem = LoggerFactory.CreateLogger<Sentiment_Analyze_FakeTests>();
-            configuration = new AppConfigurationFactory().Create();
-            configText = new CognitiveServiceConfiguration(
-                configuration[AppConfigurationKeys.CognitiveServicesKeyCredential],
-                configuration[AppConfigurationKeys.CognitiveServicesEndpoint]);
+            logItem = LoggerFactory.CreateLogger<Excel_Column_SearchTests>();
         }
 
         [TestMethod]
-        public async Task Sentiment_Analyze_Fake()       
+        public async Task Excel_Column_Search()       
         {
             Assert.IsTrue(File.Exists(SutXlsxFile), $"{SutXlsxFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 
             try
             { 
-                // Analyze
-                var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutXlsxFile);
+                var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(@"C:\Temp\Q1-100.xlsx");
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                var workflow = new  SentimentAnalyzeActivity(new NpoiService(), new TextAnalyzerServiceFake());
-                var results = await workflow.ExecuteAsync(itemToAnalyze, sheetToTransform, colToTransform);
+                var workflow = new  ExcelColumnSearchActivity(new NpoiService());
+                var results = workflow.Execute(itemToAnalyze, "DocName", "*");
                 Assert.IsTrue(results.Any(), "No results from analytics service.");
             }
             catch (Exception ex)

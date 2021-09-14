@@ -1,14 +1,19 @@
 ﻿using GoodToCode.Shared.Analytics.Abstractions;
 using GoodToCode.Shared.Blob.Abstractions;
+using System.Text.Json.Serialization;
 
 namespace GoodToCode.Analytics.Domain
 {
     public class TextOpinions : ITextOpinions
     {
-        public DocumentOpinion DocumentSentiment { get; set; }
-        public OpinionSentiments OpinionSentiments { get; set; }
-        public SentenceOpinion SentenceOpinion { get; set; }
-        public SentenceSentiment SentenceSentiment { get; set; }
+        [JsonInclude]
+        public DocumentOpinion DocumentSentiment { get; private set; }
+        [JsonInclude]
+        public OpinionSentiments OpinionSentiments { get; private set; }
+        [JsonInclude]
+        public SentenceOpinion SentenceOpinion { get; private set; }
+        [JsonInclude]
+        public SentenceSentiment SentenceSentiment { get; private set; }
 
         public TextOpinions() { }
 

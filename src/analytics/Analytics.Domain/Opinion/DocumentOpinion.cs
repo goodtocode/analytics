@@ -1,13 +1,17 @@
 ﻿using GoodToCode.Shared.Analytics.Abstractions;
 using GoodToCode.Shared.Blob.Abstractions;
+using System.Text.Json.Serialization;
 
 namespace GoodToCode.Analytics.Domain
 {
     public class DocumentOpinion : RowEntity, IDocumentOpinion
     {
-        public double Negative { get; }
-        public double Neutral { get; }
-        public double Positive { get; }
+        [JsonInclude]
+        public double Negative { get; private set; }
+        [JsonInclude]
+        public double Neutral { get; private set; }
+        [JsonInclude]
+        public double Positive { get; private set; }
 
         public DocumentOpinion() { }
 
