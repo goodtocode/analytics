@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31612.314
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Analytics.Domain", "Analytics.Domain\Analytics.Domain.csproj", "{08F62970-FE35-4C62-B6AD-6577FCC10111}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matching.Domain", "Matching.Domain\Matching.Domain.csproj", "{08F62970-FE35-4C62-B6AD-6577FCC10111}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Analytics.Activities", "Analytics.Activities\Analytics.Activities.csproj", "{5BF0CEFB-D841-423B-BA25-D32D7E6241F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matching.Activities", "Matching.Activities\Matching.Activities.csproj", "{5BF0CEFB-D841-423B-BA25-D32D7E6241F3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Analytics.Unit.Tests", "Analytics.Unit.Tests\Analytics.Unit.Tests.csproj", "{2B4247AB-3EB9-48A0-A905-FB774C6F693E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matching.Unit.Tests", "Matching.Unit.Tests\Matching.Unit.Tests.csproj", "{2B4247AB-3EB9-48A0-A905-FB774C6F693E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
