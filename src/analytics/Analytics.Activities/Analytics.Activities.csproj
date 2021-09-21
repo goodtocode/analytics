@@ -32,9 +32,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GoodToCode.Shared.Analytics.CognitiveServices" Version="5.21.257.244" />
-    <PackageReference Include="GoodToCode.Shared.Blob.Excel" Version="5.21.257.244" />
-    <PackageReference Include="GoodToCode.Shared.Persistence.StorageTables" Version="5.21.257.244" />
+    <PackageReference Include="GoodToCode.Shared.Analytics.CognitiveServices" Version="5.21.258.502" />
+    <PackageReference Include="GoodToCode.Shared.Blob.Excel" Version="5.21.258.502" />
+    <PackageReference Include="GoodToCode.Shared.Persistence.StorageTables" Version="5.21.258.502" />
   </ItemGroup>
 
   <ItemGroup>
