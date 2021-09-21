@@ -2,7 +2,7 @@
 using GoodToCode.Shared.Persistence.Abstractions;
 using System;
 
-namespace GoodToCode.Analytics.Unit.Tests
+namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
 {
     public class EntityA : IEntity
     {

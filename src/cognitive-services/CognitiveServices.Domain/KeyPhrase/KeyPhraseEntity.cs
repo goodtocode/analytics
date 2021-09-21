@@ -1,7 +1,7 @@
 ﻿using GoodToCode.Shared.Blob.Abstractions;
 using System.Text.Json.Serialization;
 
-namespace GoodToCode.Analytics.Domain
+namespace GoodToCodeAnalytics.CognitiveServices.Domain
 {
     public class KeyPhraseEntity : RowEntity, IKeyPhraseEntity
     {

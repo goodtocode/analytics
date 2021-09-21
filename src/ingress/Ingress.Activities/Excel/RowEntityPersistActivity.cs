@@ -1,10 +1,10 @@
 ﻿using Azure.Data.Tables;
-using GoodToCode.Matching.Domain;
+using GoodToCode.Analytics.Ingress.Domain;
 using GoodToCode.Shared.Persistence.StorageTables;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace GoodToCode.Matching.Activities
+namespace GoodToCode.Analytics.Ingress.Activities
 {
     public class RowEntityPersistActivity
     {

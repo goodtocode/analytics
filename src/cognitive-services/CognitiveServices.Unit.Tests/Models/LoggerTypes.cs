@@ -1,4 +1,4 @@
-﻿namespace GoodToCode.Analytics.Unit.Tests
+﻿namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
 {
     public enum LoggerTypes
     {

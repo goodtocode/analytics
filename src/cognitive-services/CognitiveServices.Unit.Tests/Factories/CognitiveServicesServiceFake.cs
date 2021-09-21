@@ -1,11 +1,11 @@
-﻿using GoodToCode.Analytics.Domain;
+﻿using GoodToCodeAnalytics.CognitiveServices.Domain;
 using GoodToCode.Shared.Analytics.Abstractions;
 using GoodToCode.Shared.Analytics.CognitiveServices;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace GoodToCode.Analytics.Unit.Tests
+namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
 {
     public class CognitiveServicesServiceFake : ICognitiveServicesService
     {

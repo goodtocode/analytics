@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace GoodToCode.Matching.Activities
+namespace GoodToCode.Analytics.Ingress.Activities
 {
     public class ExcelColumnSearchActivity
     {

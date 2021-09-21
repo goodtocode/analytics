@@ -5,7 +5,7 @@
     <Version>5.20.1</Version>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <IsPackable>false</IsPackable>
-    <AssemblyName>GoodToCode.Matching.Unit.Tests</AssemblyName>
+    <AssemblyName>GoodToCode.Analytics.Matching.Unit.Tests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

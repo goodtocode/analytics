@@ -1,10 +1,10 @@
 ﻿using Azure.Data.Tables;
-using GoodToCode.Analytics.Domain;
+using GoodToCodeAnalytics.CognitiveServices.Domain;
 using GoodToCode.Shared.Persistence.StorageTables;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace GoodToCode.Analytics.Activities
+namespace GoodToCode.Analytics.CognitiveServices.Activities
 {
     public class HealthcareEntityPersistActivity
     {

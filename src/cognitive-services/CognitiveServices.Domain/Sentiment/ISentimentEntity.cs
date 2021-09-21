@@ -1,6 +1,6 @@
 ﻿using GoodToCode.Shared.Analytics.Abstractions;
 
-namespace GoodToCode.Analytics.Domain
+namespace GoodToCodeAnalytics.CognitiveServices.Domain
 {
     public interface ISentimentEntity : IRowEntity, IConfidence, ILanguageIso, IAnalyzedText
     {        

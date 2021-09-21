@@ -3,7 +3,7 @@ using GoodToCode.Shared.Blob.Abstractions;
 using System;
 using System.Text.Json.Serialization;
 
-namespace GoodToCode.Analytics.Domain
+namespace GoodToCodeAnalytics.CognitiveServices.Domain
 {
     public class SentenceOpinion : RowEntity, ISentenceOpinion
     {

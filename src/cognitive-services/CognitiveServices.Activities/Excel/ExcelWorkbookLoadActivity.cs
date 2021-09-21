@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace GoodToCode.Analytics.Activities
+namespace GoodToCode.Analytics.CognitiveServices.Activities
 {
     public class ExcelWorkbookLoadActivity
     {

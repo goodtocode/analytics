@@ -1,4 +1,4 @@
-﻿namespace GoodToCode.Analytics.Domain
+﻿namespace GoodToCodeAnalytics.CognitiveServices.Domain
 {
     public interface ITextOpinions
     {

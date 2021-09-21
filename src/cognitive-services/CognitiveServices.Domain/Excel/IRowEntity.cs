@@ -1,6 +1,6 @@
 ﻿using GoodToCode.Shared.Persistence.Abstractions;
 
-namespace GoodToCode.Analytics.Domain
+namespace GoodToCodeAnalytics.CognitiveServices.Domain
 {
     public interface IRowEntity : IEntity
     {

@@ -1,4 +1,4 @@
-﻿namespace GoodToCode.Matching
+﻿namespace GoodToCode.Analytics.Matching
 {
     public struct AppConfigurationKeys
     {

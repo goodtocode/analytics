@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
-namespace GoodToCode.Analytics.Unit.Tests
+namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
 {
     public class LoggerFactory
     {

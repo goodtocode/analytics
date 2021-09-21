@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace GoodToCode.Analytics.Unit.Tests
+namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
 {
     public class ListLogger : ILogger
     {

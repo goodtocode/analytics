@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace GoodToCode.Analytics.Unit.Tests
+namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
 {
     public class HttpRequestFactory
     {

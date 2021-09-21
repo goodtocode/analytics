@@ -1,10 +1,10 @@
-﻿using GoodToCode.Analytics.Domain;
+﻿using GoodToCodeAnalytics.CognitiveServices.Domain;
 using GoodToCode.Shared.Analytics.Abstractions;
 using GoodToCode.Shared.Blob.Abstractions;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GoodToCode.Analytics.Unit.Tests
+namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
 {
     public class CognitiveServicesResultFactory
     {

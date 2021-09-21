@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <AssemblyName>GoodToCode.Matching.Domain</AssemblyName>
-    <RootNamespace>GoodToCode.Matching</RootNamespace>
-    <Product>GoodToCode.Matching.Domain</Product>
+    <AssemblyName>GoodToCode.Analytics.Matching.Domain</AssemblyName>
+    <RootNamespace>GoodToCode.Analytics.Matching</RootNamespace>
+    <Product>GoodToCode.Analytics.Matching.Domain</Product>
     <Version>5.20.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -21,7 +21,7 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
     <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>GoodToCode.Matching.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>GoodToCode.Analytics.Matching.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>

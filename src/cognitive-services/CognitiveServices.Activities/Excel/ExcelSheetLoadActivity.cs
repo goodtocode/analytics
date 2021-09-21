@@ -2,7 +2,7 @@
 using GoodToCode.Shared.Blob.Excel;
 using System.IO;
 
-namespace GoodToCode.Analytics.Activities
+namespace GoodToCode.Analytics.CognitiveServices.Activities
 {
     public class ExcelSheetLoadActivity
     {

@@ -1,4 +1,4 @@
-﻿using GoodToCode.Analytics.Domain;
+﻿using GoodToCodeAnalytics.CognitiveServices.Domain;
 using GoodToCode.Shared.Analytics.Abstractions;
 using GoodToCode.Shared.Analytics.CognitiveServices;
 using GoodToCode.Shared.Blob.Abstractions;
@@ -9,7 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GoodToCode.Analytics.Activities
+namespace GoodToCode.Analytics.CognitiveServices.Activities
 {
     public class KeyPhraseExtractActivity
     {

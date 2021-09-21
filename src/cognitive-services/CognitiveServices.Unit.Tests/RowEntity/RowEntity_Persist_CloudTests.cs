@@ -1,6 +1,6 @@
 ﻿using Azure.Data.Tables;
-using GoodToCode.Analytics.Activities;
-using GoodToCode.Analytics.Domain;
+using GoodToCode.Analytics.CognitiveServices.Activities;
+using GoodToCodeAnalytics.CognitiveServices.Domain;
 using GoodToCode.Shared.Blob.Excel;
 using GoodToCode.Shared.Persistence.StorageTables;
 using Microsoft.Extensions.Configuration;
@@ -13,7 +13,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace GoodToCode.Analytics.Unit.Tests
+namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
 {
     [TestClass]
     public class RowEntity_Persist_CloudTests

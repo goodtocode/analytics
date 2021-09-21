@@ -2,7 +2,7 @@
 using GoodToCode.Shared.Blob.Excel;
 using System.IO;
 
-namespace GoodToCode.Matching.Activities
+namespace GoodToCode.Analytics.Ingress.Activities
 {
     public class ExcelSheetLoadActivity
     {

@@ -1,4 +1,4 @@
-﻿//using GoodToCode.Analytics.Domain;
+﻿//using GoodToCodeAnalytics.CognitiveServices.Domain;
 //using GoodToCode.Shared.Analytics.Abstractions;
 //using GoodToCode.Shared.Persistence.StorageTables;
 //using Microsoft.Extensions.Configuration;
@@ -11,7 +11,7 @@
 //using System.Reflection;
 //using System.Threading.Tasks;
 
-//namespace GoodToCode.Analytics.Unit.Tests
+//namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
 //{
 //    [TestClass]
 //    public class EntityLink_Persist_ActivityTests

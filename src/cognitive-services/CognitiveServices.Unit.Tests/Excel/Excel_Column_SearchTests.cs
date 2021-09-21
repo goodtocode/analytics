@@ -1,5 +1,5 @@
-﻿using GoodToCode.Analytics.Activities;
-using GoodToCode.Analytics.Domain;
+﻿using GoodToCode.Analytics.CognitiveServices.Activities;
+using GoodToCodeAnalytics.CognitiveServices.Domain;
 using GoodToCode.Shared.Analytics.Abstractions;
 using GoodToCode.Shared.Blob.Excel;
 using GoodToCode.Shared.Persistence.StorageTables;
@@ -14,7 +14,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace GoodToCode.Analytics.Unit.Tests
+namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
 {
     [TestClass]
     public class Excel_Column_SearchTests

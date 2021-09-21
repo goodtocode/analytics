@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace GoodToCode.Matching.Activities
+namespace GoodToCode.Analytics.Ingress.Activities
 {
     public class ExcelColumnLoadActivity
     {
