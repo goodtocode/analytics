@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace GoodToCode.Matching.Domain
 {
-    public class OpinionSentiments : RowEntity, IOpinionSentiments
+    public class PatternMatch : RowEntity, IPatternMatch
     {
         [JsonInclude]
         public string AnalyzedText { get; private set; }
@@ -20,9 +20,9 @@ namespace GoodToCode.Matching.Domain
         [JsonInclude]
         public string LanguageIso { get; private set; }
 
-        public OpinionSentiments() { }
+        public PatternMatch() { }
 
-        public OpinionSentiments(ICellData cell, ISentimentResult result) : base(Guid.NewGuid().ToString(), cell)
+        public PatternMatch(ICellData cell, ISentimentResult result) : base(Guid.NewGuid().ToString(), cell)
         {
             AnalyzedText = result.AnalyzedText;
             Sentiment = result.Sentiment.ToString();
