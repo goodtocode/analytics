@@ -1,8 +1,8 @@
-﻿using GoodToCode.Matching.Domain;
+﻿using GoodToCode.Analytics.Matching.Domain;
 using GoodToCode.Shared.Blob.Abstractions;
 using System;
 
-namespace GoodToCode.Matching.Unit.Tests
+namespace GoodToCode.Analytics.Matching.Unit.Tests
 {
     public class RowEntityFactory
     {

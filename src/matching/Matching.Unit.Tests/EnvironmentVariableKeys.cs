@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GoodToCode.Matching
+namespace GoodToCode.Analytics.Matching
 {
     public static class EnvironmentVariables
     {

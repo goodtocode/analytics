@@ -2,7 +2,7 @@
 using GoodToCode.Shared.Persistence.Abstractions;
 using System;
 
-namespace GoodToCode.Matching.Unit.Tests
+namespace GoodToCode.Analytics.Matching.Unit.Tests
 {
     public class EntityA : IEntity
     {

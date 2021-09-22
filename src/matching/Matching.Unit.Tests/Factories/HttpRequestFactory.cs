@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace GoodToCode.Matching.Unit.Tests
+namespace GoodToCode.Analytics.Matching.Unit.Tests
 {
     public class HttpRequestFactory
     {
