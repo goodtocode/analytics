@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace GoodToCode.Analytics.Ingress.Domain
 {
-    public class RowEntity : ICellData, IRowEntity
+    public class RowEntity :  IRowEntity
     {
         [JsonInclude]
         public string PartitionKey { get; private set; }
