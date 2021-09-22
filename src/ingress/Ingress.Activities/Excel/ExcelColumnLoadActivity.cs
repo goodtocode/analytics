@@ -2,15 +2,14 @@
 using GoodToCode.Shared.Blob.Excel;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace GoodToCode.Analytics.Ingress.Activities
 {
     public class ExcelColumnLoadActivity
     {
-        private readonly INpoiService service;
+        private readonly IExcelService service;
 
-        public ExcelColumnLoadActivity(INpoiService serviceExcel)
+        public ExcelColumnLoadActivity(IExcelService serviceExcel)
         {
             service = serviceExcel;
         }

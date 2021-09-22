@@ -1,4 +1,4 @@
-﻿namespace GoodToCodeAnalytics.CognitiveServices.Domain
+﻿namespace GoodToCode.Analytics.CognitiveServices.Domain
 {
     public interface IKeyPhraseEntity : IRowEntity
     {

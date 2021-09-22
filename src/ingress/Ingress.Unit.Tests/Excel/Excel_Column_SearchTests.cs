@@ -1,9 +1,6 @@
 ﻿using GoodToCode.Analytics.Ingress.Activities;
 using GoodToCode.Analytics.Ingress.Domain;
-using GoodToCode.Shared.Analytics.Abstractions;
 using GoodToCode.Shared.Blob.Excel;
-using GoodToCode.Shared.Persistence.StorageTables;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -40,7 +37,7 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
             { 
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutXlsxFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                var workflow = new  ExcelColumnSearchActivity(new NpoiService());
+                var workflow = new  ExcelColumnSearchActivity(new ExcelService());
                 var results = workflow.Execute(itemToAnalyze, "DocName", "*");
                 Assert.IsTrue(results.Any(), "No results from analytics service.");
             }

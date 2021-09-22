@@ -6,9 +6,9 @@ namespace GoodToCode.Analytics.Ingress.Activities
 {
     public class ExcelSheetLoadActivity
     {
-        private readonly INpoiService service;
+        private readonly IExcelService service;
 
-        public ExcelSheetLoadActivity(INpoiService serviceExcel)
+        public ExcelSheetLoadActivity(IExcelService serviceExcel)
         {
             service = serviceExcel;
         }

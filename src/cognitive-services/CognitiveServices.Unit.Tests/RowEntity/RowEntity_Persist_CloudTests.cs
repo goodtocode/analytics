@@ -1,6 +1,6 @@
 ﻿using Azure.Data.Tables;
 using GoodToCode.Analytics.CognitiveServices.Activities;
-using GoodToCodeAnalytics.CognitiveServices.Domain;
+using GoodToCode.Analytics.CognitiveServices.Domain;
 using GoodToCode.Shared.Blob.Excel;
 using GoodToCode.Shared.Persistence.StorageTables;
 using Microsoft.Extensions.Configuration;

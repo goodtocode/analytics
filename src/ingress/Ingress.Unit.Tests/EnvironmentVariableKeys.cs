@@ -6,14 +6,14 @@ namespace GoodToCode.Analytics.Ingress
     {
         internal static void Validate()
         {
-            if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(EnvironmentVariableKeys.AppSettingsConnection)))
-                throw new ArgumentNullException(EnvironmentVariableKeys.AppSettingsConnection);
+            if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(EnvironmentVariableKeys.AppConfigurationConnection)))
+                throw new ArgumentNullException(EnvironmentVariableKeys.AppConfigurationConnection);
         }
     }
 
     public struct EnvironmentVariableKeys
     {
-        public const string AppSettingsConnection = "AppSettingsConnection";        
+        public const string AppConfigurationConnection = "GTC_ANALYTICS_CONNECTION";        
         public const string EnvironmentAspNetCore = "ASPNETCORE_ENVIRONMENT";
         public const string EnvironmentAzureFunctions = "AZURE_FUNCTIONS_ENVIRONMENT";
         public const string EnvironmentDotNet = "DOTNET_ENVIRONMENT";

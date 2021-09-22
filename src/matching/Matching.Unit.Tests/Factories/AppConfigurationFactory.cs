@@ -13,7 +13,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             var builder = new ConfigurationBuilder();
             builder.AddAzureAppConfiguration(options =>
                     options
-                        .Connect(Environment.GetEnvironmentVariable(EnvironmentVariableKeys.AppSettingsConnection))
+                        .Connect(Environment.GetEnvironmentVariable(EnvironmentVariableKeys.AppConfigurationConnection))
                         .ConfigureRefresh(refresh =>
                         {
                             refresh.Register(AppConfigurationKeys.SentinelSetting, refreshAll: true)

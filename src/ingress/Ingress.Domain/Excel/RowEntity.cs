@@ -4,14 +4,17 @@ using System.Text.Json.Serialization;
 
 namespace GoodToCode.Analytics.Ingress.Domain
 {
-    public class RowEntity : IRowEntity
+    public class RowEntity : ICellData, IRowEntity
     {
         [JsonInclude]
         public string PartitionKey { get; private set; }
         [JsonInclude]
         public string RowKey { get; private set; }
+        public string WorkbookName { get; private set; }
+        public int SheetIndex { get; private set; }
         [JsonInclude]
         public string SheetName { get; private set; }
+        public int ColumnIndex { get; private set; }
         [JsonInclude]
         public string ColumnName { get; private set; }
         [JsonInclude]
@@ -25,10 +28,13 @@ namespace GoodToCode.Analytics.Ingress.Domain
         {
             RowKey = rowKey;
             PartitionKey = cell.SheetName;
-            CellValue = cell.CellValue;
+            WorkbookName = cell.WorkbookName;
+            SheetIndex = cell.SheetIndex;
             SheetName = cell.SheetName;
+            ColumnIndex = cell.ColumnIndex;
             ColumnName = cell.ColumnName;
             RowIndex = cell.RowIndex;
+            CellValue = cell.CellValue;
         }
 
         public RowEntity(ICellData cell) : this(Guid.NewGuid().ToString(), cell)

@@ -1,5 +1,5 @@
 ﻿using Azure.Data.Tables;
-using GoodToCodeAnalytics.CognitiveServices.Domain;
+using GoodToCode.Analytics.CognitiveServices.Domain;
 using GoodToCode.Shared.Persistence.StorageTables;
 using System.Collections.Generic;
 using System.Threading.Tasks;

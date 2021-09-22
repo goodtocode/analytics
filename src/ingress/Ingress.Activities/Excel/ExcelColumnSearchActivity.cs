@@ -9,9 +9,9 @@ namespace GoodToCode.Analytics.Ingress.Activities
 {
     public class ExcelColumnSearchActivity
     {
-        private readonly INpoiService service;
+        private readonly IExcelService service;
 
-        public ExcelColumnSearchActivity(INpoiService serviceExcel)
+        public ExcelColumnSearchActivity(IExcelService serviceExcel)
         {
             service = serviceExcel;
         }

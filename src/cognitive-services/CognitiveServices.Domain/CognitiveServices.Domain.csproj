@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <AssemblyName>GoodToCodeAnalytics.CognitiveServices.Domain</AssemblyName>
+    <AssemblyName>GoodToCode.Analytics.CognitiveServices.Domain</AssemblyName>
     <RootNamespace>GoodToCode.Analytics</RootNamespace>
-    <Product>GoodToCodeAnalytics.CognitiveServices.Domain</Product>
+    <Product>GoodToCode.Analytics.CognitiveServices.Domain</Product>
     <Version>5.20.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>

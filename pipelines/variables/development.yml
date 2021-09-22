@@ -1,13 +1,13 @@
 variables:
   - group: gtc-rg-analytics-dev
   - template: common.yml
-  - name: Environment
+  - name: rgEnvironment
     value: 'Development'
   - name: rgName
     value: 'gtc-rg-analytics-dev-225'
   - name: locationName
     value: 'West US 2'
-  - name: 'appInsightsName'
+  - name: 'appiName'
     value: 'appi-analytics-dev-225'
   - name: 'cogName'
     value: 'cog-analytics-dev-225'

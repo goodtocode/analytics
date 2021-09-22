@@ -2,7 +2,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace GoodToCodeAnalytics.CognitiveServices.Domain
+namespace GoodToCode.Analytics.CognitiveServices.Domain
 {
     public class RowEntity : IRowEntity
     {
