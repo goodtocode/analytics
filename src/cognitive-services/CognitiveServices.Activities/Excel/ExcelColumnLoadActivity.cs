@@ -8,9 +8,9 @@ namespace GoodToCode.Analytics.CognitiveServices.Activities
 {
     public class ExcelColumnLoadActivity
     {
-        private readonly INpoiService service;
+        private readonly IExcelService service;
 
-        public ExcelColumnLoadActivity(INpoiService serviceExcel)
+        public ExcelColumnLoadActivity(IExcelService serviceExcel)
         {
             service = serviceExcel;
         }

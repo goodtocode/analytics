@@ -14,10 +14,10 @@ namespace GoodToCode.Analytics.CognitiveServices.Activities
     public class KeyPhraseExtractActivity
     {
         private ITextAnalyzerService serviceAnalyzer;
-        private INpoiService serviceExcel;
+        private IExcelService serviceExcel;
         private string languageIso = "en-US";
 
-        public KeyPhraseExtractActivity(INpoiService serviceExcelReader, ITextAnalyzerService serviceTextAnalyzer)
+        public KeyPhraseExtractActivity(IExcelService serviceExcelReader, ITextAnalyzerService serviceTextAnalyzer)
         {
             serviceAnalyzer = serviceTextAnalyzer;
             serviceExcel = serviceExcelReader;

@@ -12,9 +12,9 @@ namespace GoodToCode.Analytics.CognitiveServices.Activities
     public class HealthcareEntityAnalyzeActivity
     {
         private ICognitiveServicesService serviceAnalyzer;
-        private INpoiService serviceExcel;
+        private IExcelService serviceExcel;
 
-        public HealthcareEntityAnalyzeActivity(INpoiService serviceExcelReader, ICognitiveServicesService serviceCognitiveServices)
+        public HealthcareEntityAnalyzeActivity(IExcelService serviceExcelReader, ICognitiveServicesService serviceCognitiveServices)
         {
             serviceAnalyzer = serviceCognitiveServices;
             serviceExcel = serviceExcelReader;

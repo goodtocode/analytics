@@ -24,7 +24,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
         private readonly ILogger<NamedEntity_Persist_CloudTests> logItem;
         private readonly StorageTablesServiceConfiguration configStorage;
         private readonly CognitiveServiceConfiguration configText;
-        private readonly INpoiService excelService;
+        private readonly IExcelService excelService;
         private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         private int sheetToTransform = 0;
         private int colToTransform = 3;
@@ -42,7 +42,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
             configText = new CognitiveServiceConfiguration(
                 configuration[AppConfigurationKeys.CognitiveServicesKeyCredential],
                 configuration[AppConfigurationKeys.CognitiveServicesEndpoint]);
-            excelService = new NpoiService();
+            excelService = new ExcelService();
         }
 
         [TestMethod]

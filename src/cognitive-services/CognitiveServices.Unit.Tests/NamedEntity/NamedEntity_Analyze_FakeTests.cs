@@ -53,7 +53,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
                 // Analyze
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutXlsxFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                var workflow = new NamedEntityExtractActivity(new NpoiService(), new TextAnalyzerServiceFake());
+                var workflow = new NamedEntityExtractActivity(new ExcelService(), new TextAnalyzerServiceFake());
                 var results = await workflow.ExecuteAsync(itemToAnalyze, sheetToTransform, colToTransform);
                 Assert.IsTrue(results.Any(), "No results from analytics service.");
                 // Persist

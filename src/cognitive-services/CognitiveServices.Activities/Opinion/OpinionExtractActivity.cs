@@ -12,10 +12,10 @@ namespace GoodToCode.Analytics.CognitiveServices.Activities
     public class OpinionExtractActivity
     {
         private ITextAnalyzerService serviceAnalyzer;
-        private INpoiService serviceExcel;
+        private IExcelService serviceExcel;
         private string languageIso = "en-US";
 
-        public OpinionExtractActivity(INpoiService serviceExcelReader, ITextAnalyzerService serviceTextAnalyzer)
+        public OpinionExtractActivity(IExcelService serviceExcelReader, ITextAnalyzerService serviceTextAnalyzer)
         {
             serviceAnalyzer = serviceTextAnalyzer;
             serviceExcel = serviceExcelReader;

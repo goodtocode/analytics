@@ -21,7 +21,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
         private readonly IConfiguration configuration;
         private readonly ILogger<RowEntity_Persist_CloudTests> log;
         private readonly StorageTablesServiceConfiguration configStorage;
-        private NpoiService serviceExcel;
+        private ExcelService serviceExcel;
         private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
@@ -36,7 +36,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
                 $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-RowEntity");
 
-            serviceExcel = new NpoiService();
+            serviceExcel = new ExcelService();
         }
 
         //[TestMethod]

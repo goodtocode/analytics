@@ -15,9 +15,9 @@ namespace GoodToCode.Analytics.CognitiveServices.Activities
     public class SentimentAnalyzeActivity
     {
         private ITextAnalyzerService serviceAnalyzer;
-        private INpoiService serviceExcel;
+        private IExcelService serviceExcel;
 
-        public SentimentAnalyzeActivity(INpoiService serviceExcelReader, ITextAnalyzerService serviceTextAnalyzer)
+        public SentimentAnalyzeActivity(IExcelService serviceExcelReader, ITextAnalyzerService serviceTextAnalyzer)
         {
             serviceAnalyzer = serviceTextAnalyzer;
             serviceExcel = serviceExcelReader;

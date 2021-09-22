@@ -23,7 +23,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
         private readonly ILogger<KeyPhrase_Activities_CloudTests> logItem;
         
         private readonly CognitiveServiceConfiguration configText;
-        private readonly INpoiService excelService;
+        private readonly IExcelService excelService;
         private readonly ITextAnalyzerService analyzerService;
         private static string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         private readonly string sheetName = "TestSheet1";
@@ -39,7 +39,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
             configText = new CognitiveServiceConfiguration(
                 configuration[AppConfigurationKeys.CognitiveServicesKeyCredential],
                 configuration[AppConfigurationKeys.CognitiveServicesEndpoint]);
-            excelService = new NpoiService();
+            excelService = new ExcelService();
             analyzerService = new TextAnalyzerService(configText);
         }
 
