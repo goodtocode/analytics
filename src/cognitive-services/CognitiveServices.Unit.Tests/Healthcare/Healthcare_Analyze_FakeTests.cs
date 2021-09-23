@@ -1,6 +1,6 @@
 ﻿using GoodToCode.Analytics.CognitiveServices.Activities;
 using GoodToCode.Analytics.CognitiveServices.Domain;
-using GoodToCode.Shared.Analytics.Abstractions;
+using GoodToCode.Shared.TextAnalytics.Abstractions;
 using GoodToCode.Shared.Blob.Excel;
 using GoodToCode.Shared.Persistence.StorageTables;
 using Microsoft.Extensions.Configuration;

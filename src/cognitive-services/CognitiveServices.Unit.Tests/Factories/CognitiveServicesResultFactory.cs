@@ -1,5 +1,5 @@
 ﻿using GoodToCode.Analytics.CognitiveServices.Domain;
-using GoodToCode.Shared.Analytics.Abstractions;
+using GoodToCode.Shared.TextAnalytics.Abstractions;
 using GoodToCode.Shared.Blob.Abstractions;
 using System.Collections.Generic;
 using System.Linq;

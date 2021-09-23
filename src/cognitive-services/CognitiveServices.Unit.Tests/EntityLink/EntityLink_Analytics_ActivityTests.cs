@@ -1,5 +1,5 @@
 ﻿//using GoodToCode.Analytics.CognitiveServices.Domain;
-//using GoodToCode.Shared.Analytics.Abstractions;
+//using GoodToCode.Shared.TextAnalytics.Abstractions;
 //using GoodToCode.Shared.Persistence.StorageTables;
 //using Microsoft.Extensions.Configuration;
 //using Microsoft.Extensions.Logging;

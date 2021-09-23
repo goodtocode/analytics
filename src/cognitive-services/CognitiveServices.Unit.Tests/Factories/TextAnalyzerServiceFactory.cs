@@ -1,4 +1,4 @@
-﻿using GoodToCode.Shared.Analytics.CognitiveServices;
+﻿using GoodToCode.Shared.TextAnalytics.CognitiveServices;
 
 namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
 {

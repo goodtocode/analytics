@@ -1,4 +1,4 @@
-﻿using GoodToCode.Shared.Analytics.Abstractions;
+﻿using GoodToCode.Shared.TextAnalytics.Abstractions;
 using GoodToCode.Shared.Blob.Abstractions;
 using System.Text.Json.Serialization;
 
