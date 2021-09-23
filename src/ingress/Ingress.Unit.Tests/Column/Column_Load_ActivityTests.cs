@@ -37,8 +37,8 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
             { 
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutXlsxFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                var workflow = new  ExcelColumnSearchActivity(new ExcelService());
-                var results = workflow.Execute(itemToAnalyze, "DocName", "*");
+                var workflow = new ExcelColumnLoadActivity(new ExcelService());
+                var results = workflow.Execute(itemToAnalyze, 0, 3);
                 Assert.IsTrue(results.Any(), "No results from analytics service.");
             }
             catch (Exception ex)
