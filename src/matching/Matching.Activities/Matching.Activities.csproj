@@ -41,4 +41,8 @@
     <ProjectReference Include="..\Matching.Domain\Matching.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pattern\" />
+  </ItemGroup>
+
 </Project>
