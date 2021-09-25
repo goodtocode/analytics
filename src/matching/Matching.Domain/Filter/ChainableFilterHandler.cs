@@ -1,16 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace GoodToCode.Analytics.Matching.Domain
 {
-    public abstract class ChainableFilterHandler<T>
+    public abstract class ChainableFilterHandler<T> : IFilterHandler<T>
     {
-        public ChainableFilterHandler<T> nextHandler;
-        
-        public void NextHandler(ChainableFilterHandler<T> handler)
+        public ChainableFilterHandler<T> NextHandler;
+        public IFilterExpression<T> Filter { get; }
+
+        public ChainableFilterHandler(IFilterExpression<T> filter) { Filter = filter; }
+
+        public void SetNextHandler(ChainableFilterHandler<T> handler)
         {
-            nextHandler = handler;
+            NextHandler = handler;
         }
 
-        public abstract void ApplyFilter(T filter);
+        public abstract IEnumerable<T> ApplyFilter(IEnumerable<T> filterableList);
     }
 }
