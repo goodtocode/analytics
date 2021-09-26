@@ -2,6 +2,7 @@
 using GoodToCode.Shared.Blob.Abstractions;
 using System;
 using System.Text.Json.Serialization;
+using GoodToCode.Analytics.Abstractions;
 
 namespace GoodToCode.Analytics.Matching.Domain
 {

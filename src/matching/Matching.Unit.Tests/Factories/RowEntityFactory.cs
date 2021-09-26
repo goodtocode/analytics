@@ -1,4 +1,5 @@
-﻿using GoodToCode.Analytics.Matching.Domain;
+﻿using GoodToCode.Analytics.Abstractions;
+using GoodToCode.Analytics.Matching.Domain;
 using GoodToCode.Shared.Blob.Abstractions;
 using System;
 
