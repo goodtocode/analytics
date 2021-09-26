@@ -1,6 +1,7 @@
 ﻿using GoodToCode.Analytics.Abstractions;
 using GoodToCode.Analytics.Matching.Activities;
 using GoodToCode.Analytics.Matching.Domain;
+using GoodToCode.Shared.Blob.Abstractions;
 using GoodToCode.Shared.Blob.Excel;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -18,29 +19,32 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
     public class Filter_SequentialFilter_ActivityTests
     {
         private readonly ILogger<Filter_SequentialFilter_ActivityTests> logItem;
+        private readonly ExcelService excelService;
         private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         public RowEntity SutRow { get; private set; }
-        public IEnumerable<RowEntity> SutRows { get; private set; }
-        public IEnumerable<FilterExpression<RowEntity>> SutFilters { get; private set; }
+        public IEnumerable<ICellData> SutHeaders { get; private set; }
+        public IEnumerable<FilterExpression<ICellData>> SutFilters { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
 
 
         public Filter_SequentialFilter_ActivityTests()
         {
             logItem = LoggerFactory.CreateLogger<Filter_SequentialFilter_ActivityTests>();
+            excelService = ExcelServiceFactory.GetInstance().CreateExcelService();
         }
 
         [TestMethod]
         public async Task Column_Search_Activity()
         {
             Assert.IsTrue(File.Exists(SutXlsxFile), $"{SutXlsxFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
-            SutFilters = new List<FilterExpression<RowEntity>>() { new FilterExpression<RowEntity>(x => x.ColumnName.Contains("Answer")) };
+            SutFilters = new List<FilterExpression<ICellData>>() { new FilterExpression<ICellData>(x => x.ColumnIndex > -1) };
             try
             {
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutXlsxFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                var workflow = new SequentialFilterActivity<RowEntity>(SutFilters);
-                var results = workflow.Execute(SutRows);
+                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).ToSheetData().GetRow(1).Cells;
+                var workflow = new SequentialFilterActivity<ICellData>(SutFilters);
+                var results = workflow.Execute(SutHeaders);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
             }
             catch (Exception ex)
