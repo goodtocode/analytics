@@ -1,6 +1,6 @@
 ﻿using GoodToCode.Shared.Persistence.Abstractions;
 
-namespace GoodToCode.Analytics.Matching.Domain
+namespace GoodToCode.Analytics.Abstractions
 {
     public interface IRowEntity : IEntity
     {

@@ -2,7 +2,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace GoodToCode.Analytics.Matching.Domain
+namespace GoodToCode.Analytics.Abstractions
 {
     public class RowEntity : IRowEntity
     {

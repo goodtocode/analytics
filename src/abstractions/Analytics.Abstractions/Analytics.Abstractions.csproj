@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <AssemblyName>GoodToCode.Analytics.Matching.Activities</AssemblyName>
-    <RootNamespace>GoodToCode.Analytics.Matching</RootNamespace>
-    <Product>GoodToCode.Analytics.Matching.Activities</Product>
+    <AssemblyName>GoodToCode.Analytics.Abstractions</AssemblyName>
+    <RootNamespace>GoodToCode.Analytics.Abstractions</RootNamespace>
+    <Product>GoodToCode.Analytics.Abstractions</Product>
     <Version>5.20.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Company>GoodToCode</Company>
+    <Company>GoodToCode</Company>    
     <Authors>Robert J. Good</Authors>
     <PackageTags>.NET C# EF Core DDD Web API Azure Functions</PackageTags>
-    <Description>GoodToCode shared aspect-oriented (AOP) library for cross-cutting utility concerns.</Description>
+    <Description>GoodToCode Analytics aspect-oriented (AOP) library for cross-cutting data analytics use.</Description>
     <Copyright>Copyright (c) GoodToCode. All rights reserved.</Copyright>
     <PackageProjectUrl>https://github.com/goodtocode/analytics</PackageProjectUrl>
     <PackageIcon>storeicon.png</PackageIcon>
@@ -21,7 +21,7 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
     <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>GoodToCode.Analytics.Matching.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>GoodToCode.Analytics.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,17 +32,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GoodToCode.Shared.Blob.Excel" Version="5.21.265.512" />
-    <PackageReference Include="GoodToCode.Shared.Persistence.StorageTables" Version="5.21.265.512" />
-    <PackageReference Include="GoodToCode.Shared.TextAnalytics.CognitiveServices" Version="5.21.265.512" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Matching.Domain\Matching.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pattern\" />
+    <PackageReference Include="GoodToCode.Shared.Blob.Abstractions" Version="5.21.265.512" />
+    <PackageReference Include="GoodToCode.Shared.Persistence.Abstractions" Version="5.21.265.512" />
+    <PackageReference Include="System.Text.Json" Version="5.0.2" />
   </ItemGroup>
 
 </Project>

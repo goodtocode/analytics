@@ -1,16 +1,15 @@
 ﻿using GoodToCode.Analytics.Matching.Domain;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace GoodToCode.Analytics.Matching.Activities
 {
-    public class ListFilterActivity<T>
+    public class SequentialFilterActivity<T>
     {
         public List<ExpressionFilterHandler<T>> Filters { get; }
         public List<IEnumerable<T>> Results;
 
-        public ListFilterActivity(IEnumerable<FilterExpression<T>> filters)
+        public SequentialFilterActivity(IEnumerable<FilterExpression<T>> filters)
         {
             ExpressionFilterHandler<T> last = null;
             foreach (var filter in filters)
