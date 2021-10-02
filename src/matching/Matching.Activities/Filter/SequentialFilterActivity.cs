@@ -6,15 +6,15 @@ namespace GoodToCode.Analytics.Matching.Activities
 {
     public class SequentialFilterActivity<T>
     {
-        public List<ExpressionFilterHandler<T>> Filters { get; } = new List<ExpressionFilterHandler<T>>();
+        public List<ChainableFilterHandler<T>> Filters { get; } = new List<ChainableFilterHandler<T>>();
         public List<IEnumerable<T>> Results;
 
         public SequentialFilterActivity(IEnumerable<FilterExpression<T>> filters)
         {
-            ExpressionFilterHandler<T> last = null;
+            ChainableFilterHandler<T> last = null;
             foreach (var filter in filters)
             {                
-                var next = new ExpressionFilterHandler<T>(filter);
+                var next = new ChainableFilterHandler<T>(filter);
                 Filters.Add(next);
                 if (last != null)
                     last.SetNextHandler(next);

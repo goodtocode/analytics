@@ -6,7 +6,7 @@ namespace GoodToCode.Analytics.Matching.Activities
 {
     public class SingleFilterActivity<T>
     {
-        public ExpressionFilterHandler<T> Filter { get; }
+        public ChainableFilterHandler<T> Filter { get; }
         public List<IEnumerable<T>> Results;
 
         public SingleFilterActivity(FilterExpression<T> filter)
