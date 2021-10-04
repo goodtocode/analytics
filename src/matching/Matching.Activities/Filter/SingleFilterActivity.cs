@@ -6,21 +6,19 @@ namespace GoodToCode.Analytics.Matching.Activities
 {
     public class SingleFilterActivity<T>
     {
-        public ChainableFilterHandler<T> Filter { get; }
-        public List<IEnumerable<T>> Results;
+        public SingleFilterHandler<T> Handler { get; }
+        public List<IEnumerable<T>> Results { get; private set; } = new List<IEnumerable<T>>();
 
         public SingleFilterActivity(FilterExpression<T> filter)
         {
-            Filter = filter;
+            Handler = filter.Expression;
         }
 
         public List<IEnumerable<T>> Execute(IEnumerable<T> listToFilter)
         {
-            Filters.First().ApplyFilter(listToFilter);
+            Handler.ApplyFilter(listToFilter);
             
-            Results = new List<IEnumerable<T>>();
-            foreach (var filter in Filters)
-                Results.Add(filter.FilteredList);
+            Results.Add(filter.FilteredList);
             
             return Results;
         }        

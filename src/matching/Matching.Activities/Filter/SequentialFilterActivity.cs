@@ -6,7 +6,7 @@ namespace GoodToCode.Analytics.Matching.Activities
 {
     public class SequentialFilterActivity<T>
     {
-        public List<ChainableFilterHandler<T>> Filters { get; } = new List<ChainableFilterHandler<T>>();
+        public List<ChainableFilterHandler<T>> Handlers { get; } = new List<ChainableFilterHandler<T>>();
         public List<IEnumerable<T>> Results;
 
         public SequentialFilterActivity(IEnumerable<FilterExpression<T>> filters)
@@ -15,7 +15,7 @@ namespace GoodToCode.Analytics.Matching.Activities
             foreach (var filter in filters)
             {                
                 var next = new ChainableFilterHandler<T>(filter);
-                Filters.Add(next);
+                Handlers.Add(next);
                 if (last != null)
                     last.SetNextHandler(next);
                 last = next;
@@ -24,10 +24,10 @@ namespace GoodToCode.Analytics.Matching.Activities
 
         public List<IEnumerable<T>> Execute(IEnumerable<T> listToFilter)
         {
-            Filters.First().ApplyFilter(listToFilter);
+            Handlers.First().ApplyFilter(listToFilter);
             
             Results = new List<IEnumerable<T>>();
-            foreach (var filter in Filters)
+            foreach (var filter in Handlers)
                 Results.Add(filter.FilteredList);
             
             return Results;
