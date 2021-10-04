@@ -11,15 +11,13 @@ namespace GoodToCode.Analytics.Matching.Activities
 
         public SingleFilterActivity(FilterExpression<T> filter)
         {
-            Handler = filter.Expression;
+            Handler = new SingleFilterHandler<T>(filter);
         }
 
         public List<IEnumerable<T>> Execute(IEnumerable<T> listToFilter)
-        {
-            Handler.ApplyFilter(listToFilter);
-            
-            Results.Add(filter.FilteredList);
-            
+        {            
+            var filteredList = Handler.ApplyFilter(listToFilter);            
+            Results.Add(filteredList);            
             return Results;
         }        
     }
