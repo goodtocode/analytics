@@ -50,6 +50,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var workflow = new SequentialFilterActivity<ICellData>(SutFilters);
                 var results = workflow.Execute(SutHeaders);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
+                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault().CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -77,6 +78,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var workflow = new SequentialFilterActivity<ICellData>(SutFilters);
                 var results = workflow.Execute(SutHeaders);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
+                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault().CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -105,6 +107,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var workflow = new SequentialFilterActivity<ICellData>(SutFilters);
                 var results = workflow.Execute(SutHeaders);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
+                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault().CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -133,6 +136,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var workflow = new SequentialFilterActivity<ICellData>(SutFilters);
                 var results = workflow.Execute(SutHeaders);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
+                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault().CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -161,6 +165,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var workflow = new SequentialFilterActivity<ICellData>(SutFilters);
                 var results = workflow.Execute(SutHeaders);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
+                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault().CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -187,6 +192,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var workflow = new SequentialFilterActivity<ICellData>(SutFilters);
                 var results = workflow.Execute(SutHeaders);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
+                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault().CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
