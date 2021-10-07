@@ -93,10 +93,9 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             Assert.IsTrue(File.Exists(SutDataSourceFile), $"{SutDataSourceFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
             Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 
-            SutFilters = new List<FilterExpression<ICellData>>() { 
-                new FilterExpression<ICellData>(
-                    x => (x.ColumnName == "Address" && x.CellValue.Contains("/bulk-discounts"))
-                    && (x.ColumnName == "H2-1" && x.CellValue == "Certification Discounts"))
+            SutFilters = new List<FilterExpression<ICellData>>() {
+                new FilterExpression<ICellData>(x => x.ColumnName == "Address" && x.CellValue.Contains("/bulk-discounts")),
+                new FilterExpression<ICellData>(x => x.ColumnName == "H2-1" && x.CellValue == "Certification Discounts")
             };
 
             try
@@ -178,8 +177,8 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             Assert.IsTrue(File.Exists(SutDataSourceFile), $"{SutDataSourceFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
             Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 
-            SutFilters = new List<FilterExpression<ICellData>>() { 
-                new FilterExpression<ICellData>(x => x.ColumnName == "Address" && x.CellValue != "/nursing-excellence/nurse-stories")
+            SutFilters = new List<FilterExpression<ICellData>>() {
+                new FilterExpression<ICellData>(x => x.ColumnName == "Address" && x.CellValue.Contains("/education/webinar-series"))
             };
 
             try
