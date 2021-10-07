@@ -46,7 +46,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             {
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutOpinionFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).GetRow(1).Cells;
+                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).Cells;
                 var workflow = new SingleFilterActivity<ICellData>(SutFilter);
                 var results = workflow.Execute(SutHeaders);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
@@ -72,7 +72,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             {
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).GetRow(1).Cells;
+                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).Cells;
                 var workflow = new SingleFilterActivity<ICellData>(SutFilter);
                 var results = workflow.Execute(SutHeaders);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
@@ -98,7 +98,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             {
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).GetRow(1).Cells;
+                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).Cells;
                 var workflow = new SingleFilterActivity<ICellData>(SutFilter);
                 var results = workflow.Execute(SutHeaders);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
@@ -124,7 +124,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             {
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).GetRow(1).Cells;
+                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).Cells;
                 var workflow = new SingleFilterActivity<ICellData>(SutFilter);
                 var results = workflow.Execute(SutHeaders);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
@@ -151,7 +151,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             {
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).GetRow(1).Cells;
+                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).Cells;
                 var workflow = new SingleFilterActivity<ICellData>(SutFilter);
                 var results = workflow.Execute(SutHeaders);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
@@ -176,7 +176,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             {
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).GetRow(1).Cells;
+                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).Cells;
                 var workflow = new SingleFilterActivity<ICellData>(SutFilter);
                 var results = workflow.Execute(SutHeaders);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
