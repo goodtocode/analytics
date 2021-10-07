@@ -46,11 +46,11 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             {
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutOpinionFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).ToSheetData().GetRow(1).Cells;
+                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).GetRow(1).Cells;
                 var workflow = new SingleFilterActivity<ICellData>(SutFilter);
                 var results = workflow.Execute(SutHeaders);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
-                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault().CellValue), "No results from filter service.");
+                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault()?.CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -72,11 +72,11 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             {
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).ToSheetData().GetRow(1).Cells;
+                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).GetRow(1).Cells;
                 var workflow = new SingleFilterActivity<ICellData>(SutFilter);
                 var results = workflow.Execute(SutHeaders);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
-                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault().CellValue), "No results from filter service.");
+                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault()?.CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -98,11 +98,11 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             {
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).ToSheetData().GetRow(1).Cells;
+                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).GetRow(1).Cells;
                 var workflow = new SingleFilterActivity<ICellData>(SutFilter);
                 var results = workflow.Execute(SutHeaders);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
-                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault().CellValue), "No results from filter service.");
+                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault()?.CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -124,11 +124,11 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             {
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).ToSheetData().GetRow(1).Cells;
+                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).GetRow(1).Cells;
                 var workflow = new SingleFilterActivity<ICellData>(SutFilter);
                 var results = workflow.Execute(SutHeaders);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
-                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault().CellValue), "No results from filter service.");
+                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault()?.CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -151,11 +151,11 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             {
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).ToSheetData().GetRow(1).Cells;
+                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).GetRow(1).Cells;
                 var workflow = new SingleFilterActivity<ICellData>(SutFilter);
                 var results = workflow.Execute(SutHeaders);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
-                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault().CellValue), "No results from filter service.");
+                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault()?.CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -176,11 +176,11 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             {
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).ToSheetData().GetRow(1).Cells;
+                SutHeaders = excelService.GetSheet(itemToAnalyze, 0).GetRow(1).Cells;
                 var workflow = new SingleFilterActivity<ICellData>(SutFilter);
                 var results = workflow.Execute(SutHeaders);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
-                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault().CellValue), "No results from filter service.");
+                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault()?.CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
