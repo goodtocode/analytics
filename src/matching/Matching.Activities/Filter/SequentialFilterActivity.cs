@@ -24,11 +24,13 @@ namespace GoodToCode.Analytics.Matching.Activities
 
         public List<IEnumerable<T>> Execute(IEnumerable<T> listToFilter)
         {
-            Handlers.First().ApplyFilter(listToFilter);
-            
             Results = new List<IEnumerable<T>>();
-            foreach (var filter in Handlers)
-                Results.Add(filter.FilteredList);
+
+            foreach (var handler in Handlers)
+            {
+                handler.ApplyFilter(listToFilter);
+                Results.Add(handler.FilteredList);
+            }
             
             return Results;
         }        
