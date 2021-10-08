@@ -22,7 +22,8 @@ namespace GoodToCode.Analytics.Ingress.Activities
             
             documentName = string.IsNullOrWhiteSpace(documentName) ? $"Analytics-{DateTime.UtcNow:u}" : documentName;
             var wb = service.GetWorkbook(excelStream);
-            foreach (var item in wb.SheetMetadata)
+            if (!wb.Sheets.Any()) throw new ArgumentException("Passed workbook/file does not have any sheets.");
+            foreach (var item in wb.Sheets)
             {
                 var sd = service.GetSheet(excelStream, item.SheetIndex);
                 if (!sd.Rows.Any()) throw new ArgumentException("Passed sheet does not have any rows.");

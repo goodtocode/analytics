@@ -19,7 +19,7 @@ namespace GoodToCode.Analytics.Ingress.Activities
             var returnSheets = new List<ISheetData>();
             var wb = service.GetWorkbook(excelStream);
 
-            foreach (var sheet in wb.SheetMetadata)
+            foreach (var sheet in wb.Sheets)
                 returnSheets.Add(service.GetSheet(excelStream, sheet.SheetIndex));
 
             return returnSheets;
