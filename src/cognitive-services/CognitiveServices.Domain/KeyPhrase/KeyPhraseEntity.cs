@@ -1,4 +1,5 @@
-﻿using GoodToCode.Shared.Blob.Abstractions;
+﻿using GoodToCode.Analytics.Abstractions;
+using GoodToCode.Shared.Blob.Abstractions;
 using System.Text.Json.Serialization;
 
 namespace GoodToCode.Analytics.CognitiveServices.Domain

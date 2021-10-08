@@ -34,7 +34,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
 
         public async Task<LinkedResult> ExtractEntityLinksAsync(string text, string languageIso = "en-US")
         {
-            return null; //return await Task.Run(() => new LinkedResult() { });
+            return await Task.Run(() => new LinkedResult(null) { });
         }
 
         public async Task<KeyPhrases> ExtractKeyPhrasesAsync(string text, string languageIso = "en-US")

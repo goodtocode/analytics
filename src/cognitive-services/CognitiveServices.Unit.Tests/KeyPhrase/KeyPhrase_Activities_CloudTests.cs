@@ -1,8 +1,8 @@
-﻿using GoodToCode.Analytics.CognitiveServices.Activities;
-using GoodToCode.Analytics.CognitiveServices.Domain;
+﻿using GoodToCode.Analytics.Abstractions;
+using GoodToCode.Analytics.CognitiveServices.Activities;
+using GoodToCode.Shared.Blob.Excel;
 using GoodToCode.Shared.TextAnalytics.Abstractions;
 using GoodToCode.Shared.TextAnalytics.CognitiveServices;
-using GoodToCode.Shared.Blob.Excel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;

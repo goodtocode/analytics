@@ -1,6 +1,5 @@
-﻿using GoodToCode.Analytics.CognitiveServices.Activities;
-using GoodToCode.Analytics.CognitiveServices.Domain;
-using GoodToCode.Shared.TextAnalytics.Abstractions;
+﻿using GoodToCode.Analytics.Abstractions;
+using GoodToCode.Analytics.CognitiveServices.Activities;
 using GoodToCode.Shared.Blob.Excel;
 using GoodToCode.Shared.Persistence.StorageTables;
 using Microsoft.Extensions.Configuration;
@@ -22,10 +21,9 @@ namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
         private readonly IConfiguration configuration;
         private readonly ILogger<KeyPhrase_Analyze_FakeTests> logItem;
         private readonly StorageTablesServiceConfiguration configStorage;
-        private readonly CognitiveServiceConfiguration configText;
-        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Sheet600.xlsx"; } }
-        private int sheetToTransform = 0;
-        private int colToTransform = 2;
+        private static string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Sheet600.xlsx"; } }
+        private readonly int sheetToTransform = 0;
+        private readonly int colToTransform = 2;
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
@@ -38,9 +36,6 @@ namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
             configStorage = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
                 $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-KeyPhrase");
-            configText = new CognitiveServiceConfiguration(
-                configuration[AppConfigurationKeys.CognitiveServicesKeyCredential],
-                configuration[AppConfigurationKeys.CognitiveServicesEndpoint]);
         }
 
         [TestMethod]

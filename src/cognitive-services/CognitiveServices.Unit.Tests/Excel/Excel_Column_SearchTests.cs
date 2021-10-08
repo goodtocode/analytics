@@ -1,9 +1,6 @@
-﻿using GoodToCode.Analytics.CognitiveServices.Activities;
-using GoodToCode.Analytics.CognitiveServices.Domain;
-using GoodToCode.Shared.TextAnalytics.Abstractions;
+﻿using GoodToCode.Analytics.Abstractions;
+using GoodToCode.Analytics.CognitiveServices.Activities;
 using GoodToCode.Shared.Blob.Excel;
-using GoodToCode.Shared.Persistence.StorageTables;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -20,7 +17,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
     public class Excel_Column_SearchTests
     {
         private readonly ILogger<Excel_Column_SearchTests> logItem;
-        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
+        private static string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }

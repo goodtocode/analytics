@@ -1,6 +1,6 @@
 ﻿using Azure.Data.Tables;
+using GoodToCode.Analytics.Abstractions;
 using GoodToCode.Analytics.CognitiveServices.Activities;
-using GoodToCode.Analytics.CognitiveServices.Domain;
 using GoodToCode.Shared.Blob.Excel;
 using GoodToCode.Shared.Persistence.StorageTables;
 using Microsoft.Extensions.Configuration;
@@ -21,8 +21,8 @@ namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
         private readonly IConfiguration configuration;
         private readonly ILogger<RowEntity_Persist_CloudTests> log;
         private readonly StorageTablesServiceConfiguration configStorage;
-        private ExcelService serviceExcel;
-        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
+        private readonly ExcelService serviceExcel;
+        private static string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public List<TableEntity> SutReturn { get; private set; } = new List<TableEntity>();
@@ -49,8 +49,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutXlsxFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
 
-                var sheet = serviceExcel.GetWorkbook(itemToAnalyze).GetSheetAt(0);
-                var sd = sheet.ToSheetData();
+                var sd = serviceExcel.GetSheet(itemToAnalyze, 0);
                 foreach (var row in sd.Rows)
                 {
                     SutReturn.Add(await new RowEntityPersistActivity(configStorage).ExecuteAsync(new RowEntity(row.Cells.FirstOrDefault())));

@@ -8,7 +8,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Activities
 {
     public class KeyPhrasePersistActivity
     {
-        private IStorageTablesService<KeyPhraseEntity> servicePersist;
+        private readonly IStorageTablesService<KeyPhraseEntity> servicePersist;
 
         public KeyPhrasePersistActivity(IStorageTablesServiceConfiguration config)
         {

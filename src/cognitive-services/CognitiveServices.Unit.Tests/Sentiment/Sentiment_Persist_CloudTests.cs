@@ -1,9 +1,9 @@
-﻿using GoodToCode.Analytics.CognitiveServices.Activities;
-using GoodToCode.Analytics.CognitiveServices.Domain;
-using GoodToCode.Shared.TextAnalytics.Abstractions;
-using GoodToCode.Shared.TextAnalytics.CognitiveServices;
+﻿using GoodToCode.Analytics.Abstractions;
+using GoodToCode.Analytics.CognitiveServices.Activities;
 using GoodToCode.Shared.Blob.Excel;
 using GoodToCode.Shared.Persistence.StorageTables;
+using GoodToCode.Shared.TextAnalytics.Abstractions;
+using GoodToCode.Shared.TextAnalytics.CognitiveServices;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -24,10 +24,9 @@ namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
         private readonly ILogger<Sentiment_Persist_CloudTests> logItem;
         private readonly StorageTablesServiceConfiguration configStorage;
         private readonly CognitiveServiceConfiguration configText;
-        private readonly IExcelService excelService;
-        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
-        private int sheetToTransform = 0;
-        private int colToTransform = 3;
+        private static string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
+        private readonly int sheetToTransform = 0;
+        private readonly int colToTransform = 3;
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
@@ -42,7 +41,6 @@ namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
             configText = new CognitiveServiceConfiguration(
                 configuration[AppConfigurationKeys.CognitiveServicesKeyCredential],
                 configuration[AppConfigurationKeys.CognitiveServicesEndpoint]);
-            excelService = new ExcelService();
         }
 
         [TestMethod]

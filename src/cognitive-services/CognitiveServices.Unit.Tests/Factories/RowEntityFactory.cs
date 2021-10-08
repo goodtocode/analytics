@@ -1,4 +1,4 @@
-﻿using GoodToCode.Analytics.CognitiveServices.Domain;
+﻿using GoodToCode.Analytics.Abstractions;
 using GoodToCode.Shared.Blob.Abstractions;
 using System;
 

@@ -1,21 +1,18 @@
 ﻿using GoodToCode.Analytics.CognitiveServices.Domain;
-using GoodToCode.Shared.TextAnalytics.CognitiveServices;
 using GoodToCode.Shared.Blob.Abstractions;
 using GoodToCode.Shared.Blob.Excel;
-using System;
+using GoodToCode.Shared.TextAnalytics.CognitiveServices;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace GoodToCode.Analytics.CognitiveServices.Activities
 {
     public class SentimentAnalyzeActivity
     {
-        private ITextAnalyzerService serviceAnalyzer;
-        private IExcelService serviceExcel;
+        private readonly ITextAnalyzerService serviceAnalyzer;
+        private readonly IExcelService serviceExcel;
 
         public SentimentAnalyzeActivity(IExcelService serviceExcelReader, ITextAnalyzerService serviceTextAnalyzer)
         {
@@ -24,21 +21,19 @@ namespace GoodToCode.Analytics.CognitiveServices.Activities
         }
 
         private const int characterLimit = 5120;
-        private const int kBLimit = 1024;
-        private const int maxDocsLanguage = 1000;
-        private const int maxDocsSentiment = 10;
-        private const int maxDocsOpinion = 10;
-        private const int maxDocsKeyPhrase = 10;
-        private const int maxDocsNamedEntity = 5;
-        private const int maxDocsEntityLinks = 5;
-        private const int maxDocsHealthcare = 10;
-
-        private const int characterLimitAnalyzeEndpoint = 125000;
-        private const int maxDocsAnalyzeEndpoint = 25;
-        private string languageIso = "en-US";
+        //private const int kBLimit = 1024;
+        //private const int maxDocsLanguage = 1000;
+        //private const int maxDocsSentiment = 10;
+        //private const int maxDocsOpinion = 10;
+        //private const int maxDocsKeyPhrase = 10;
+        //private const int maxDocsNamedEntity = 5;
+        //private const int maxDocsEntityLinks = 5;
+        //private const int maxDocsHealthcare = 10;
+        //private const int characterLimitAnalyzeEndpoint = 125000;
+        //private const int maxDocsAnalyzeEndpoint = 25;
+        private readonly string languageIso = "en-US";
 
         /// <summary>
-
         /// Maximum size of entire request	1 MB. Also applies to Text Analytics for health.
         /// Max Documents Per Request
         ///     Language Detection	1000
@@ -73,9 +68,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Activities
         {
 
             var returnValue = new List<SentimentEntity>();
-            var sheet = serviceExcel.GetWorkbook(excelStream).GetSheetAt(sheetToAnalyze);
-            var sd = sheet.ToSheetData();
-            var cellsToAnalyze = sd.GetColumn(columnToAnalyze);
+            var cellsToAnalyze = serviceExcel.GetColumn(excelStream, sheetToAnalyze, columnToAnalyze);
             foreach (var cell in cellsToAnalyze.Where(c => string.IsNullOrEmpty(c.CellValue) == false))
                 returnValue.AddRange(await new SentimentAnalyzeActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(cell));
 

@@ -2,7 +2,6 @@
 using GoodToCode.Shared.Blob.Excel;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace GoodToCode.Analytics.CognitiveServices.Activities
 {
@@ -17,10 +16,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Activities
 
         public  IEnumerable<ICellData> Execute(Stream excelStream, int sheetToAnalyze, int columnToAnalyze)
         {
-            var sheet = service.GetWorkbook(excelStream).GetSheetAt(sheetToAnalyze);
-            var sd = sheet.ToSheetData();
-            
-            return sd.GetColumn(columnToAnalyze);
+            return service.GetColumn(excelStream, sheetToAnalyze, columnToAnalyze);
         }
     }
 }

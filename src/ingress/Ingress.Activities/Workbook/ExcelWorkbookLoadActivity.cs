@@ -14,15 +14,10 @@ namespace GoodToCode.Analytics.Ingress.Activities
             service = serviceExcel;
         }
 
-        public IEnumerable<ISheetData> Execute(Stream excelStream)
+        public IEnumerable<ISheetData> Execute(Stream excelStream, string documentName)
         {
-            var returnSheets = new List<ISheetData>();
-            var wb = service.GetWorkbook(excelStream);
-
-            foreach (var sheet in wb.Sheets)
-                returnSheets.Add(service.GetSheet(excelStream, sheet.SheetIndex));
-
-            return returnSheets;
+            var wb = service.GetWorkbook(excelStream, documentName);
+            return wb.Sheets;
         }
     }
 }

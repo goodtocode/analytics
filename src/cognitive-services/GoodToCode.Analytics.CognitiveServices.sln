@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveServices.Domain", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveServices.Unit.Tests", "CognitiveServices.Unit.Tests\CognitiveServices.Unit.Tests.csproj", "{370A86C0-5005-456B-ADA8-80418446D22B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Analytics.Abstractions", "..\abstractions\Analytics.Abstractions\Analytics.Abstractions.csproj", "{91C9DA95-BB14-441F-B50E-947035953B1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{370A86C0-5005-456B-ADA8-80418446D22B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{370A86C0-5005-456B-ADA8-80418446D22B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{370A86C0-5005-456B-ADA8-80418446D22B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91C9DA95-BB14-441F-B50E-947035953B1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91C9DA95-BB14-441F-B50E-947035953B1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91C9DA95-BB14-441F-B50E-947035953B1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91C9DA95-BB14-441F-B50E-947035953B1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

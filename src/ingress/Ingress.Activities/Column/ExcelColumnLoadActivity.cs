@@ -2,6 +2,7 @@
 using GoodToCode.Shared.Blob.Excel;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace GoodToCode.Analytics.Ingress.Activities
 {
@@ -16,8 +17,7 @@ namespace GoodToCode.Analytics.Ingress.Activities
 
         public  IEnumerable<ICellData> Execute(Stream excelStream, int sheetToAnalyze, int columnToAnalyze)
         {
-            var sd = service.GetSheet(excelStream, sheetToAnalyze);            
-            return sd.GetColumn(columnToAnalyze);
+            return service.GetColumn(excelStream, sheetToAnalyze, columnToAnalyze);
         }
     }
 }

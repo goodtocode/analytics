@@ -1,7 +1,7 @@
 ﻿using GoodToCode.Analytics.CognitiveServices.Domain;
-using GoodToCode.Shared.TextAnalytics.CognitiveServices;
 using GoodToCode.Shared.Blob.Abstractions;
 using GoodToCode.Shared.Blob.Excel;
+using GoodToCode.Shared.TextAnalytics.CognitiveServices;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,9 +11,9 @@ namespace GoodToCode.Analytics.CognitiveServices.Activities
 {
     public class NamedEntityExtractActivity
     {
-        private ITextAnalyzerService serviceAnalyzer;
-        private IExcelService serviceExcel;
-        private string languageIso = "en-US";
+        private readonly ITextAnalyzerService serviceAnalyzer;
+        private readonly IExcelService serviceExcel;
+        private readonly string languageIso = "en-US";
 
         public NamedEntityExtractActivity(IExcelService serviceExcelReader, ITextAnalyzerService serviceTextAnalyzer)
         {
@@ -24,9 +24,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Activities
         public async Task<IEnumerable<NamedEntity>> ExecuteAsync(Stream excelStream, int sheetToAnalyze, int columnToAnalyze)
         {
             var returnValue = new List<NamedEntity>();
-            var sheet = serviceExcel.GetWorkbook(excelStream).GetSheetAt(sheetToAnalyze);
-            var sd = sheet.ToSheetData();
-            var cellsToAnalyze = sd.GetColumn(columnToAnalyze);
+            var cellsToAnalyze = serviceExcel.GetColumn(excelStream, sheetToAnalyze, columnToAnalyze);
             foreach (var cell in cellsToAnalyze.Where(c => string.IsNullOrEmpty(c.CellValue) == false))
                 returnValue.AddRange(await new NamedEntityExtractActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(cell));
 

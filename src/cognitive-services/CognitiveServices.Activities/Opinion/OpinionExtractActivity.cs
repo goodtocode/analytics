@@ -11,9 +11,9 @@ namespace GoodToCode.Analytics.CognitiveServices.Activities
 {
     public class OpinionExtractActivity
     {
-        private ITextAnalyzerService serviceAnalyzer;
-        private IExcelService serviceExcel;
-        private string languageIso = "en-US";
+        private readonly ITextAnalyzerService serviceAnalyzer;
+        private readonly IExcelService serviceExcel;
+        private readonly string languageIso = "en-US";
 
         public OpinionExtractActivity(IExcelService serviceExcelReader, ITextAnalyzerService serviceTextAnalyzer)
         {
@@ -24,10 +24,8 @@ namespace GoodToCode.Analytics.CognitiveServices.Activities
         public async Task<IEnumerable<TextOpinions>> ExecuteAsync(Stream excelStream, int sheetToAnalyze, int columnToAnalyze)
         {
             var returnValue = new List<TextOpinions>();
-            
-            var sheet = serviceExcel.GetWorkbook(excelStream).GetSheetAt(sheetToAnalyze);
-            var sd = sheet.ToSheetData();
-            var cellsToAnalyze = sd.GetColumn(columnToAnalyze);
+
+            var cellsToAnalyze = serviceExcel.GetColumn(excelStream, sheetToAnalyze, columnToAnalyze);
             returnValue.AddRange(await new OpinionExtractActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(cellsToAnalyze));
 
             return returnValue;

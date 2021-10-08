@@ -15,7 +15,8 @@ namespace GoodToCode.Analytics.Ingress.Activities
 
         public ISheetData Execute(Stream excelStream, int sheetToAnalyze)
         {
-            return service.GetSheet(excelStream, sheetToAnalyze);
+            var sheet = service.GetSheet(excelStream, sheetToAnalyze);
+            return sheet;
         }
     }
 }

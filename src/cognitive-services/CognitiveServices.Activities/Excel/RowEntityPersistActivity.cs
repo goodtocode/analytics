@@ -1,5 +1,5 @@
 ﻿using Azure.Data.Tables;
-using GoodToCode.Analytics.CognitiveServices.Domain;
+using GoodToCode.Analytics.Abstractions;
 using GoodToCode.Shared.Persistence.StorageTables;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,7 +8,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Activities
 {
     public class RowEntityPersistActivity
     {
-        private IStorageTablesService<RowEntity> servicePersist;
+        private readonly IStorageTablesService<RowEntity> servicePersist;
 
         public RowEntityPersistActivity(IStorageTablesServiceConfiguration config)
         {
