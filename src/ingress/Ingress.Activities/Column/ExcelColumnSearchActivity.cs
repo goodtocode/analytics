@@ -22,9 +22,9 @@ namespace GoodToCode.Analytics.Ingress.Activities
             
             documentName = string.IsNullOrWhiteSpace(documentName) ? $"Analytics-{DateTime.UtcNow:u}" : documentName;
             var wb = service.GetWorkbook(excelStream);
-            foreach (var item in wb)
+            foreach (var item in wb.SheetMetadata)
             {
-                var sd = item.ToSheetData(documentName);
+                var sd = service.GetSheet(excelStream, item.SheetIndex);
                 if (!sd.Rows.Any()) throw new ArgumentException("Passed sheet does not have any rows.");
                 var header = sd.GetRow(1);
                 var foundCells = header.Cells.Where(c => c.ColumnName.Contains(searchString));

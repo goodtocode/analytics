@@ -16,9 +16,7 @@ namespace GoodToCode.Analytics.Ingress.Activities
 
         public  IEnumerable<ICellData> Execute(Stream excelStream, int sheetToAnalyze, int columnToAnalyze)
         {
-            var sheet = service.GetWorkbook(excelStream).GetSheetAt(sheetToAnalyze);
-            var sd = sheet.ToSheetData();
-            
+            var sd = service.GetSheet(excelStream, sheetToAnalyze);            
             return sd.GetColumn(columnToAnalyze);
         }
     }
