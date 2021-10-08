@@ -1,6 +1,5 @@
 ﻿using GoodToCode.Analytics.Ingress.Activities;
 using GoodToCode.Analytics.Ingress.Domain;
-using GoodToCode.Shared.Blob.Excel;
 using GoodToCode.Shared.Persistence.StorageTables;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -21,7 +20,7 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
         private readonly IConfiguration configuration;
         private readonly ILogger<RowEntity_Persist_ActivityTests> logItem;
         private readonly StorageTablesServiceConfiguration configStorage;
-        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
+        private static string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
@@ -44,7 +43,7 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
             { 
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutXlsxFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                var workflow = new RowEntityPersistActivity(configStorage);
+                var workflow = new RowPersistActivity(configStorage);
                 var results = await workflow.ExecuteAsync(RowEntityFactory.CreateRowEntity());
                 Assert.IsTrue(results.Any(), "Failed to persist.");
             }

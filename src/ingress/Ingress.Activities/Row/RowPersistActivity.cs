@@ -8,7 +8,7 @@ namespace GoodToCode.Analytics.Ingress.Activities
 {
     public class RowPersistActivity
     {
-        private IStorageTablesService<RowEntity> servicePersist;
+        private readonly IStorageTablesService<RowEntity> servicePersist;
 
         public RowPersistActivity(IStorageTablesServiceConfiguration config)
         {

@@ -17,7 +17,7 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
     public class Column_Search_ActivityTests
     {
         private readonly ILogger<Column_Search_ActivityTests> logItem;
-        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
+        private static string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }

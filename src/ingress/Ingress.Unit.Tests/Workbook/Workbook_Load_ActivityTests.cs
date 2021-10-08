@@ -17,7 +17,7 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
     public class Workbook_Load_ActivityTests
     {
         private readonly ILogger<Workbook_Load_ActivityTests> logItem;
-        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
+        private static string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
@@ -38,7 +38,7 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutXlsxFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
                 var workflow = new ExcelWorkbookLoadActivity(new ExcelService());
-                var results = workflow.Execute(itemToAnalyze);
+                var results = workflow.Execute(itemToAnalyze, Path.GetFileName(SutXlsxFile));
                 Assert.IsTrue(results.Any(), "No results from Excel service.");
             }
             catch (Exception ex)
