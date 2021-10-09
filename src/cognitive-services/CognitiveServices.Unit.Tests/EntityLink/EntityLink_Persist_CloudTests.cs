@@ -20,9 +20,9 @@
 //        private readonly ILogger<StorageTablesService<RowEntity>> logItem;
 //        private readonly StorageTablesServiceConfiguration configStorage;
 //        private readonly CognitiveServiceConfiguration configText;
-//        private string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
-//        private int sheetToTransform = 0;
-//        private int colToTransform = 3;
+//        private static string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
+//        private readonly int sheetToTransform = 0;
+//        private readonly int colToTransform = 3;
 //        public RowEntity SutRow { get; private set; }
 //        public IEnumerable<RowEntity> SutRows { get; private set; }
 //        public Dictionary<string, StringValues> SutReturn { get; private set; }

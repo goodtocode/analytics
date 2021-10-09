@@ -1,4 +1,5 @@
-﻿using GoodToCode.Shared.TextAnalytics.Abstractions;
+﻿using GoodToCode.Analytics.Abstractions;
+using GoodToCode.Shared.TextAnalytics.Abstractions;
 
 namespace GoodToCode.Analytics.CognitiveServices.Domain
 {

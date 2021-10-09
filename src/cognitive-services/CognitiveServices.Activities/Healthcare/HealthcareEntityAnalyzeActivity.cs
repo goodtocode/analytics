@@ -1,7 +1,7 @@
 ﻿using GoodToCode.Analytics.CognitiveServices.Domain;
-using GoodToCode.Shared.TextAnalytics.CognitiveServices;
 using GoodToCode.Shared.Blob.Abstractions;
 using GoodToCode.Shared.Blob.Excel;
+using GoodToCode.Shared.TextAnalytics.CognitiveServices;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,8 +11,8 @@ namespace GoodToCode.Analytics.CognitiveServices.Activities
 {
     public class HealthcareEntityAnalyzeActivity
     {
-        private ICognitiveServicesService serviceAnalyzer;
-        private IExcelService serviceExcel;
+        private readonly ICognitiveServicesService serviceAnalyzer;
+        private readonly IExcelService serviceExcel;
 
         public HealthcareEntityAnalyzeActivity(IExcelService serviceExcelReader, ICognitiveServicesService serviceCognitiveServices)
         {
@@ -24,9 +24,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Activities
         {
             var returnValue = new List<HealthcareNamedEntity>();            
 
-            var sheet = serviceExcel.GetWorkbook(excelStream).GetSheetAt(sheetToAnalyze);
-            var sd = sheet.ToSheetData();
-            var cellsToAnalyze = sd.GetColumn(columnToAnalyze);
+            var cellsToAnalyze = serviceExcel.GetColumn(excelStream, sheetToAnalyze, columnToAnalyze);
             returnValue.AddRange(await new HealthcareEntityAnalyzeActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(cellsToAnalyze));
 
             return returnValue;

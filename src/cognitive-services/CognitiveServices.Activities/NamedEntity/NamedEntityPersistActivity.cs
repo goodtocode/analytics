@@ -8,7 +8,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Activities
 {
     public class NamedEntityPersistActivity
     {
-        private IStorageTablesService<NamedEntity> servicePersist;
+        private readonly IStorageTablesService<NamedEntity> servicePersist;
 
         public NamedEntityPersistActivity(IStorageTablesServiceConfiguration config)
         {

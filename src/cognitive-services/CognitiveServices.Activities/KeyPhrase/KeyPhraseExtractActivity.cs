@@ -1,9 +1,8 @@
 ﻿using GoodToCode.Analytics.CognitiveServices.Domain;
-using GoodToCode.Shared.TextAnalytics.Abstractions;
-using GoodToCode.Shared.TextAnalytics.CognitiveServices;
 using GoodToCode.Shared.Blob.Abstractions;
 using GoodToCode.Shared.Blob.Excel;
-using System;
+using GoodToCode.Shared.TextAnalytics.Abstractions;
+using GoodToCode.Shared.TextAnalytics.CognitiveServices;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,9 +12,9 @@ namespace GoodToCode.Analytics.CognitiveServices.Activities
 {
     public class KeyPhraseExtractActivity
     {
-        private ITextAnalyzerService serviceAnalyzer;
-        private IExcelService serviceExcel;
-        private string languageIso = "en-US";
+        private readonly ITextAnalyzerService serviceAnalyzer;
+        private readonly IExcelService serviceExcel;
+        private readonly string languageIso = "en-US";
 
         public KeyPhraseExtractActivity(IExcelService serviceExcelReader, ITextAnalyzerService serviceTextAnalyzer)
         {
@@ -27,9 +26,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Activities
         {
             var returnValue = new List<KeyPhraseEntity>();
 
-            var sheet = serviceExcel.GetWorkbook(excelStream).GetSheetAt(sheetToAnalyze);
-            var sd = sheet.ToSheetData();
-            var cellsToAnalyze = sd.GetColumn(columnToAnalyze);
+            var cellsToAnalyze = serviceExcel.GetColumn(excelStream, sheetToAnalyze, columnToAnalyze);
             returnValue.AddRange(await new KeyPhraseExtractActivity(serviceExcel, serviceAnalyzer).ExecuteAsync(cellsToAnalyze));
 
             return returnValue;

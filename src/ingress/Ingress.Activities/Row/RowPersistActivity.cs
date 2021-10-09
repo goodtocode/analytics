@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace GoodToCode.Analytics.Ingress.Activities
 {
-    public class RowEntityPersistActivity
+    public class RowPersistActivity
     {
-        private IStorageTablesService<RowEntity> servicePersist;
+        private readonly IStorageTablesService<RowEntity> servicePersist;
 
-        public RowEntityPersistActivity(IStorageTablesServiceConfiguration config)
+        public RowPersistActivity(IStorageTablesServiceConfiguration config)
         {
             servicePersist = new StorageTablesService<RowEntity>(config);
         }
