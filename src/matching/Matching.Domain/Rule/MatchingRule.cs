@@ -2,7 +2,7 @@
 
 namespace GoodToCode.Analytics.Matching.Domain
 {
-    public class MatchingRule
+    public class MatchingRule : IMatchingRule
     {
         [JsonInclude]
         public string MatchColumn { get; private set; }
