@@ -17,12 +17,7 @@ namespace GoodToCode.Analytics.Ingress.Activities
 
         public async Task<IEnumerable<TableEntity>> ExecuteAsync(IEnumerable<RowEntity> entities)
         {
-            var returnValue = new List<TableEntity>();
-
-            foreach (var entity in entities)
-                returnValue.Add(await ExecuteAsync(entity));
-
-            return returnValue;
+            return await servicePersist.AddItemsAsync(entities);
         }
 
         public async Task<TableEntity> ExecuteAsync(RowEntity entity)
