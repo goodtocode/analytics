@@ -14,22 +14,22 @@ using System.Threading.Tasks;
 namespace GoodToCode.Analytics.Ingress.Unit.Tests
 {
     [TestClass]
-    public class Column_Load_ActivityTests
+    public class Excel_Workbook_ActivityTests
     {
-        private readonly ILogger<Column_Load_ActivityTests> logItem;
+        private readonly ILogger<Excel_Workbook_ActivityTests> logItem;
         private static string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
 
 
-        public Column_Load_ActivityTests()
+        public Excel_Workbook_ActivityTests()
         {
-            logItem = LoggerFactory.CreateLogger<Column_Load_ActivityTests>();
+            logItem = LoggerFactory.CreateLogger<Excel_Workbook_ActivityTests>();
         }
 
         [TestMethod]
-        public async Task Column_Load_Activity()       
+        public async Task Workbook_Load_Activity()       
         {
             Assert.IsTrue(File.Exists(SutXlsxFile), $"{SutXlsxFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 
@@ -37,9 +37,9 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
             { 
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutXlsxFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                var workflow = new ExcelColumnLoadActivity(new ExcelService());
-                var results = workflow.Execute(itemToAnalyze, 0, 3);
-                Assert.IsTrue(results.Any(), "No results from analytics service.");
+                var workflow = new ExcelWorkbookLoadActivity(new ExcelService());
+                var results = workflow.Execute(itemToAnalyze, Path.GetFileName(SutXlsxFile));
+                Assert.IsTrue(results.Any(), "No results from Excel service.");
             }
             catch (Exception ex)
             {

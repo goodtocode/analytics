@@ -14,18 +14,18 @@ using System.Threading.Tasks;
 namespace GoodToCode.Analytics.Ingress.Unit.Tests
 {
     [TestClass]
-    public class Sheet_Load_ActivityTests
+    public class Excel_Sheet_ActivityTests
     {
-        private readonly ILogger<Sheet_Load_ActivityTests> logItem;
+        private readonly ILogger<Excel_Sheet_ActivityTests> logItem;
         private static string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
 
 
-        public Sheet_Load_ActivityTests()
+        public Excel_Sheet_ActivityTests()
         {
-            logItem = LoggerFactory.CreateLogger<Sheet_Load_ActivityTests>();
+            logItem = LoggerFactory.CreateLogger<Excel_Sheet_ActivityTests>();
         }
 
         [TestMethod]

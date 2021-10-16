@@ -2,7 +2,7 @@
 
 namespace GoodToCode.Analytics.Abstractions
 {
-    public interface IRowEntity : IEntity
+    public interface ICellEntity : IEntity
     {
         string SheetName { get; }
         string ColumnName { get; }

@@ -1,6 +1,6 @@
 ﻿using GoodToCode.Analytics.Ingress.Activities;
 using GoodToCode.Analytics.Ingress.Domain;
-using GoodToCode.Shared.Blob.Excel;
+using GoodToCode.Shared.Blob.Csv;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,32 +14,32 @@ using System.Threading.Tasks;
 namespace GoodToCode.Analytics.Ingress.Unit.Tests
 {
     [TestClass]
-    public class Workbook_Load_ActivityTests
+    public class Csv_Sheet_ActivityTests
     {
-        private readonly ILogger<Workbook_Load_ActivityTests> logItem;
-        private static string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
+        private readonly ILogger<Csv_Sheet_ActivityTests> logItem;
+        private static string SutCsvFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.csv"; } }
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
 
 
-        public Workbook_Load_ActivityTests()
+        public Csv_Sheet_ActivityTests()
         {
-            logItem = LoggerFactory.CreateLogger<Workbook_Load_ActivityTests>();
+            logItem = LoggerFactory.CreateLogger<Csv_Sheet_ActivityTests>();
         }
 
         [TestMethod]
-        public async Task Workbook_Load_Activity()       
+        public async Task Sheet_Load_Activity()       
         {
-            Assert.IsTrue(File.Exists(SutXlsxFile), $"{SutXlsxFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
+            Assert.IsTrue(File.Exists(SutCsvFile), $"{SutCsvFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 
             try
             { 
-                var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutXlsxFile);
+                var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutCsvFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                var workflow = new ExcelWorkbookLoadActivity(new ExcelService());
-                var results = workflow.Execute(itemToAnalyze, Path.GetFileName(SutXlsxFile));
-                Assert.IsTrue(results.Any(), "No results from Excel service.");
+                var workflow = new  CsvSheetLoadActivity(new CsvService());
+                var results = workflow.Execute(itemToAnalyze);
+                Assert.IsTrue(results.Rows.Any(), "No results from Csv service.");
             }
             catch (Exception ex)
             {

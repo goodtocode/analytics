@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace GoodToCode.Analytics.Abstractions
 {
-    public class RowEntity : IRowEntity
+    public class CellEntity : ICellEntity
     {
         [JsonInclude]
         public string PartitionKey { get; private set; }
@@ -19,9 +19,9 @@ namespace GoodToCode.Analytics.Abstractions
         [JsonInclude]
         public string CellValue { get; private set; }
 
-        public RowEntity() { }
+        public CellEntity() { }
 
-        public RowEntity(string rowKey, ICellData cell)
+        public CellEntity(string rowKey, ICellData cell)
         {
             RowKey = rowKey;
             PartitionKey = cell.SheetName;
@@ -31,7 +31,7 @@ namespace GoodToCode.Analytics.Abstractions
             RowIndex = cell.RowIndex;
         }
 
-        public RowEntity(ICellData cell) : this(Guid.NewGuid().ToString(), cell)
+        public CellEntity(ICellData cell) : this(Guid.NewGuid().ToString(), cell)
         {
         }
     }

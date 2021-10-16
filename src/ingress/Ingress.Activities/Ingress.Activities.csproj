@@ -32,11 +32,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GoodToCode.Shared.Blob.Excel" Version="5.21.281.2216" />
-    <PackageReference Include="GoodToCode.Shared.Persistence.StorageTables" Version="5.21.281.2216" />
+    <PackageReference Include="GoodToCode.Shared.Blob.Excel" Version="5.21.289.1901" />
+    <PackageReference Include="GoodToCode.Shared.Persistence.StorageTables" Version="5.21.289.1901" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\abstractions\Analytics.Abstractions\Analytics.Abstractions.csproj" />
     <ProjectReference Include="..\Ingress.Domain\Ingress.Domain.csproj" />
   </ItemGroup>
 
