@@ -1,9 +1,9 @@
 ﻿using GoodToCode.Shared.Blob.Abstractions;
 using GoodToCode.Shared.Persistence.Abstractions;
 
-namespace GoodToCode.Analytics.Ingress.Domain
+namespace GoodToCode.Analytics.Abstractions
 {
-    public interface IRowEntity : ICellData, IEntity
+    public interface IRowEntity : IRowData, IEntity
     {
 
     }

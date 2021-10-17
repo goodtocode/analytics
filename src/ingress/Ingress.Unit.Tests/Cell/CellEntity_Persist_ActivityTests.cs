@@ -15,23 +15,23 @@ using System.Threading.Tasks;
 namespace GoodToCode.Analytics.Ingress.Unit.Tests
 {
     [TestClass]
-    public class RowEntity_Persist_ActivityTests
+    public class CellEntity_Persist_ActivityTests
     {
         private readonly IConfiguration configuration;
-        private readonly ILogger<RowEntity_Persist_ActivityTests> logItem;
+        private readonly ILogger<CellEntity_Persist_ActivityTests> logItem;
         private readonly StorageTablesServiceConfiguration configStorage;
         private static string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         public CellEntity SutRow { get; private set; }
         public IEnumerable<CellEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
 
-        public RowEntity_Persist_ActivityTests()
+        public CellEntity_Persist_ActivityTests()
         {
-            logItem = LoggerFactory.CreateLogger<RowEntity_Persist_ActivityTests>();
+            logItem = LoggerFactory.CreateLogger<CellEntity_Persist_ActivityTests>();
             configuration = new AppConfigurationFactory().Create();
             configStorage = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-RowEntity");
+                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-CellEntity");
         }
 
         [TestMethod]
@@ -43,7 +43,7 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
             { 
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutXlsxFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                var workflow = new RowPersistActivity(configStorage);
+                var workflow = new CellPersistActivity(configStorage);
                 var results = await workflow.ExecuteAsync(CellEntityFactory.CreateCellEntity());
                 Assert.IsTrue(results.Any(), "Failed to persist.");
             }

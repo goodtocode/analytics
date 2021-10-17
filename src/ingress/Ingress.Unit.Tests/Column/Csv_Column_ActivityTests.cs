@@ -1,5 +1,5 @@
 ﻿using GoodToCode.Analytics.Ingress.Activities;
-using GoodToCode.Analytics.Ingress.Domain;
+using GoodToCode.Analytics.Abstractions;
 using GoodToCode.Shared.Blob.Csv;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -18,8 +18,8 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
     {
         private readonly ILogger<Csv_Column_ActivityTests> logItem;
         private static string SutCsvFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.csv"; } }
-        public RowEntity SutRow { get; private set; }
-        public IEnumerable<RowEntity> SutRows { get; private set; }
+        public CellEntity SutRow { get; private set; }
+        public IEnumerable<CellEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
 
 

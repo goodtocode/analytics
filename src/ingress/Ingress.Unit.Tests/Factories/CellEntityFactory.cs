@@ -1,12 +1,12 @@
-﻿using GoodToCode.Analytics.Ingress.Domain;
+﻿using GoodToCode.Analytics.Abstractions;
 using GoodToCode.Shared.Blob.Abstractions;
 using System;
 
 namespace GoodToCode.Analytics.Ingress.Unit.Tests
 {
-    public class RowEntityFactory
+    public class CellEntityFactory
     {
-        public static RowEntity CreateRowEntity()
+        public static CellEntity CreateCellEntity()
         {
             var cell = new CellData()
             {
@@ -19,7 +19,7 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
                 WorkbookName = ""
             };
 
-            var row = new RowEntity(Guid.NewGuid().ToString(), cell);
+            var row = new CellEntity(Guid.NewGuid().ToString(), cell);
             return row;
         }
     }
