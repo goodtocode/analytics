@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GoodToCode.Analytics.Ingress
+namespace GoodToCode.Analytics.Ingress.Unit.Tests
 {
     public static class EnvironmentVariables
     {

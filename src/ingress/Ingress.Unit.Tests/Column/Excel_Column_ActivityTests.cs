@@ -29,7 +29,7 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
         }
 
         [TestMethod]
-        public async Task Column_Load_Activity()       
+        public async Task Excel_Column_Load_Activity()       
         {
             Assert.IsTrue(File.Exists(SutXlsxFile), $"{SutXlsxFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 
@@ -49,7 +49,7 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
         }
 
         [TestMethod]
-        public async Task Column_Search_Activity()
+        public async Task Excel_Column_Search_Activity()
         {
             Assert.IsTrue(File.Exists(SutXlsxFile), $"{SutXlsxFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 

@@ -29,7 +29,7 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
         }
 
         [TestMethod]
-        public async Task Sheet_Load_Activity()       
+        public async Task Csv_Sheet_Load_Activity()       
         {
             Assert.IsTrue(File.Exists(SutCsvFile), $"{SutCsvFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 

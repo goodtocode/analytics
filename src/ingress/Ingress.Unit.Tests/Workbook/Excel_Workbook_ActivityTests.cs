@@ -29,7 +29,7 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
         }
 
         [TestMethod]
-        public async Task Workbook_Load_Activity()       
+        public async Task Excel_Workbook_Load_Activity()       
         {
             Assert.IsTrue(File.Exists(SutXlsxFile), $"{SutXlsxFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 

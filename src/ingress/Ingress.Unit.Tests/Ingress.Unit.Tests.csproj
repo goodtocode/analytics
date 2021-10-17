@@ -6,6 +6,7 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <IsPackable>false</IsPackable>
     <AssemblyName>GoodToCode.Matching.Unit.Tests</AssemblyName>
+    <RootNamespace>GoodToCode.Ingress.Unit.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

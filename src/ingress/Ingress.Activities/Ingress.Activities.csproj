@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>GoodToCode.Analytics.Ingress.Activities</AssemblyName>
-    <RootNamespace>GoodToCode.Analytics.Ingress</RootNamespace>
+    <RootNamespace>GoodToCode.Analytics.Ingress.Activities</RootNamespace>
     <Product>GoodToCode.Analytics.Ingress.Activities</Product>
     <Version>5.20.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

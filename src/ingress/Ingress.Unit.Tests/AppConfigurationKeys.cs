@@ -1,4 +1,4 @@
-﻿namespace GoodToCode.Analytics.Ingress
+﻿namespace GoodToCode.Analytics.Ingress.Unit.Tests
 {
     public struct AppConfigurationKeys
     {

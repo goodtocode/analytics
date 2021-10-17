@@ -22,7 +22,10 @@ namespace GoodToCode.Analytics.Ingress.Activities
         {
             var returnData = new List<TableEntity>();
             foreach (var sheet in entity.Sheets)
-                returnData.Add(await servicePersist.AddItemAsync(sheet.Rows.ToDictionary()));
+            {
+                var rows = sheet.Rows.ToDictionary();
+                returnData.Add(await servicePersist.AddItemAsync(rows));
+            }
 
             return returnData;
         }
