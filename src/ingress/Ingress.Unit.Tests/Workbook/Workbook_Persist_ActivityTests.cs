@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using GoodToCode.Shared.Persistence.Abstractions;
 
 namespace GoodToCode.Analytics.Ingress.Unit.Tests
 {
@@ -35,16 +36,16 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
         }
 
         [TestMethod]
-        public async Task Workbook_Persist_Activity()       
+        public async Task Workbook_Persist_Activity()
         {
             Assert.IsTrue(File.Exists(SutXlsxFile), $"{SutXlsxFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 
             try
-            { 
+            {
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutXlsxFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
                 var workflow = new WorkbookPersistActivity(configStorage);
-                var results = await workflow.ExecuteAsync(WorkbookFactory.CreateWorkbookData());
+                var results = await workflow.ExecuteAsync(WorkbookFactory.CreateWorkbookData(), "Partition1");
                 Assert.IsTrue(results.Any(), "Failed to persist.");
             }
             catch (Exception ex)
