@@ -3,6 +3,7 @@ using GoodToCode.Shared.Blob.Abstractions;
 using System;
 using System.Text.Json.Serialization;
 using GoodToCode.Analytics.Abstractions;
+using System.Collections.Generic;
 
 namespace GoodToCode.Analytics.CognitiveServices.Domain
 {
@@ -19,7 +20,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Domain
 
         public HealthcareNamedEntity() { }
 
-        public HealthcareNamedEntity(ICellData cell, IAnalyticsResult result) : base(Guid.NewGuid().ToString(), cell)
+        public HealthcareNamedEntity(ICellData cell, IAnalyticsResult result) : base(Guid.NewGuid().ToString(), new List<ICellData>() { cell })
         {
             AnalyzedText = result.AnalyzedText;
             Category = result.Category;

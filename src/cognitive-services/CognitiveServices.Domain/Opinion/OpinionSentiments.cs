@@ -3,6 +3,7 @@ using GoodToCode.Shared.Blob.Abstractions;
 using System;
 using System.Text.Json.Serialization;
 using GoodToCode.Analytics.Abstractions;
+using System.Collections.Generic;
 
 namespace GoodToCode.Analytics.CognitiveServices.Domain
 {
@@ -23,7 +24,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Domain
 
         public OpinionSentiments() { }
 
-        public OpinionSentiments(ICellData cell, ISentimentResult result) : base(Guid.NewGuid().ToString(), cell)
+        public OpinionSentiments(ICellData cell, ISentimentResult result) : base(Guid.NewGuid().ToString(), new List<ICellData>() { cell })
         {
             AnalyzedText = result.AnalyzedText;
             Sentiment = result.Sentiment.ToString();

@@ -52,7 +52,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
                 var sd = serviceExcel.GetSheet(itemToAnalyze, 0);
                 foreach (var row in sd.Rows)
                 {
-                    SutReturn.Add(await new RowEntityPersistActivity(configStorage).ExecuteAsync(new RowEntity(row.Cells.FirstOrDefault())));
+                    SutReturn.Add(await new RowEntityPersistActivity(configStorage).ExecuteAsync(new RowEntity(row.Cells)));
                 }    
                 Assert.IsTrue(SutReturn.Any(), "No results from service.");
             }

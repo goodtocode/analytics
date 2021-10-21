@@ -1,5 +1,6 @@
 ﻿using GoodToCode.Shared.Blob.Abstractions;
 using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace GoodToCode.Analytics.Abstractions
