@@ -3,6 +3,7 @@ using GoodToCode.Shared.Blob.Abstractions;
 using System;
 using System.Text.Json.Serialization;
 using GoodToCode.Analytics.Abstractions;
+using System.Collections.Generic;
 
 namespace GoodToCode.Analytics.Matching.Domain
 {
@@ -23,7 +24,7 @@ namespace GoodToCode.Analytics.Matching.Domain
 
         public PatternMatch() { }
 
-        public PatternMatch(ICellData cell, ISentimentResult result) : base(Guid.NewGuid().ToString(), cell)
+        public PatternMatch(ICellData cell, ISentimentResult result) : base(Guid.NewGuid(), cell)
         {
             AnalyzedText = result.AnalyzedText;
             Sentiment = result.Sentiment.ToString();

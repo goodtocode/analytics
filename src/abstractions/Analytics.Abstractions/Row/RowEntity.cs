@@ -24,7 +24,18 @@ namespace GoodToCode.Analytics.Abstractions
         public IEnumerable<ICellData> Cells { get; private set; }
 
         public RowEntity() { }
-
+        public RowEntity(Guid rowKey, ICellData cell) : this(rowKey.ToString(), cell) { }
+        public RowEntity(string rowKey, ICellData cell)
+        {
+            RowKey = rowKey;
+            Cells = new List<ICellData>() { cell };
+            PartitionKey = cell.SheetName;
+            WorkbookName = cell.WorkbookName;
+            SheetIndex = cell.SheetIndex;
+            SheetName = cell.SheetName;
+            RowIndex = cell.RowIndex;
+        }
+        public RowEntity(Guid rowKey, IEnumerable<ICellData> cells) : this(rowKey.ToString(), cells) { }
         public RowEntity(string rowKey, IEnumerable<ICellData> cells)
         {
             RowKey = rowKey;
@@ -45,6 +56,7 @@ namespace GoodToCode.Analytics.Abstractions
         {            
             var rootObj = this.GetType()
                             .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                                .Where(x => x.PropertyType.IsPrimitive || x.PropertyType.IsValueType || x.PropertyType == typeof(Guid) || x.PropertyType == typeof(string))
                             .ToDictionary(prop => prop.Name, prop => (object)prop.GetValue(this, null));
             var cells = Cells.ToDictionary(k => k.ColumnName, v => (object)v.CellValue);
             var returnDict = rootObj.Concat(cells.Where(kvp => !rootObj.ContainsKey(kvp.Key))).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
