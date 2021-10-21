@@ -35,7 +35,7 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
         }
 
         [TestMethod]
-        public async Task Sheet_Persist_Activity()       
+        public async Task Sheet_Persist_Activity()
         {
             Assert.IsTrue(File.Exists(SutXlsxFile), $"{SutXlsxFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 
@@ -44,7 +44,7 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutXlsxFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
                 var workflow = new SheetPersistActivity(configStorage);
-                var results = await workflow.ExecuteAsync(SheetFactory.CreateSheetData());
+                var results = await workflow.ExecuteAsync(SheetFactory.CreateSheetData(), "Partition1");
                 Assert.IsTrue(results.Any(), "Failed to persist.");
             }
             catch (Exception ex)

@@ -1,7 +1,5 @@
 ﻿using Azure.Data.Tables;
-using GoodToCode.Analytics.Abstractions;
 using GoodToCode.Shared.Blob.Abstractions;
-using GoodToCode.Shared.Persistence.Abstractions;
 using GoodToCode.Shared.Persistence.StorageTables;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,26 +8,30 @@ namespace GoodToCode.Analytics.Ingress.Activities
 {
     public class SheetPersistActivity
     {
-        private readonly IStorageTablesService<CellEntity> servicePersist;
+        private readonly RowPersistActivity activityPersist;
 
         public SheetPersistActivity(IStorageTablesServiceConfiguration config)
         {
-            servicePersist = new StorageTablesService<CellEntity>(config);
+            activityPersist = new RowPersistActivity(config);
         }
 
-        public async Task<IEnumerable<TableEntity>> ExecuteAsync(IEnumerable<ISheetData> entities)
+        public async Task<IEnumerable<TableEntity>> ExecuteAsync(IEnumerable<ISheetData> entities, string paritionKey)
         {
             var returnData = new List<TableEntity>();
             foreach(var entity in entities)
-                returnData.Add(await ExecuteAsync(entity));
+                foreach(var row in await ExecuteAsync(entity, paritionKey))
+                    returnData.Add(row);
 
             return returnData;
         }
 
-        public async Task<TableEntity> ExecuteAsync(ISheetData entity)
+        public async Task<IEnumerable<TableEntity>> ExecuteAsync(ISheetData entity, string paritionKey)
         {
+            var returnData = new List<TableEntity>();
+            foreach (var row in entity.Rows)
+                returnData.Add(await activityPersist.ExecuteAsync(row, paritionKey));
 
-            return await servicePersist.AddItemAsync(entity.Rows.ToDictionary());
+            return returnData;
         }
     }
 }

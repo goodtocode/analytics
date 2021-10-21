@@ -44,7 +44,7 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutXlsxFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
                 var workflow = new RowPersistActivity(configStorage);
-                var results = await workflow.ExecuteAsync(CellFactory.CreateCellEntity());
+                var results = await workflow.ExecuteAsync(RowFactory.CreateRowData(), "Partition1");
                 Assert.IsTrue(results.Any(), "Failed to persist.");
             }
             catch (Exception ex)
