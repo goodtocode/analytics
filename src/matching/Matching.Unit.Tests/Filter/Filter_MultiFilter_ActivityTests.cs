@@ -172,7 +172,8 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 
             SutFilters = new List<FilterExpression<ICellData>>() {
-                new  FilterExpression<ICellData>(x => x.ColumnName == "Address" && x.CellValue != "/nursing-excellence/nurse-stories") };
+                new  FilterExpression<ICellData>(x => x.ColumnName == "Address" && x.CellValue != "/nursing-excellence/nurse-stories"),
+                new  FilterExpression<ICellData>(x => x.ColumnName == "Address" && x.CellValue != "/nursing-excellence/chapters")};
 
             try
             {
