@@ -1,7 +1,6 @@
 ﻿using GoodToCode.Analytics.Ingress.Activities;
 using GoodToCode.Analytics.Abstractions;
-using GoodToCode.Shared.Persistence.StorageTables;
-using Microsoft.Extensions.Configuration;
+using GoodToCode.Shared.Blob.Excel;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -15,27 +14,22 @@ using System.Threading.Tasks;
 namespace GoodToCode.Analytics.Ingress.Unit.Tests
 {
     [TestClass]
-    public class RowEntity_Persist_ActivityTests
+    public class Excel_Sheet_ActivityTests
     {
-        private readonly IConfiguration configuration;
-        private readonly ILogger<RowEntity_Persist_ActivityTests> logItem;
-        private readonly StorageTablesServiceConfiguration configStorage;
+        private readonly ILogger<Excel_Sheet_ActivityTests> logItem;
         private static string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         public CellEntity SutRow { get; private set; }
         public IEnumerable<CellEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
 
-        public RowEntity_Persist_ActivityTests()
+
+        public Excel_Sheet_ActivityTests()
         {
-            logItem = LoggerFactory.CreateLogger<RowEntity_Persist_ActivityTests>();
-            configuration = new AppConfigurationFactory().Create();
-            configStorage = new StorageTablesServiceConfiguration(
-                configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-RowEntity");
+            logItem = LoggerFactory.CreateLogger<Excel_Sheet_ActivityTests>();
         }
 
         [TestMethod]
-        public async Task RowEntity_Persist_Activity()       
+        public async Task Excel_Sheet_Load_Activity()       
         {
             Assert.IsTrue(File.Exists(SutXlsxFile), $"{SutXlsxFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 
@@ -43,9 +37,9 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
             { 
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutXlsxFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
-                var workflow = new RowPersistActivity(configStorage);
-                var results = await workflow.ExecuteAsync(RowFactory.CreateRowData(), "Partition1");
-                Assert.IsTrue(results.Any(), "Failed to persist.");
+                var workflow = new  ExcelSheetLoadActivity(new ExcelService());
+                var results = workflow.Execute(itemToAnalyze, 0);
+                Assert.IsTrue(results.Rows.Any(), "No results from Excel service.");
             }
             catch (Exception ex)
             {

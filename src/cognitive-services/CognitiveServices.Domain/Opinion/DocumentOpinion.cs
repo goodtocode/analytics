@@ -2,6 +2,7 @@
 using GoodToCode.Shared.Blob.Abstractions;
 using System.Text.Json.Serialization;
 using GoodToCode.Analytics.Abstractions;
+using System.Collections.Generic;
 
 namespace GoodToCode.Analytics.CognitiveServices.Domain
 {
@@ -16,7 +17,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Domain
 
         public DocumentOpinion() { }
 
-        public DocumentOpinion(ICellData cell, IConfidence result) : base(cell)
+        public DocumentOpinion(ICellData cell, IConfidence result) : base(new List<ICellData>() { cell })
         {
             Negative = result.Negative;
             Neutral = result.Neutral;

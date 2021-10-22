@@ -1,5 +1,5 @@
 ﻿using GoodToCode.Analytics.Ingress.Activities;
-using GoodToCode.Analytics.Ingress.Domain;
+using GoodToCode.Analytics.Abstractions;
 using GoodToCode.Shared.Blob.Excel;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -14,22 +14,22 @@ using System.Threading.Tasks;
 namespace GoodToCode.Analytics.Ingress.Unit.Tests
 {
     [TestClass]
-    public class Workbook_Load_ActivityTests
+    public class Excel_Workbook_ActivityTests
     {
-        private readonly ILogger<Workbook_Load_ActivityTests> logItem;
+        private readonly ILogger<Excel_Workbook_ActivityTests> logItem;
         private static string SutXlsxFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
-        public RowEntity SutRow { get; private set; }
-        public IEnumerable<RowEntity> SutRows { get; private set; }
+        public CellEntity SutRow { get; private set; }
+        public IEnumerable<CellEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
 
 
-        public Workbook_Load_ActivityTests()
+        public Excel_Workbook_ActivityTests()
         {
-            logItem = LoggerFactory.CreateLogger<Workbook_Load_ActivityTests>();
+            logItem = LoggerFactory.CreateLogger<Excel_Workbook_ActivityTests>();
         }
 
         [TestMethod]
-        public async Task Workbook_Load_Activity()       
+        public async Task Excel_Workbook_Load_Activity()       
         {
             Assert.IsTrue(File.Exists(SutXlsxFile), $"{SutXlsxFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 

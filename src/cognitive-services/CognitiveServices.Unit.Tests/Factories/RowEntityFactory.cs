@@ -1,6 +1,7 @@
 ﻿using GoodToCode.Analytics.Abstractions;
 using GoodToCode.Shared.Blob.Abstractions;
 using System;
+using System.Collections.Generic;
 
 namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
 {
@@ -19,7 +20,7 @@ namespace GoodToCode.Analytics.CognitiveServices.Unit.Tests
                 WorkbookName = ""
             };
 
-            var row = new RowEntity(Guid.NewGuid().ToString(), cell);
+            var row = new RowEntity(Guid.NewGuid().ToString(), new List<ICellData>() { cell });
             return row;
         }
     }

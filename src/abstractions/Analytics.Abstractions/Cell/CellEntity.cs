@@ -1,17 +1,21 @@
 ﻿using GoodToCode.Shared.Blob.Abstractions;
 using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace GoodToCode.Analytics.Abstractions
 {
-    public class RowEntity : IRowEntity
+    public class CellEntity : ICellEntity
     {
         [JsonInclude]
         public string PartitionKey { get; private set; }
         [JsonInclude]
         public string RowKey { get; private set; }
+        public string WorkbookName { get; private set; }
         [JsonInclude]
         public string SheetName { get; private set; }
+        public int SheetIndex { get; private set; }
+        public int ColumnIndex { get; private set; }
         [JsonInclude]
         public string ColumnName { get; private set; }
         [JsonInclude]
@@ -19,19 +23,22 @@ namespace GoodToCode.Analytics.Abstractions
         [JsonInclude]
         public string CellValue { get; private set; }
 
-        public RowEntity() { }
+        public CellEntity() { }
 
-        public RowEntity(string rowKey, ICellData cell)
-        {
-            RowKey = rowKey;
+        public CellEntity(string rowKey, ICellData cell)
+        {            
             PartitionKey = cell.SheetName;
-            CellValue = cell.CellValue;
+            RowKey = rowKey;
+            WorkbookName = cell.WorkbookName;
+            SheetIndex = cell.SheetIndex;
             SheetName = cell.SheetName;
-            ColumnName = cell.ColumnName;
             RowIndex = cell.RowIndex;
+            ColumnIndex = cell.ColumnIndex;
+            ColumnName = cell.ColumnName;
+            CellValue = cell.CellValue;
         }
 
-        public RowEntity(ICellData cell) : this(Guid.NewGuid().ToString(), cell)
+        public CellEntity(ICellData cell) : this(Guid.NewGuid().ToString(), cell)
         {
         }
     }
