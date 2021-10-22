@@ -4,22 +4,24 @@ using System.Linq;
 
 namespace GoodToCode.Analytics.Matching.Domain
 {
-    public class SingleFilterHandler<T> : IFilterHandler<T>
+    public class MultiFilterHandler<T> : IFilterHandler<T>
     {
-        public SingleFilterHandler<T> NextHandler;
-        public IFilterExpression<T> Filter { get; private set; }
+        public MultiFilterHandler<T> NextHandler;
+        public IEnumerable<IFilterExpression<T>> Filters { get; private set; }
 
         public IEnumerable<T> FilteredList { get; private set; }
 
-        public SingleFilterHandler(IFilterExpression<T> filter) { Filter = filter; }
+        public MultiFilterHandler(IEnumerable<IFilterExpression<T>> filterList) { Filters = filterList; }
 
         public IEnumerable<T> ApplyFilter(IEnumerable<T> filterableList)
         {
             if (!filterableList.Any())
                 throw new ArgumentException("filterableList must not be empty.", filterableList.GetType().Name);
 
-            FilteredList = filterableList.Where(Filter.Expression.Compile());
+            foreach (var filter in Filters)
+                filterableList.Where(filter.Expression.Compile());
 
+            FilteredList = filterableList.ToList();
             return FilteredList;
         }
     }
