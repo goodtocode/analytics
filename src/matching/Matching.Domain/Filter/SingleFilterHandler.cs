@@ -15,7 +15,11 @@ namespace GoodToCode.Analytics.Matching.Domain
 
         public IEnumerable<T> ApplyFilter(IEnumerable<T> filterableList)
         {
+            if (!filterableList.Any())
+                throw new ArgumentException("filterableList must not be empty.", filterableList.GetType().Name);
+
             FilteredList = filterableList.Where(Filter.Expression.Compile());
+
             return FilteredList;
         }
     }
