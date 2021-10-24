@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using GoodToCode.Analytics.Abstractions;
+using System.Text.Json.Serialization;
 
 namespace GoodToCode.Analytics.Matching.Domain
 {

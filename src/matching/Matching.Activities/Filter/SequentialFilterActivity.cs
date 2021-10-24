@@ -1,4 +1,5 @@
-﻿using GoodToCode.Analytics.Matching.Domain;
+﻿using GoodToCode.Analytics.Abstractions;
+using GoodToCode.Analytics.Matching.Domain;
 using System.Collections.Generic;
 
 namespace GoodToCode.Analytics.Matching.Activities

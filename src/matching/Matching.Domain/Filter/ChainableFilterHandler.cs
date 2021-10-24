@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GoodToCode.Analytics.Abstractions;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GoodToCode.Analytics.Matching.Domain
