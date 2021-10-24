@@ -50,7 +50,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var workflow = new SingleFilterActivity<ICellData>(SutFilter);
                 var results = workflow.Execute(SutSheet);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
-                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault()?.CellValue), "No results from filter service.");
+                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault()?.CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -75,7 +75,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var workflow = new SingleFilterActivity<ICellData>(SutFilter);
                 var results = workflow.Execute(SutSheet);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
-                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault()?.CellValue), "No results from filter service.");
+                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault()?.CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -100,7 +100,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var workflow = new SingleFilterActivity<ICellData>(SutFilter);
                 var results = workflow.Execute(SutSheet);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
-                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault()?.CellValue), "No results from filter service.");
+                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault()?.CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -125,7 +125,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var workflow = new SingleFilterActivity<ICellData>(SutFilter);
                 var results = workflow.Execute(SutSheet);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
-                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault()?.CellValue), "No results from filter service.");
+                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault()?.CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -151,7 +151,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var workflow = new SingleFilterActivity<ICellData>(SutFilter);
                 var results = workflow.Execute(SutSheet);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
-                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault()?.CellValue), "No results from filter service.");
+                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault()?.CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -176,7 +176,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var workflow = new SingleFilterActivity<ICellData>(SutFilter);
                 var results = workflow.Execute(SutSheet);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
-                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault().FirstOrDefault()?.CellValue), "No results from filter service.");
+                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault()?.CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
