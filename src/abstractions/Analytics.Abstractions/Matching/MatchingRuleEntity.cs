@@ -39,19 +39,4 @@ namespace GoodToCode.Analytics.Abstractions
             MatchResult = cells.Where(c => c.ColumnName == Columns.MatchResult).FirstOrDefault().CellValue;
         }
     }
-
-    public static class MatchingRuleExtensions
-    {
-        public static IEnumerable<MatchingRuleEntity> ToMatchingRule(this ISheetData sheet)
-        {
-            IEnumerable<MatchingRuleEntity> returnData;
-
-            if (!sheet.Rows.Any())
-                throw new ArgumentException("Argument list is empty.", sheet.Rows.GetType().Name);
-
-            returnData = sheet.Rows.Select(r => new MatchingRuleEntity(r)).ToList();
-
-            return returnData;
-        }
-    }
 }
