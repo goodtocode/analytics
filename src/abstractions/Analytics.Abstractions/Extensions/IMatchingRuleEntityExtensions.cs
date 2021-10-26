@@ -1,4 +1,6 @@
-﻿namespace GoodToCode.Analytics.Abstractions
+﻿using System.Collections.Generic;
+
+namespace GoodToCode.Analytics.Abstractions
 {
     public static class IMatchingRuleEntityExtensions
     {
@@ -17,6 +19,14 @@
                 MatchType.NotEquals => new FilterExpression<T>(x => x.GetType().GetProperty(rule.MatchColumn).GetValue(x, null).ToString() != rule.MatchValue),
                 _ => new FilterExpression<T>(x => x.GetType().GetProperty(rule.MatchColumn).GetValue(x, null).ToString().Contains(rule.MatchValue)),
             };
+        }
+
+        public static IEnumerable<FilterExpression<T>> ToFilterExpression<T>(this IEnumerable<MatchingRuleEntity> rules)
+        {
+            var returnData = new List<FilterExpression<T>>();
+            foreach(var rule in rules)
+                returnData.Add(rule.ToFilterExpression<T>());
+            return returnData;
         }
     }
 }

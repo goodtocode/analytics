@@ -61,13 +61,12 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 Stream dataSourceStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile));
                 SutDataSource = excelService.GetSheet(dataSourceStream, 0);
                 var dataSourceRecords = new List<DataSourceEntity>();
-                foreach (IRowEntity row in SutDataSource.Rows)
+                foreach (var row in SutDataSource.Rows)
                     dataSourceRecords.Add(new DataSourceEntity(row));                
                 var workflowLink = new LinkDataSourceToRuleActivity<DataSourceEntity>();
-                var linkResults = workflowLink.Execute(filterRules, dataSource);
-
-                Assert.IsTrue(results.Any(), "No results from filter service.");
-                Assert.IsTrue(!string.IsNullOrWhiteSpace(results.FirstOrDefault()?.CellValue), "No results from filter service.");
+                var linkResults = workflowLink.Execute(matchingEntity.ToFilterExpression<DataSourceEntity>(), dataSourceRecords);
+                Assert.IsTrue(linkResults.MatchedData.Any(), "No results from filter service.");
+                Assert.IsTrue(linkResults.MatchedRules.Any(), "No results from filter service.");
             }
             catch (Exception ex)
             {
