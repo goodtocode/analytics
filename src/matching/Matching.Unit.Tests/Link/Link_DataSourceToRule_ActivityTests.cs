@@ -48,9 +48,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         public async Task Link_DataSourceToRule_Activity()
         {
             Assert.IsTrue(File.Exists(SutOpinionFile), $"{SutOpinionFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
-
-            SutFilter = new FilterExpression<ICellData>(x => x.ColumnIndex > -1);
-
+          
             try
             {
                 // Load rules
