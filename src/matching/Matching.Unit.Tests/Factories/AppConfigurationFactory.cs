@@ -4,10 +4,9 @@ using System;
 
 namespace GoodToCode.Analytics.Matching.Unit.Tests
 {
-    public class AppConfigurationFactory
+    public static class AppConfigurationFactory
     {
-        public IConfiguration Configuration { get; private set; }
-        public IConfiguration Create()
+        public static IConfiguration Create()
         {
             var environment = Environment.GetEnvironmentVariable(EnvironmentVariableKeys.EnvironmentAspNetCore) ?? EnvironmentVariableDefaults.Environment;
             var builder = new ConfigurationBuilder();
@@ -22,8 +21,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                         .Select(KeyFilter.Any, LabelFilter.Null)
                         .Select(KeyFilter.Any, environment)
                     );
-            Configuration = builder.Build();
-            return Configuration;
+            return builder.Build();
         }
     }
 }
