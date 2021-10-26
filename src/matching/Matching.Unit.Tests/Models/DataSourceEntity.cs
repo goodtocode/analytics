@@ -37,17 +37,17 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
 
             PartitionKey = cells.FirstOrDefault().SheetName;
             RowKey = Guid.NewGuid().ToString();
-            Address = cells.FirstOrDefault(c => c.ColumnName == "Address").CellValue;
-            ContentType = cells.FirstOrDefault(c => c.ColumnName == "Content Type").CellValue;
-            StatusCode = cells.FirstOrDefault(c => c.ColumnName == "Status Code").CellValue;
-            Status = cells.FirstOrDefault(c => c.ColumnName == "Status").CellValue;
-            Indexability = cells.FirstOrDefault(c => c.ColumnName == "Indexability").CellValue;
-            IndexabilityStatus = cells.FirstOrDefault(c => c.ColumnName == "Indexability Status").CellValue;
-            Title1 = cells.FirstOrDefault(c => c.ColumnName == "Title 1").CellValue;
-            H1_1 = cells.FirstOrDefault(c => c.ColumnName == "H1-1").CellValue;
-            H1_2 = cells.FirstOrDefault(c => c.ColumnName == "H1-2").CellValue;
-            H2_1 = cells.FirstOrDefault(c => c.ColumnName == "H2-1").CellValue;
-            H2_2 = cells.FirstOrDefault(c => c.ColumnName == "H2-2").CellValue;
+            Address = cells.FirstOrDefault(c => c.ColumnName == "Address")?.CellValue;
+            ContentType = cells.FirstOrDefault(c => c.ColumnName == "Content Type")?.CellValue;
+            StatusCode = cells.FirstOrDefault(c => c.ColumnName == "Status Code")?.CellValue;
+            Status = cells.FirstOrDefault(c => c.ColumnName == "Status")?.CellValue;
+            Indexability = cells.FirstOrDefault(c => c.ColumnName == "Indexability")?.CellValue;
+            IndexabilityStatus = cells.FirstOrDefault(c => c.ColumnName == "Indexability Status")?.CellValue;
+            Title1 = cells.FirstOrDefault(c => c.ColumnName == "Title 1")?.CellValue;
+            H1_1 = cells.FirstOrDefault(c => c.ColumnName == "H1-1")?.CellValue;
+            H1_2 = cells.FirstOrDefault(c => c.ColumnName == "H1-2")?.CellValue;
+            H2_1 = cells.FirstOrDefault(c => c.ColumnName == "H2-1")?.CellValue;
+            H2_2 = cells.FirstOrDefault(c => c.ColumnName == "H2-2")?.CellValue;
         }
     }
 }
