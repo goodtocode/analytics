@@ -25,20 +25,16 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         private readonly ExcelService excelService;
         private readonly StorageTablesServiceConfiguration configDestinationTable;
 
-        private static string SutOpinionFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-DataSource-Small.xlsx"; } }
         private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential.xlsx"; } }
-        public RowEntity SutRow { get; private set; }
         public ISheetData SutRules { get; private set; }
         public ISheetData SutDataSource { get; private set; }
-        public FilterExpression<ICellData> SutFilter { get; private set; }
-        public Dictionary<string, StringValues> SutReturn { get; private set; }
 
         public Link_DataSourceToRule_ActivityTests()
         {
-            logItem = LoggerFactory.CreateLogger<Link_DataSourceToRule_ActivityTests>();
-            excelService = ExcelServiceFactory.GetInstance().CreateExcelService();
+            logItem = LoggerFactory.CreateLogger<Link_DataSourceToRule_ActivityTests>();            
             configuration = AppConfigurationFactory.Create();
+            excelService = ExcelServiceFactory.GetInstance().CreateExcelService();
             configDestinationTable = new StorageTablesServiceConfiguration(
                     configuration[AppConfigurationKeys.StorageTablesConnectionString],
                     $"UnitTests-{DateTime.UtcNow:yyyy-MM-dd}-Link");
@@ -47,8 +43,9 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         [TestMethod]
         public async Task Link_DataSourceToRule_Activity()
         {
-            Assert.IsTrue(File.Exists(SutOpinionFile), $"{SutOpinionFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
-          
+            Assert.IsTrue(File.Exists(SutDataSourceFile), $"{SutDataSourceFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
+            Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
+
             try
             {
                 // Load rules
