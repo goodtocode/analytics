@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace GoodToCode.Analytics.Matching.Domain
+namespace GoodToCode.Analytics.Abstractions
 {
     public class FilterExpression<T> : IFilterExpression<T>
     {
