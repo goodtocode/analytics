@@ -20,15 +20,14 @@ namespace GoodToCode.Analytics.Matching.Domain
                 throw new ArgumentException("filterableList must not be empty.", filterableList.GetType().Name);
 
             IEnumerable<T> filteredList = null;
+            IEnumerable<T> finalList = null;
             foreach (var filter in Filters)
             {
-                if (filteredList == null)
-                    filteredList = filterableList;
-
-                filteredList = filteredList.Where(filter.Expression.Compile());
+                filteredList = filteredList == null ? filterableList : finalList;
+                finalList = filteredList.Where(filter.Expression.Compile());
             }
                 
-            FilteredList = filteredList.ToList();
+            FilteredList = filteredList?.ToList() ?? new List<T>();
             return FilteredList;
         }
     }
