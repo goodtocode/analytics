@@ -1,12 +1,10 @@
-﻿using GoodToCode.Analytics.Matching.Domain;
-using GoodToCode.Shared.Blob.Abstractions;
+﻿using GoodToCode.Shared.Blob.Abstractions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GoodToCode.Analytics.Abstractions
 {
-    public class MatchingRuleEntity : IMatchingRuleEntity
+    public class MatchingRuleEntity
     {
         public struct Columns
         {

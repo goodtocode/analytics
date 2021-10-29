@@ -20,7 +20,7 @@ namespace GoodToCode.Analytics.Matching.Domain
                 throw new ArgumentException("filterableList must not be empty.", filterableList.GetType().Name);
 
             FilteredList = filterableList.Where(Filter.Expression.Compile());
-
+            
             return FilteredList;
         }
     }
