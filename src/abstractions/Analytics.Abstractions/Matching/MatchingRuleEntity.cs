@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace GoodToCode.Analytics.Abstractions
 {
-    public class MatchingRuleEntity
+    public class MatchingRuleEntity : IMatchingRuleEntity
     {
         public struct Columns
         {
