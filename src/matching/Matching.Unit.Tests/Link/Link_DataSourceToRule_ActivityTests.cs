@@ -58,10 +58,9 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var dataSourceRecords = new List<DataSourceEntity>();
                 foreach (var row in SutDataSource.Rows)
                     dataSourceRecords.Add(new DataSourceEntity(row));
-                var expressions = matchingEntity.ToFilterExpression<DataSourceEntity>();
-                var linkResults = new LinkDataSourceToRuleActivity<DataSourceEntity>().Execute(expressions, dataSourceRecords);
-                Assert.IsTrue(linkResults.MatchedData.Any(), "No results from filter service.");
-                Assert.IsTrue(linkResults.MatchedRules.Any(), "No results from filter service.");
+                var linkResults = new LinkDataSourceToRuleActivity<DataSourceEntity>().Execute(matchingEntity, dataSourceRecords);
+                Assert.IsTrue(linkResults.Any(), "No results from filter service.");
+                Assert.IsTrue(linkResults.Any(), "No results from filter service.");
             }
             catch (Exception ex)
             {
