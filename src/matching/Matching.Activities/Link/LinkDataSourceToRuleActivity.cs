@@ -2,6 +2,7 @@
 using GoodToCode.Analytics.Matching.Domain;
 using GoodToCode.Shared.Persistence.Abstractions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GoodToCode.Analytics.Matching.Activities
 {
@@ -17,13 +18,18 @@ namespace GoodToCode.Analytics.Matching.Activities
         public IEnumerable<IMatchResultEntity<TDataSource>> Execute(IEnumerable<MatchingRuleEntity> filterRules, IEnumerable<TDataSource> dataSource)
         {
             var currResults = new List<IMatchResultEntity<TDataSource>>();
-            foreach (var rule in filterRules)
-            {
-                var expression = rule.ToFilterExpression<TDataSource>();
-                var workflow = new SingleFilterActivity<TDataSource>(expression);
-                var results = workflow.Execute(dataSource);
+            IEnumerable<TDataSource> results;
+            
+            var ruleGroups = filterRules.GroupBy(r => r.MatchResult);
+            foreach(var group in ruleGroups)
+            {                
+                var expression = group.ToFilterExpression<TDataSource>();
+                if (group.Count() > 1)
+                    results = new MultiFilterActivity<TDataSource>(expression).Execute(dataSource);
+                else 
+                    results = new SingleFilterActivity<TDataSource>(expression.FirstOrDefault()).Execute(dataSource);
                 foreach (var result in results)
-                    currResults.Add(new MatchResultEntity<TDataSource>(rule, result));
+                    currResults.Add(new MatchResultEntity<TDataSource>(group.FirstOrDefault(), result));
             }
 
             Results = currResults;
