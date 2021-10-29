@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace GoodToCode.Analytics.Matching.Activities
 {
-    public class PersistDataSourceMatchesActivity<TDataSource> where TDataSource : class, IEntity, new()
+    public class PersistMatchResultActivity<TDataSource> where TDataSource : class, IEntity, new()
     {
         public IEnumerable<IMatchResultEntity<TDataSource>> Results;
         private readonly StorageTablesServiceConfiguration configDestination;
         private readonly IStorageTablesService<TDataSource> servicePersist;
 
 
-        public PersistDataSourceMatchesActivity(StorageTablesServiceConfiguration destinationTableConfig)
+        public PersistMatchResultActivity(StorageTablesServiceConfiguration destinationTableConfig)
         {
             configDestination = destinationTableConfig;
             servicePersist = new StorageTablesService<TDataSource>(configDestination);
