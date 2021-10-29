@@ -1,5 +1,4 @@
 ﻿using GoodToCode.Shared.Persistence.Abstractions;
-using System.Collections.Generic;
 
 namespace GoodToCode.Analytics.Abstractions
 {
@@ -15,9 +14,18 @@ namespace GoodToCode.Analytics.Abstractions
         public string RowKey { get; }
         public string PartitionKey { get; }
 
-        public MatchResultEntity(MatchingRuleEntity rule, TDataSource data)
+        private MatchResultEntity(MatchingRuleEntity rule)
         {
-            this.Fill(rule);
+            PartitionKey = rule.PartitionKey;
+            RowKey = rule.RowKey;
+            MatchColumn = rule.MatchColumn;
+            MatchResult = rule.MatchResult;
+            MatchType = rule.MatchType;
+            MatchValue = rule.MatchValue;
+        }
+
+        public MatchResultEntity(MatchingRuleEntity rule, TDataSource data) : this(rule)
+        {
             MatchedData = data;
             DataSourceRowKey = data.RowKey;
             DataSourceString = data.ToString();
