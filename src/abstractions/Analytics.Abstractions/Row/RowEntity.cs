@@ -34,8 +34,8 @@ namespace GoodToCode.Analytics.Abstractions
             SheetIndex = cell.SheetIndex;
             SheetName = cell.SheetName;
             RowIndex = cell.RowIndex;
-        }
-        public RowEntity(Guid rowKey, IEnumerable<ICellData> cells) : this(rowKey.ToString(), cells) { }
+        }        
+
         public RowEntity(string rowKey, IEnumerable<ICellData> cells)
         {
             RowKey = rowKey;
@@ -47,6 +47,12 @@ namespace GoodToCode.Analytics.Abstractions
             SheetName = firstCell.SheetName;
             RowIndex = firstCell.RowIndex;
         }
+
+        public RowEntity(string partitionKey, string rowKey, IEnumerable<ICellData> cells) : this(rowKey, cells) 
+        {
+            PartitionKey = partitionKey;
+        }
+
 
         public RowEntity(IEnumerable<ICellData> cells) : this(Guid.NewGuid().ToString(), cells)
         {

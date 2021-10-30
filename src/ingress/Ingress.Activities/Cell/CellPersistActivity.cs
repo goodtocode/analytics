@@ -1,6 +1,7 @@
 ﻿using Azure.Data.Tables;
 using GoodToCode.Analytics.Abstractions;
 using GoodToCode.Shared.Persistence.StorageTables;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -22,6 +23,8 @@ namespace GoodToCode.Analytics.Ingress.Activities
 
         public async Task<TableEntity> ExecuteAsync(CellEntity entity)
         {
+            if (string.IsNullOrWhiteSpace(entity.PartitionKey) || string.IsNullOrWhiteSpace(entity.RowKey))
+                throw new ArgumentException("PartitionKey and RowKey are required.", entity.GetType().Name);
             return await servicePersist.AddItemAsync(entity);
         }
     }
