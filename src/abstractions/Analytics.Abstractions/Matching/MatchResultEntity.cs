@@ -1,4 +1,5 @@
 ﻿using GoodToCode.Shared.Persistence.Abstractions;
+using System;
 using System.Text.Json.Serialization;
 
 namespace GoodToCode.Analytics.Abstractions
@@ -9,6 +10,8 @@ namespace GoodToCode.Analytics.Abstractions
         public string PartitionKey { get; }
         [JsonInclude]
         public string RowKey { get; }
+        [JsonInclude]
+        public string MatchRuleRowKey { get; }
         [JsonInclude]
         public string DataSourceRowKey { get; }
         [JsonInclude]
@@ -23,10 +26,13 @@ namespace GoodToCode.Analytics.Abstractions
         [JsonInclude]
         public string MatchValue { get; }
 
+        public MatchResultEntity() { }
+
         private MatchResultEntity(MatchingRuleEntity rule)
         {
             PartitionKey = rule.PartitionKey;
-            RowKey = rule.RowKey;
+            RowKey = Guid.NewGuid().ToString();
+            MatchRuleRowKey = rule.RowKey;
             MatchColumn = rule.MatchColumn;
             MatchResult = rule.MatchResult;
             MatchType = rule.MatchType;
