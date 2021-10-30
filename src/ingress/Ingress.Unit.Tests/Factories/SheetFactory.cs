@@ -1,6 +1,4 @@
-﻿using GoodToCode.Analytics.Abstractions;
-using GoodToCode.Shared.Blob.Abstractions;
-using System;
+﻿using GoodToCode.Shared.Blob.Abstractions;
 using System.Collections.Generic;
 
 namespace GoodToCode.Analytics.Ingress.Unit.Tests

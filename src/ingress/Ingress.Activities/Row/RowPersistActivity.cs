@@ -25,12 +25,10 @@ namespace GoodToCode.Analytics.Ingress.Activities
             return returnData;
         }
 
-        public async Task<TableEntity> ExecuteAsync(IRowData entity, string paritionKey)
+        public async Task<TableEntity> ExecuteAsync(IRowData row, string paritionKey)
         {
-            var entityDict = entity.ToDictionary();
-            entityDict.Add("PartitionKey", paritionKey);
-            entityDict.Add("RowKey", Guid.NewGuid().ToString());
-            return await servicePersist.AddItemAsync(entityDict);
+            var entity = new RowEntity(paritionKey, Guid.NewGuid().ToString(), row.Cells);
+            return await servicePersist.AddItemAsync(entity);
         }
     }
 }
