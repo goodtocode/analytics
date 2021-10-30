@@ -63,5 +63,10 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             H2_1 = cells.FirstOrDefault(c => c.ColumnName == "H2-1")?.CellValue;
             H2_2 = cells.FirstOrDefault(c => c.ColumnName == "H2-2")?.CellValue;
         }
+
+        public override string ToString()
+        {
+            return Address;
+        }
     }
 }

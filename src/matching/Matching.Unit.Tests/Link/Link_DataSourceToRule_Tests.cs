@@ -88,8 +88,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                     dataSourceRecords.Add(new DataSourceEntity(row));
                 var linkResults = new LinkDataSourceToRuleActivity<DataSourceEntity>().Execute(matchingEntity, dataSourceRecords);
                 var workflowPersist = new PersistMatchResultActivity<DataSourceEntity>(configDestination);
-                var persistResults = await workflowPersist.ExecuteAsync(linkResults, $"Results-{DateTime.UtcNow:yyyy-MM-dd}");
-                Assert.IsTrue(persistResults.Any(), "No results from filter service.");
+                var persistResults = await workflowPersist.ExecuteAsync(linkResults);
                 Assert.IsTrue(persistResults.Any(), "No results from filter service.");
             }
             catch (Exception ex)
