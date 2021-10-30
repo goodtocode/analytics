@@ -31,7 +31,7 @@ namespace GoodToCode.Analytics.Ingress.Unit.Tests
             configuration = new AppConfigurationFactory().Create();
             configStorage = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-CellEntity");
+                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-Cell");
         }
 
         [TestMethod]
