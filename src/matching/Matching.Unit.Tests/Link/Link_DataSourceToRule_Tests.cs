@@ -18,26 +18,26 @@ using System.Threading.Tasks;
 namespace GoodToCode.Analytics.Matching.Unit.Tests
 {
     [TestClass]
-    public class Link_DataSourceToRule_ActivityTests
+    public class Link_DataSourceToRule_Tests
     {
-        private readonly ILogger<Link_DataSourceToRule_ActivityTests> logItem;
+        private readonly ILogger<Link_DataSourceToRule_Tests> logItem;
         private readonly IConfiguration configuration;
         private readonly ExcelService excelService;
-        private readonly StorageTablesServiceConfiguration configDestinationTable;
+        private readonly StorageTablesServiceConfiguration configDestination;
 
         private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-DataSource-Small.xlsx"; } }
         private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential.xlsx"; } }
         public ISheetData SutRules { get; private set; }
         public ISheetData SutDataSource { get; private set; }
 
-        public Link_DataSourceToRule_ActivityTests()
+        public Link_DataSourceToRule_Tests()
         {
-            logItem = LoggerFactory.CreateLogger<Link_DataSourceToRule_ActivityTests>();            
+            logItem = LoggerFactory.CreateLogger<Link_DataSourceToRule_Tests>();            
             configuration = AppConfigurationFactory.Create();
             excelService = ExcelServiceFactory.GetInstance().CreateExcelService();
-            configDestinationTable = new StorageTablesServiceConfiguration(
+            configDestination = new StorageTablesServiceConfiguration(
                     configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                    $"UnitTests-{DateTime.UtcNow:yyyy-MM-dd}-Link");
+                    $"UnitTests-{DateTime.UtcNow:yyyy-MM-dd}-Results");
         }
 
         [TestMethod]
@@ -60,7 +60,37 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                     dataSourceRecords.Add(new DataSourceEntity(row));
                 var linkResults = new LinkDataSourceToRuleActivity<DataSourceEntity>().Execute(matchingEntity, dataSourceRecords);
                 Assert.IsTrue(linkResults.Any(), "No results from filter service.");
-                Assert.IsTrue(linkResults.Any(), "No results from filter service.");
+            }
+            catch (Exception ex)
+            {
+                logItem.LogError(ex.Message, ex);
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
+        public async Task Link_DataSourceToRule_Persist()
+        {
+            Assert.IsTrue(File.Exists(SutDataSourceFile), $"{SutDataSourceFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
+            Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
+
+            try
+            {
+                // Load rules
+                Stream ruleStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutRuleFile));
+                SutRules = excelService.GetSheet(ruleStream, 0);
+                var matchingEntity = SutRules.ToMatchingRule();
+                // Load data source
+                Stream dataSourceStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile));
+                SutDataSource = excelService.GetSheet(dataSourceStream, 0);
+                var dataSourceRecords = new List<DataSourceEntity>();
+                foreach (var row in SutDataSource.Rows)
+                    dataSourceRecords.Add(new DataSourceEntity(row));
+                var linkResults = new LinkDataSourceToRuleActivity<DataSourceEntity>().Execute(matchingEntity, dataSourceRecords);
+                var workflowPersist = new PersistMatchResultActivity<DataSourceEntity>(configDestination);
+                var persistResults = await workflowPersist.ExecuteAsync(linkResults, $"Results-{DateTime.UtcNow:yyyy-MM-dd}");
+                Assert.IsTrue(persistResults.Any(), "No results from filter service.");
+                Assert.IsTrue(persistResults.Any(), "No results from filter service.");
             }
             catch (Exception ex)
             {

@@ -11,17 +11,17 @@ namespace GoodToCode.Analytics.Abstractions
     public class RowEntity : IRowEntity
     {
         [JsonInclude]
-        public string PartitionKey { get; private set; }
+        public string PartitionKey { get; }
         [JsonInclude]
-        public string RowKey { get; private set; }
+        public string RowKey { get; }
         public string WorkbookName { get; private set; }
         public int SheetIndex { get; private set; }
         [JsonInclude]
-        public string SheetName { get; private set; }
+        public string SheetName { get; }
         [JsonInclude]
-        public int RowIndex { get; private set; }
+        public int RowIndex { get; }
         [JsonInclude]
-        public IEnumerable<ICellData> Cells { get; private set; }
+        public IEnumerable<ICellData> Cells { get; }
 
         public RowEntity() { }
         public RowEntity(Guid rowKey, ICellData cell) : this(rowKey.ToString(), cell) { }
