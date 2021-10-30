@@ -1,6 +1,7 @@
 ﻿using GoodToCode.Shared.Blob.Abstractions;
 using System;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace GoodToCode.Analytics.Abstractions
 {
@@ -13,13 +14,19 @@ namespace GoodToCode.Analytics.Abstractions
             public const string MatchValue = "MatchValue";
             public const string MatchResult = "MatchResult";
         }
-
-        public string PartitionKey { get; set; }
-        public string RowKey { get; set; }
-        public string MatchColumn { get; set; }
-        public string MatchResult { get; set; }
-        public string MatchType { get; set; }
-        public string MatchValue { get; set; }
+        
+        [JsonInclude]
+        public string PartitionKey { get; }
+        [JsonInclude]
+        public string RowKey { get; }
+        [JsonInclude]
+        public string MatchColumn { get; }
+        [JsonInclude]
+        public string MatchResult { get; }
+        [JsonInclude]
+        public string MatchType { get; }
+        [JsonInclude]
+        public string MatchValue { get; }
 
         public MatchingRuleEntity() { }
 
