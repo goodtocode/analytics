@@ -2,6 +2,7 @@
 using GoodToCode.Shared.Blob.Abstractions;
 using GoodToCode.Shared.Persistence.Abstractions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 
@@ -67,6 +68,21 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         public override string ToString()
         {
             return Address;
+        }
+    }
+
+    public static class DataSourceEntityExtensions
+    {
+        public static IEnumerable<DataSourceEntity> ToDataSourceEntity(this ISheetData sheet)
+        {
+            IEnumerable<DataSourceEntity> returnData;
+
+            if (!sheet.Rows.Any())
+                throw new ArgumentException("Argument list is empty.", sheet.Rows.GetType().Name);
+
+            returnData = sheet.Rows.Select(r => new DataSourceEntity(r)).ToList();
+
+            return returnData;
         }
     }
 }

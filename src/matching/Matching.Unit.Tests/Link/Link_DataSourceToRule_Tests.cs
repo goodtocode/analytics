@@ -1,6 +1,5 @@
 ﻿using GoodToCode.Analytics.Abstractions;
 using GoodToCode.Analytics.Matching.Activities;
-using GoodToCode.Analytics.Matching.Domain;
 using GoodToCode.Shared.Blob.Abstractions;
 using GoodToCode.Shared.Blob.Excel;
 using GoodToCode.Shared.Persistence.StorageTables;
@@ -18,26 +17,28 @@ using System.Threading.Tasks;
 namespace GoodToCode.Analytics.Matching.Unit.Tests
 {
     [TestClass]
-    public class Link_DataSourceToRule_Tests
+    public class Link_DataSourceToRules_Tests
     {
-        private readonly ILogger<Link_DataSourceToRule_Tests> logItem;
+        private readonly ILogger<Link_DataSourceToRules_Tests> logItem;
         private readonly IConfiguration configuration;
-        private readonly ExcelService excelService;
         private readonly StorageTablesServiceConfiguration configDestination;
-
+        private readonly IExcelService excelService;
         private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-DataSource-Small.xlsx"; } }
         private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential.xlsx"; } }
+        public IEnumerable<string> PartitionKeys { get; private set; }
         public ISheetData SutRules { get; private set; }
-        public ISheetData SutDataSource { get; private set; }
+        public IWorkbookData SutWorkbook { get; private set; }
 
-        public Link_DataSourceToRule_Tests()
+
+        public Link_DataSourceToRules_Tests()
         {
-            logItem = LoggerFactory.CreateLogger<Link_DataSourceToRule_Tests>();            
             configuration = AppConfigurationFactory.Create();
+            logItem = LoggerFactory.CreateLogger<Link_DataSourceToRules_Tests>();
             excelService = ExcelServiceFactory.GetInstance().CreateExcelService();
             configDestination = new StorageTablesServiceConfiguration(
-                    configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                    $"UnitTests-{DateTime.UtcNow:yyyy-MM-dd}-Results");
+                configuration[AppConfigurationKeys.StorageTablesConnectionString],
+                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-LinkResults");
+            PartitionKeys = new List<string>() { "Invalid", "ByAddressAndH2", "ByAddressAndH1", "ByAddressAndTitle", "ByAddress" };
         }
 
         [TestMethod]
@@ -54,12 +55,16 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var matchingEntity = SutRules.ToMatchingRule();
                 // Load data source
                 Stream dataSourceStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile));
-                SutDataSource = excelService.GetSheet(dataSourceStream, 0);
-                var dataSourceRecords = new List<DataSourceEntity>();
-                foreach (var row in SutDataSource.Rows)
-                    dataSourceRecords.Add(new DataSourceEntity(row));
-                var linkResults = new LinkDataSourceToRuleActivity<DataSourceEntity>().Execute(matchingEntity, dataSourceRecords);
-                Assert.IsTrue(linkResults.Any(), "No results from filter service.");
+                SutWorkbook = excelService.GetWorkbook(dataSourceStream, Path.GetFileName(SutRuleFile));
+                foreach (var sheet in SutWorkbook.Sheets)
+                {
+                    var dataSourceRecords = new List<DataSourceEntity>();
+                    foreach (var row in sheet.Rows)
+                        dataSourceRecords.Add(new DataSourceEntity(row));
+                    var workflowLink = new LinkDataSourceToRuleActivity<DataSourceEntity>();
+                    var linkResults = workflowLink.Execute(matchingEntity, dataSourceRecords);
+                    Assert.IsTrue(linkResults.Any(), "No results from filter service.");
+                }
             }
             catch (Exception ex)
             {
@@ -69,7 +74,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         }
 
         [TestMethod]
-        public async Task Link_DataSourceToRule_Persist()
+        public async Task Link_HtmlScrapeToRules_Orchestration()
         {
             Assert.IsTrue(File.Exists(SutDataSourceFile), $"{SutDataSourceFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
             Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
@@ -82,14 +87,49 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var matchingEntity = SutRules.ToMatchingRule();
                 // Load data source
                 Stream dataSourceStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile));
-                SutDataSource = excelService.GetSheet(dataSourceStream, 0);
-                var dataSourceRecords = new List<DataSourceEntity>();
-                foreach (var row in SutDataSource.Rows)
-                    dataSourceRecords.Add(new DataSourceEntity(row));
-                var linkResults = new LinkDataSourceToRuleActivity<DataSourceEntity>().Execute(matchingEntity, dataSourceRecords);
-                var workflowPersist = new PersistMatchResultActivity<DataSourceEntity>(configDestination);
-                var persistResults = await workflowPersist.ExecuteAsync(linkResults);
-                Assert.IsTrue(persistResults.Any(), "No results from filter service.");
+                SutWorkbook = excelService.GetWorkbook(dataSourceStream, Path.GetFileName(SutRuleFile));
+                foreach (var sheet in SutWorkbook.Sheets)
+                {
+                    var dataSourceRecords = new List<DataSourceEntity>();
+                    foreach (var row in sheet.Rows)
+                        dataSourceRecords.Add(new DataSourceEntity(row));
+                    var workflowLink = new LinkDataSourceToRuleGroupsActivity<DataSourceEntity>(PartitionKeys);
+                    var linkResults = workflowLink.Execute(matchingEntity, dataSourceRecords);
+                    Assert.IsTrue(linkResults.Any(), "No results from filter service.");
+                }
+            }
+            catch (Exception ex)
+            {
+                logItem.LogError(ex.Message, ex);
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
+        public async Task Link_HtmlScrapeToRules_Persist()
+        {
+            Assert.IsTrue(File.Exists(SutDataSourceFile), $"{SutDataSourceFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
+            Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
+
+            try
+            {
+                // Load rules
+                Stream ruleStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutRuleFile));
+                SutRules = excelService.GetSheet(ruleStream, 0);
+                var matchingEntity = SutRules.ToMatchingRule();
+                // Load data source
+                Stream dataSourceStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile));
+                SutWorkbook = excelService.GetWorkbook(dataSourceStream, Path.GetFileName(SutRuleFile));
+                foreach (var sheet in SutWorkbook.Sheets)
+                {
+                    var dataSourceRecords = sheet.ToDataSourceEntity();
+                    var workflowLink = new LinkDataSourceToRuleGroupsActivity<DataSourceEntity>(PartitionKeys);
+                    var linkResults = workflowLink.Execute(matchingEntity, dataSourceRecords);
+                    Assert.IsTrue(linkResults.Any(), "No results from filter service.");
+                    var workflowPersist = new PersistMatchResultActivity<DataSourceEntity>(configDestination);
+                    var persistResults = await workflowPersist.ExecuteAsync(linkResults);
+                    Assert.IsTrue(persistResults.Any(), "No results from filter service.");
+                }
             }
             catch (Exception ex)
             {
