@@ -45,6 +45,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 SutSheet = excelService.GetSheet(itemToAnalyze, 0);
                 var matchingEntity = SutSheet.ToMatchingRule();
                 Assert.IsTrue(matchingEntity.Any());
+                Assert.IsTrue(matchingEntity.FirstOrDefault().MatchColumn != null);
                 var filter = matchingEntity.FirstOrDefault().ToFilterExpression<DataSourceEntity>();
                 Assert.IsTrue(filter.Expression != null);
             }
@@ -66,6 +67,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 SutWorkbook = excelService.GetWorkbook(itemToAnalyze);
                 var matchingEntity = SutWorkbook.ToMatchingRule();
                 Assert.IsTrue(matchingEntity.Any());
+                Assert.IsTrue(matchingEntity.FirstOrDefault().MatchColumn != null);
             }
             catch (Exception ex)
             {
@@ -85,6 +87,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 SutSheet = excelService.GetSheet(itemToAnalyze, 0);
                 var matchingEntity = SutSheet.ToMatchingRule();
                 Assert.IsTrue(matchingEntity.Any());
+                Assert.IsTrue(matchingEntity.FirstOrDefault().MatchColumn != null);
             }
             catch (Exception ex)
             {
