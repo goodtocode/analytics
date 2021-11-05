@@ -23,6 +23,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         private static string SutOpinionFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-DataSource-Small.xlsx"; } }
         private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential.xlsx"; } }
+        public IWorkbookData SutWorkbook { get; private set; }
         public ISheetData SutSheet { get; private set; }
         public FilterExpression<ICellData> SutFilter { get; private set; }
 
@@ -46,6 +47,25 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 Assert.IsTrue(matchingEntity.Any());
                 var filter = matchingEntity.FirstOrDefault().ToFilterExpression<DataSourceEntity>();
                 Assert.IsTrue(filter.Expression != null);
+            }
+            catch (Exception ex)
+            {
+                logItem.LogError(ex.Message, ex);
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
+        public async Task Matching_WorkbookData_ToMatchingRule()
+        {
+            Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
+            try
+            {
+                var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutRuleFile);
+                Stream itemToAnalyze = new MemoryStream(bytes);
+                SutWorkbook = excelService.GetWorkbook(itemToAnalyze);
+                var matchingEntity = SutWorkbook.ToMatchingRule();
+                Assert.IsTrue(matchingEntity.Any());
             }
             catch (Exception ex)
             {
