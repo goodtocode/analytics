@@ -1,6 +1,5 @@
 ﻿using GoodToCode.Analytics.Abstractions;
 using GoodToCode.Analytics.Matching.Activities;
-using GoodToCode.Analytics.Matching.Domain;
 using GoodToCode.Shared.Blob.Abstractions;
 using GoodToCode.Shared.Blob.Excel;
 using Microsoft.Extensions.Logging;

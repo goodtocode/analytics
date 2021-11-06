@@ -1,13 +1,9 @@
 ﻿using GoodToCode.Analytics.Abstractions;
-using GoodToCode.Analytics.Matching.Activities;
-using GoodToCode.Analytics.Matching.Domain;
 using GoodToCode.Shared.Blob.Abstractions;
 using GoodToCode.Shared.Blob.Excel;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -20,8 +16,6 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
     {
         private readonly ILogger<Matching_MatchingRuleEntity_ExtensionsTests> logItem;
         private readonly ExcelService excelService;
-        private static string SutOpinionFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
-        private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-DataSource-Small.xlsx"; } }
         private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential.xlsx"; } }
         public IWorkbookData SutWorkbook { get; private set; }
         public ISheetData SutSheet { get; private set; }
