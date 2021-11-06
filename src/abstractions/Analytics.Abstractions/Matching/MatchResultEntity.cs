@@ -7,24 +7,24 @@ namespace GoodToCode.Analytics.Abstractions
     public class MatchResultEntity<TDataSource> : IMatchResultEntity<TDataSource> where TDataSource : IEntity
     {
         [JsonInclude]
-        public string PartitionKey { get; }
+        public string PartitionKey  { get; set; }
         [JsonInclude]
-        public string RowKey { get; }
+        public string RowKey  { get; set; }
         [JsonInclude]
-        public string MatchRuleRowKey { get; }
+        public string MatchRuleRowKey  { get; set; }
         [JsonInclude]
-        public string DataSourceRowKey { get; }
+        public string DataSourceRowKey  { get; set; }
         [JsonInclude]
-        public string DataSourceString { get; }
+        public string DataSourceString  { get; set; }
         public TDataSource MatchedData { get; private set; }
         [JsonInclude]
-        public string MatchColumn { get; }
+        public string MatchColumn  { get; set; }
         [JsonInclude]
-        public string MatchResult { get; }
+        public string MatchResult  { get; set; }
         [JsonInclude]
-        public string MatchType { get; }
+        public string MatchType  { get; set; }
         [JsonInclude]
-        public string MatchValue { get; }
+        public string MatchValue  { get; set; }
 
         public MatchResultEntity() { }
 

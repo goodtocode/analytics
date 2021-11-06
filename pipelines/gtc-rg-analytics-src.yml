@@ -27,21 +27,7 @@ stages:
       - template: variables/development.yml
       
     jobs:
-      - job: deploy_landing_zone                
-        steps:
-          - template: steps/lz-deploy-steps.yml
-            parameters:
-              armPath: 'infrastructure'
-
-      - job: deploy_infrastructure
-        dependsOn: deploy_landing_zone
-        steps:
-          - template: steps/infrastructure-deploy-steps.yml
-            parameters:
-              armPath: 'infrastructure'
-
       - job: build_src
-        dependsOn: deploy_infrastructure
         steps:
           - template: steps/src-build-steps.yml
             parameters:
@@ -58,6 +44,20 @@ stages:
         dependsOn: test_src
         steps:
           - template: steps/nuget-deploy-internal-steps.yml
+            parameters:
+              armPath: 'infrastructure'
+
+      - job: deploy_landing_zone
+        dependsOn: test_src
+        steps:
+          - template: steps/lz-deploy-steps.yml
+            parameters:
+              armPath: 'infrastructure'
+
+      - job: deploy_infrastructure
+        dependsOn: deploy_landing_zone
+        steps:
+          - template: steps/infrastructure-deploy-steps.yml
             parameters:
               armPath: 'infrastructure'
 
@@ -79,21 +79,7 @@ stages:
       - template: variables/production.yml    
 
     jobs:
-      - job: deploy_landing_zone
-        steps:
-          - template: steps/lz-deploy-steps.yml
-            parameters:
-              armPath: 'infrastructure'
-
-      - job: deploy_infrastructure
-        dependsOn: deploy_landing_zone
-        steps:
-          - template: steps/infrastructure-deploy-steps.yml
-            parameters:
-              armPath: 'infrastructure'
-
-      - job: build_src
-        dependsOn: deploy_infrastructure
+      - job: build_src        
         steps:
           - template: steps/src-build-steps.yml
             parameters:
@@ -110,5 +96,19 @@ stages:
         dependsOn: test_src
         steps:
           - template: steps/nuget-deploy-external-steps.yml
+            parameters:
+              armPath: 'infrastructure'
+
+      - job: deploy_landing_zone
+        dependsOn: test_src
+        steps:
+          - template: steps/lz-deploy-steps.yml
+            parameters:
+              armPath: 'infrastructure'
+
+      - job: deploy_infrastructure
+        dependsOn: deploy_landing_zone
+        steps:
+          - template: steps/infrastructure-deploy-steps.yml
             parameters:
               armPath: 'infrastructure'

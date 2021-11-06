@@ -16,17 +16,17 @@ namespace GoodToCode.Analytics.Abstractions
         }
         
         [JsonInclude]
-        public string PartitionKey { get; }
+        public string PartitionKey  { get; set; }
         [JsonInclude]
-        public string RowKey { get; }
+        public string RowKey  { get; set; }
         [JsonInclude]
-        public string MatchColumn { get; }
+        public string MatchColumn  { get; set; }
         [JsonInclude]
-        public string MatchResult { get; }
+        public string MatchResult  { get; set; }
         [JsonInclude]
-        public string MatchType { get; }
+        public string MatchType  { get; set; }
         [JsonInclude]
-        public string MatchValue { get; }
+        public string MatchValue  { get; set; }
 
         public MatchingRuleEntity() { }
 
