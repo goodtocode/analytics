@@ -21,11 +21,13 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
     {
         private readonly ILogger<Link_DataSourceToRules_Tests> logItem;
         private readonly IConfiguration configuration;
+        private readonly StorageTablesServiceConfiguration configRule;
+        private readonly StorageTablesServiceConfiguration configDataSource;
         private readonly StorageTablesServiceConfiguration configDestination;
         private readonly IExcelService excelService;
         private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-DataSource-Small.xlsx"; } }
         private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential.xlsx"; } }
-        public IEnumerable<string> PartitionKeys { get; private set; }
+        public IEnumerable<string> RulePartitionKeys { get; private set; }
         public ISheetData SutRules { get; private set; }
         public IWorkbookData SutWorkbook { get; private set; }
 
@@ -35,10 +37,16 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             configuration = AppConfigurationFactory.Create();
             logItem = LoggerFactory.CreateLogger<Link_DataSourceToRules_Tests>();
             excelService = ExcelServiceFactory.GetInstance().CreateExcelService();
+            configRule = new StorageTablesServiceConfiguration(
+                configuration[AppConfigurationKeys.StorageTablesConnectionString],
+                Persist_Rules_ActivityTests.SutTable);
+            configDataSource = new StorageTablesServiceConfiguration(
+                configuration[AppConfigurationKeys.StorageTablesConnectionString],
+                Persist_DataSource_ActivityTests.SutTable);
             configDestination = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
                 $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-LinkResults");
-            PartitionKeys = new List<string>() { "Invalid", "ByAddressAndH2", "ByAddressAndH1", "ByAddressAndTitle", "ByAddress" };
+            RulePartitionKeys = new List<string>() { "Invalid", "ByAddressAndH2", "ByAddressAndH1", "ByAddressAndTitle", "ByAddress" };
         }
 
         [TestMethod]
@@ -93,7 +101,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                     var dataSourceRecords = new List<DataSourceEntity>();
                     foreach (var row in sheet.Rows)
                         dataSourceRecords.Add(new DataSourceEntity(row));
-                    var workflowLink = new LinkDataSourceToRuleGroupsActivity<DataSourceEntity>(PartitionKeys);
+                    var workflowLink = new LinkDataSourceToRuleGroupsActivity<DataSourceEntity>(RulePartitionKeys);
                     var linkResults = workflowLink.Execute(matchingEntity, dataSourceRecords);
                     Assert.IsTrue(linkResults.Any(), "No results from filter service.");
                 }
@@ -123,7 +131,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 foreach (var sheet in SutWorkbook.Sheets)
                 {
                     var dataSourceRecords = sheet.ToDataSourceEntity();
-                    var workflowLink = new LinkDataSourceToRuleGroupsActivity<DataSourceEntity>(PartitionKeys);
+                    var workflowLink = new LinkDataSourceToRuleGroupsActivity<DataSourceEntity>(RulePartitionKeys);
                     var linkResults = workflowLink.Execute(matchingEntity, dataSourceRecords);
                     Assert.IsTrue(linkResults.Any(), "No results from filter service.");
                     var workflowPersist = new PersistMatchResultActivity<DataSourceEntity>(configDestination);
@@ -136,6 +144,19 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 logItem.LogError(ex.Message, ex);
                 Assert.Fail(ex.Message);
             }
+        }
+
+        [TestMethod]
+        public async Task Link_HtmlScrapeToRules_Storage()
+        {
+            var rules = new List<MatchingRuleEntity>();
+            foreach (var partitionKey in RulePartitionKeys)
+                rules.AddRange(new StorageTablesService<MatchingRuleEntity>(configRule).GetAndCastItems(r => r.PartitionKey == partitionKey));
+            var dataSource = new StorageTablesService<DataSourceEntity>(configDataSource).GetAndCastItems(r => r.PartitionKey != "");
+            var workflowLink = new LinkDataSourceToRuleGroupsActivity<DataSourceEntity>(RulePartitionKeys);
+            var linkResults = workflowLink.Execute(rules, dataSource);
+            var workflowPersist = new PersistMatchResultActivity<DataSourceEntity>(configDestination);
+            var Results = await workflowPersist.ExecuteAsync(linkResults);
         }
 
         [TestCleanup]

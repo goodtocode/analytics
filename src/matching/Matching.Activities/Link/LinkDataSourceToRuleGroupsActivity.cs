@@ -1,5 +1,4 @@
 ﻿using GoodToCode.Analytics.Abstractions;
-using GoodToCode.Analytics.Matching.Activities;
 using GoodToCode.Analytics.Matching.Domain;
 using GoodToCode.Shared.Persistence.Abstractions;
 using System.Collections.Generic;
