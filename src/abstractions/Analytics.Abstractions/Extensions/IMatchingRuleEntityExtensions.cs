@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GoodToCode.Analytics.Abstractions
 {
@@ -11,13 +12,27 @@ namespace GoodToCode.Analytics.Abstractions
         
         public static FilterExpression<T> ToFilterExpression<T>(this MatchingRuleEntity rule)
         {
+            // Check if property exists
+            var matchColumn = rule.MatchColumn;
+            if (typeof(T).GetProperty(matchColumn) == null)
+            {
+                matchColumn = rule.MatchColumn.ToIdentifier();
+                if (typeof(T).GetProperty(matchColumn) == null)
+                    throw new ArgumentException("MatchColumn value must match a property in T", rule.GetType().Name);
+            }
+
             return rule.MatchType switch
             {
-                MatchType.BeginsWith => new FilterExpression<T>(x => x.GetType().GetProperty(rule.MatchColumn).GetValue(x, null).ToString().StartsWith(rule.MatchValue)),
-                MatchType.EndsWith => new FilterExpression<T>(x => x.GetType().GetProperty(rule.MatchColumn).GetValue(x, null).ToString().EndsWith(rule.MatchValue)),
-                MatchType.IsEqual => new FilterExpression<T>(x => x.GetType().GetProperty(rule.MatchColumn).GetValue(x, null).ToString() == rule.MatchValue),
-                MatchType.NotEquals => new FilterExpression<T>(x => x.GetType().GetProperty(rule.MatchColumn).GetValue(x, null).ToString() != rule.MatchValue),
-                _ => new FilterExpression<T>(x => x.GetType().GetProperty(rule.MatchColumn).GetValue(x, null).ToString().Contains(rule.MatchValue)),
+                MatchType.BeginsWith => new FilterExpression<T>(x => x.GetType().GetProperty(matchColumn).GetValue(x, null) != null 
+                                                                && x.GetType().GetProperty(matchColumn).GetValue(x, null).ToString().StartsWith(rule.MatchValue)),
+                MatchType.EndsWith => new FilterExpression<T>(x => x.GetType().GetProperty(matchColumn).GetValue(x, null) != null
+                                                                && x.GetType().GetProperty(matchColumn).GetValue(x, null).ToString().EndsWith(rule.MatchValue)),
+                MatchType.IsEqual => new FilterExpression<T>(x => x.GetType().GetProperty(matchColumn).GetValue(x, null) != null
+                                                                && x.GetType().GetProperty(matchColumn).GetValue(x, null).ToString() == rule.MatchValue),
+                MatchType.NotEquals => new FilterExpression<T>(x => x.GetType().GetProperty(matchColumn).GetValue(x, null) != null
+                                                                && x.GetType().GetProperty(matchColumn).GetValue(x, null).ToString() != rule.MatchValue),
+                _ => new FilterExpression<T>(x => x.GetType().GetProperty(matchColumn).GetValue(x, null) != null
+                                                                && x.GetType().GetProperty(matchColumn).GetValue(x, null).ToString().Contains(rule.MatchValue)),
             };
         }
 
