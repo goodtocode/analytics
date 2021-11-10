@@ -149,6 +149,9 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         [TestMethod]
         public async Task Link_HtmlScrapeToRules_Storage()
         {
+            
+            await new Persist_DataSource_ActivityTests().Ingress_DataSource_Orchestration();
+            await new Persist_Rules_ActivityTests().Ingress_Rules_Orchestration();
             var rules = new List<MatchingRuleEntity>();
             foreach (var partitionKey in RulePartitionKeys)
                 rules.AddRange(new StorageTablesService<MatchingRuleEntity>(configRule).GetAndCastItems(r => r.PartitionKey == partitionKey));
