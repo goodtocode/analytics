@@ -61,18 +61,6 @@ stages:
             parameters:
               armPath: 'infrastructure'
 
-  - stage: pull_request
-    condition: or(eq(variables['Build.Reason'], 'PullRequest'),  startsWith(variables['Build.SourceBranch'], 'refs/pull'))
-    variables:
-      - template: variables/development.yml    
-
-    jobs:
-      - job: test_src
-        steps:
-          - template: steps/src-test-steps.yml
-            parameters:
-              armPath: 'infrastructure' 
-
   - stage: production
     condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
     variables:
