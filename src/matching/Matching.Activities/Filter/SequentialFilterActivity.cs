@@ -7,7 +7,7 @@ namespace GoodToCode.Analytics.Matching.Activities
     public class SequentialFilterActivity<T> : ISequentialFilterActivity<T>
     {
         public List<ChainableFilterHandler<T>> Handlers { get; } = new List<ChainableFilterHandler<T>>();
-        public List<IEnumerable<T>> Results;
+        public IEnumerable<T> Results;
 
         public SequentialFilterActivity(IEnumerable<FilterExpression<T>> filters)
         {
@@ -22,16 +22,17 @@ namespace GoodToCode.Analytics.Matching.Activities
             }
         }
 
-        public List<IEnumerable<T>> Execute(IEnumerable<T> listToFilter)
+        public IEnumerable<T> Execute(IEnumerable<T> listToFilter)
         {
-            Results = new List<IEnumerable<T>>();
+            var localResults = new List<T>();
 
             foreach (var handler in Handlers)
             {
                 handler.ApplyFilter(listToFilter);
-                Results.Add(handler.FilteredList);
+                localResults.AddRange(handler.FilteredList);
             }
 
+            Results = localResults;
             return Results;
         }
     }
