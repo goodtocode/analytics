@@ -21,7 +21,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         private readonly ExcelService excelService;
         private static string SutOpinionFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-DataSource-Small.xlsx"; } }
-        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential.xlsx"; } }
+        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential-Small.xlsx"; } }
         public RowEntity SutRow { get; private set; }
         public IEnumerable<ICellData> SutCells { get; private set; }
         public IEnumerable<FilterExpression<ICellData>> SutFilters { get; private set; }
@@ -49,7 +49,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var results = workflow.Execute(SutCells);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
                 foreach (var result in results)
-                    Assert.IsTrue(!string.IsNullOrWhiteSpace(result.FirstOrDefault()?.CellValue), "No results from filter service.");
+                    Assert.IsTrue(!string.IsNullOrWhiteSpace(result.CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -78,7 +78,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var results = workflow.Execute(SutCells);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
                 foreach (var result in results)
-                    Assert.IsTrue(!string.IsNullOrWhiteSpace(result.FirstOrDefault()?.CellValue), "No results from filter service.");
+                    Assert.IsTrue(!string.IsNullOrWhiteSpace(result.CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -107,7 +107,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var results = workflow.Execute(SutCells);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
                 foreach (var result in results)
-                    Assert.IsTrue(!string.IsNullOrWhiteSpace(result.FirstOrDefault()?.CellValue), "No results from filter service.");
+                    Assert.IsTrue(!string.IsNullOrWhiteSpace(result.CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -136,7 +136,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var results = workflow.Execute(SutCells);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
                 foreach(var result in results)
-                    Assert.IsTrue(!string.IsNullOrWhiteSpace(result.FirstOrDefault()?.CellValue), "No results from filter service.");
+                    Assert.IsTrue(!string.IsNullOrWhiteSpace(result.CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -165,7 +165,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var results = workflow.Execute(SutCells);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
                 foreach (var result in results)
-                    Assert.IsTrue(!string.IsNullOrWhiteSpace(result.FirstOrDefault()?.CellValue), "No results from filter service.");
+                    Assert.IsTrue(!string.IsNullOrWhiteSpace(result.CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -193,7 +193,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var results = workflow.Execute(SutCells);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
                 foreach (var result in results)
-                    Assert.IsTrue(!string.IsNullOrWhiteSpace(result.FirstOrDefault()?.CellValue), "No results from filter service.");
+                    Assert.IsTrue(!string.IsNullOrWhiteSpace(result.CellValue), "No results from filter service.");
             }
             catch (Exception ex)
             {

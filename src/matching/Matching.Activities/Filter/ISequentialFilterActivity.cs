@@ -7,6 +7,6 @@ namespace GoodToCode.Analytics.Matching.Activities
     {
         List<ChainableFilterHandler<T>> Handlers { get; }
 
-        List<IEnumerable<T>> Execute(IEnumerable<T> listToFilter);
+        IEnumerable<T> Execute(IEnumerable<T> listToFilter);
     }
 }

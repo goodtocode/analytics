@@ -21,7 +21,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         private readonly ExcelService excelService;
         private static string SutOpinionFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-DataSource-Small.xlsx"; } }
-        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential.xlsx"; } }
+        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential-Small.xlsx"; } }
         public RowEntity SutRow { get; private set; }
         public IEnumerable<ICellData> SutSheet { get; private set; }
         public FilterExpression<ICellData> SutFilter { get; private set; }

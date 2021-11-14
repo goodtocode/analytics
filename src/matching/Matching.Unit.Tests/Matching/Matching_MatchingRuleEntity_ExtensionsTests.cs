@@ -16,7 +16,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
     {
         private readonly ILogger<Matching_MatchingRuleEntity_ExtensionsTests> logItem;
         private readonly ExcelService excelService;
-        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential.xlsx"; } }
+        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential-Small.xlsx"; } }
         public IWorkbookData SutWorkbook { get; private set; }
         public ISheetData SutSheet { get; private set; }
         public FilterExpression<ICellData> SutFilter { get; private set; }
