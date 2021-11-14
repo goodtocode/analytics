@@ -10,6 +10,11 @@ trigger:
     - src/*
     - tests/*
 
+pr:
+  branches:
+    exclude:
+    - '*'
+
 pool:
   vmImage: 'ubuntu-latest'
 
