@@ -18,18 +18,20 @@ namespace GoodToCode.Analytics.Matching.Activities
         public IEnumerable<IMatchResultEntity<TDataSource>> Execute(IEnumerable<MatchingRuleEntity> filterRules, IEnumerable<TDataSource> dataSource)
         {
             var currResults = new List<IMatchResultEntity<TDataSource>>();
-            IEnumerable<TDataSource> results;
-            
+            IEnumerable<TDataSource> filteredResults;
+            IEnumerable<TDataSource> remainingDataSource = dataSource;
+
             var ruleGroups = filterRules.GroupBy(r => r.MatchResult);
             foreach(var group in ruleGroups)
             {                
                 var expression = group.ToFilterExpression<TDataSource>();
                 if (group.Count() > 1)
-                    results = new SequentialFilterActivity<TDataSource>(expression).Execute(dataSource);
+                    filteredResults = new SequentialFilterActivity<TDataSource>(expression).Execute(remainingDataSource);
                 else 
-                    results = new SingleFilterActivity<TDataSource>(expression.FirstOrDefault()).Execute(dataSource);
-                foreach (var result in results)
+                    filteredResults = new SingleFilterActivity<TDataSource>(expression.FirstOrDefault()).Execute(dataSource);
+                foreach (var result in filteredResults)
                     currResults.Add(new MatchResultEntity<TDataSource>(group.FirstOrDefault(), result));
+                remainingDataSource = remainingDataSource.Except(filteredResults);
             }
 
             Results = currResults;
