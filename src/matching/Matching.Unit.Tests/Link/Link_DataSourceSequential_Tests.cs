@@ -26,9 +26,9 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         private readonly StorageTablesServiceConfiguration configDestination;
         private readonly IExcelService excelService;
         private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-DataSource-Small.xlsx"; } }
-        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential.xlsx"; } }
+        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential-Small.xlsx"; } }
         public IEnumerable<string> RulePartitionKeys { get; private set; }
-        public ISheetData SutRules { get; private set; }
+        public IWorkbookData SutRules { get; private set; }
         public IWorkbookData SutWorkbook { get; private set; }
 
 
@@ -59,7 +59,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             {
                 // Load rules
                 Stream ruleStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutRuleFile));
-                SutRules = excelService.GetSheet(ruleStream, 0);
+                SutRules = excelService.GetWorkbook(ruleStream);
                 var matchingEntity = SutRules.ToMatchingRule();
                 // Load data source
                 Stream dataSourceStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile));
@@ -91,7 +91,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             {
                 // Load rules
                 Stream ruleStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutRuleFile));
-                SutRules = excelService.GetSheet(ruleStream, 0);
+                SutRules = excelService.GetWorkbook(ruleStream);
                 var matchingEntity = SutRules.ToMatchingRule();
                 // Load data source
                 Stream dataSourceStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile));
@@ -123,7 +123,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             {
                 // Load rules
                 Stream ruleStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutRuleFile));
-                SutRules = excelService.GetSheet(ruleStream, 0);
+                SutRules = excelService.GetWorkbook(ruleStream);
                 var matchingEntity = SutRules.ToMatchingRule();
                 // Load data source
                 Stream dataSourceStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile));

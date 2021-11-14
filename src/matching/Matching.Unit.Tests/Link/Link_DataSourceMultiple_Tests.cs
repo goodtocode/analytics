@@ -5,7 +5,6 @@ using GoodToCode.Shared.Blob.Excel;
 using GoodToCode.Shared.Persistence.StorageTables;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -26,9 +25,9 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         private readonly StorageTablesServiceConfiguration configDestination;
         private readonly IExcelService excelService;
         private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-DataSource-Small.xlsx"; } }
-        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential.xlsx"; } }
+        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Multiple-Small.xlsx"; } }
         public IEnumerable<string> RulePartitionKeys { get; private set; }
-        public ISheetData SutRules { get; private set; }
+        public IWorkbookData SutRules { get; private set; }
         public IWorkbookData SutWorkbook { get; private set; }
 
 
@@ -46,7 +45,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             configDestination = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
                 $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-LinkResultsMultiple");
-            RulePartitionKeys = new List<string>() { "Invalid", "ByAddressAndH2", "ByAddressAndH1", "ByAddressAndTitle", "ByAddress" };
+            RulePartitionKeys = new List<string>() { "Invalid", "ByAddressAndH2", "ByAddressAndH1", "ByAddressAndTitle", "ByAddress", "ByAddress2" };
         }
 
         [TestMethod]
@@ -59,7 +58,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             {
                 // Load rules
                 Stream ruleStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutRuleFile));
-                SutRules = excelService.GetSheet(ruleStream, 0);
+                SutRules = excelService.GetWorkbook(ruleStream);
                 var matchingEntity = SutRules.ToMatchingRule();
                 // Load data source
                 Stream dataSourceStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile));
@@ -91,7 +90,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             {
                 // Load rules
                 Stream ruleStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutRuleFile));
-                SutRules = excelService.GetSheet(ruleStream, 0);
+                SutRules = excelService.GetWorkbook(ruleStream);
                 var matchingEntity = SutRules.ToMatchingRule();
                 // Load data source
                 Stream dataSourceStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile));
@@ -123,7 +122,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             {
                 // Load rules
                 Stream ruleStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutRuleFile));
-                SutRules = excelService.GetSheet(ruleStream, 0);
+                SutRules = excelService.GetWorkbook(ruleStream);
                 var matchingEntity = SutRules.ToMatchingRule();
                 // Load data source
                 Stream dataSourceStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile));
