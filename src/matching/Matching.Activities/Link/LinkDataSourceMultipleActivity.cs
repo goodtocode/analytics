@@ -22,7 +22,7 @@ namespace GoodToCode.Analytics.Matching.Activities
             
             var ruleGroups = filterRules.GroupBy(r => r.MatchResult);
             foreach(var group in ruleGroups)
-            {                
+            {
                 var expression = group.ToFilterExpression<TDataSource>();
                 if (group.Count() > 1)
                     results = new MultiFilterActivity<TDataSource>(expression).Execute(dataSource);

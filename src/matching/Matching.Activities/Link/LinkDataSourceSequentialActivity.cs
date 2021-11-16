@@ -28,7 +28,7 @@ namespace GoodToCode.Analytics.Matching.Activities
                 if (group.Count() > 1)
                     filteredResults = new SequentialFilterActivity<TDataSource>(expression).Execute(remainingDataSource);
                 else 
-                    filteredResults = new SingleFilterActivity<TDataSource>(expression.FirstOrDefault()).Execute(dataSource);
+                    filteredResults = new SingleFilterActivity<TDataSource>(expression.FirstOrDefault()).Execute(remainingDataSource);
                 foreach (var result in filteredResults)
                     currResults.Add(new MatchResultEntity<TDataSource>(group.FirstOrDefault(), result));
                 remainingDataSource = remainingDataSource.Except(filteredResults);
