@@ -19,9 +19,7 @@ namespace GoodToCode.Analytics.Matching.Activities
 
         public async Task<IEnumerable<TableEntity>> ExecuteAsync(IEnumerable<TDataSource> dataSource)
         {
-            foreach(var partition in dataSource.Select(c => c.PartitionKey).Distinct())
-                await servicePersist.DeletePartitionAsync(partition);
-            
+            await servicePersist.DeletePartitionsAsync(dataSource.Select(c => c.PartitionKey).Distinct());
             return await servicePersist.AddItemsAsync(dataSource);
         }
     }

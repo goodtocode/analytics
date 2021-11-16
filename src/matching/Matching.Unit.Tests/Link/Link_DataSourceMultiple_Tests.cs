@@ -44,7 +44,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 Persist_DataSource_ActivityTests.SutTable);
             configDestination = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-LinkResultsMultiple");
+                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-{StorageTableNames.MultipleResultsTable}");
             RulePartitionKeys = new List<string>() { "Invalid", "ByAddressAndH2", "ByAddressAndH1", "ByAddressAndTitle", "ByAddress", "ByAddress2" };
         }
 
