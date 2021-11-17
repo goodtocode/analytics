@@ -31,6 +31,8 @@ namespace GoodToCode.Analytics.Matching.Activities
                     filteredResults = new SingleFilterActivity<TDataSource>(expression.FirstOrDefault()).Execute(remainingDataSource);
                 foreach (var result in filteredResults)
                     currResults.Add(new MatchResultEntity<TDataSource>(group.FirstOrDefault(), result));
+
+remainingDataSource = 
                 remainingDataSource = remainingDataSource.Except(filteredResults);
             }
 
