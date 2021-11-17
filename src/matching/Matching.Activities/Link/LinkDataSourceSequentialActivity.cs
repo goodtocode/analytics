@@ -21,19 +21,21 @@ namespace GoodToCode.Analytics.Matching.Activities
             IEnumerable<TDataSource> filteredResults;
             IEnumerable<TDataSource> remainingDataSource = dataSource;
 
-            var ruleGroups = filterRules.GroupBy(r => r.MatchResult);
-            foreach(var group in ruleGroups)
-            {                
-                var expression = group.ToFilterExpression<TDataSource>();
-                if (group.Count() > 1)
-                    filteredResults = new SequentialFilterActivity<TDataSource>(expression).Execute(remainingDataSource);
-                else 
-                    filteredResults = new SingleFilterActivity<TDataSource>(expression.FirstOrDefault()).Execute(remainingDataSource);
-                foreach (var result in filteredResults)
-                    currResults.Add(new MatchResultEntity<TDataSource>(group.FirstOrDefault(), result));
-
-remainingDataSource = 
-                remainingDataSource = remainingDataSource.Except(filteredResults);
+            var rulePartitions = filterRules.GroupBy(r => r.PartitionKey);
+            foreach (var partition in rulePartitions)
+            {
+                var ruleGroups = partition.GroupBy(r => r.MatchResult);
+                foreach (var group in ruleGroups)
+                {
+                    var expression = group.ToFilterExpression<TDataSource>();
+                    if (group.Count() > 1)
+                        filteredResults = new SequentialFilterActivity<TDataSource>(expression).Execute(remainingDataSource);
+                    else
+                        filteredResults = new SingleFilterActivity<TDataSource>(expression.FirstOrDefault()).Execute(remainingDataSource);
+                    foreach (var result in filteredResults)
+                        currResults.Add(new MatchResultEntity<TDataSource>(group.FirstOrDefault(), result));
+                    remainingDataSource = remainingDataSource.Where(c => filteredResults.Select(r => r.RowKey).Contains(c.RowKey) == false);
+                }
             }
 
             Results = currResults;
