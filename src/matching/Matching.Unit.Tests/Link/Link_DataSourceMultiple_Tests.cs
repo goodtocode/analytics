@@ -44,7 +44,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 Persist_DataSource_ActivityTests.SutTable);
             configDestination = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-LinkResultsMultiple");
+                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-{StorageTableNames.MultipleResultsTable}");
             RulePartitionKeys = new List<string>() { "Invalid", "ByAddressAndH2", "ByAddressAndH1", "ByAddressAndTitle", "ByAddress", "ByAddress2" };
         }
 
@@ -100,7 +100,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                     var dataSourceRecords = new List<DataSourceEntity>();
                     foreach (var row in sheet.Rows)
                         dataSourceRecords.Add(new DataSourceEntity(row));
-                    var workflowLink = new LinkDataSourceMultipleByGroupActivity<DataSourceEntity>(RulePartitionKeys);
+                    var workflowLink = new LinkDataSourceMultipleActivity<DataSourceEntity>();
                     var linkResults = workflowLink.Execute(matchingEntity, dataSourceRecords);
                     Assert.IsTrue(linkResults.Any(), "No results from filter service.");
                 }
@@ -130,7 +130,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 foreach (var sheet in SutWorkbook.Sheets)
                 {
                     var dataSourceRecords = sheet.ToDataSourceEntity();
-                    var workflowLink = new LinkDataSourceMultipleByGroupActivity<DataSourceEntity>(RulePartitionKeys);
+                    var workflowLink = new LinkDataSourceMultipleActivity<DataSourceEntity>();
                     var linkResults = workflowLink.Execute(matchingEntity, dataSourceRecords);
                     Assert.IsTrue(linkResults.Any(), "No results from filter service.");
                     var workflowPersist = new PersistMatchResultActivity<DataSourceEntity>(configDestination);
@@ -154,7 +154,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             foreach (var partitionKey in RulePartitionKeys)
                 rules.AddRange(new StorageTablesService<MatchingRuleEntity>(configRule).GetAndCastItems(r => r.PartitionKey == partitionKey));
             var dataSource = new StorageTablesService<DataSourceEntity>(configDataSource).GetAndCastItems(r => r.PartitionKey != "");
-            var workflowLink = new LinkDataSourceMultipleByGroupActivity<DataSourceEntity>(RulePartitionKeys);
+            var workflowLink = new LinkDataSourceMultipleActivity<DataSourceEntity>();
             var linkResults = workflowLink.Execute(rules, dataSource);
             var workflowPersist = new PersistMatchResultActivity<DataSourceEntity>(configDestination);
             var Results = await workflowPersist.ExecuteAsync(linkResults);

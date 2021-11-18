@@ -1,6 +1,7 @@
 ﻿using GoodToCode.Analytics.Abstractions;
 using GoodToCode.Analytics.Matching.Domain;
 using GoodToCode.Shared.Persistence.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,18 +21,26 @@ namespace GoodToCode.Analytics.Matching.Activities
             var currResults = new List<IMatchResultEntity<TDataSource>>();
             IEnumerable<TDataSource> filteredResults;
             IEnumerable<TDataSource> remainingDataSource = dataSource;
+            var matchedRowKeys = new List<string>();
 
-            var ruleGroups = filterRules.GroupBy(r => r.MatchResult);
-            foreach(var group in ruleGroups)
-            {                
-                var expression = group.ToFilterExpression<TDataSource>();
-                if (group.Count() > 1)
-                    filteredResults = new SequentialFilterActivity<TDataSource>(expression).Execute(remainingDataSource);
-                else 
-                    filteredResults = new SingleFilterActivity<TDataSource>(expression.FirstOrDefault()).Execute(dataSource);
-                foreach (var result in filteredResults)
-                    currResults.Add(new MatchResultEntity<TDataSource>(group.FirstOrDefault(), result));
-                remainingDataSource = remainingDataSource.Except(filteredResults);
+            var rulePartitions = filterRules.GroupBy(r => r.PartitionKey);
+            foreach (var partition in rulePartitions)
+            {
+                var ruleGroups = partition.GroupBy(r => r.MatchResult);
+                foreach (var group in ruleGroups)
+                {
+                    var expression = group.ToFilterExpression<TDataSource>();
+                    if (group.Count() > 1)
+                        filteredResults = new SequentialFilterActivity<TDataSource>(expression).Execute(remainingDataSource);
+                    else
+                        filteredResults = new SingleFilterActivity<TDataSource>(expression.FirstOrDefault()).Execute(remainingDataSource);
+                    foreach (var result in filteredResults)
+                    {
+                        currResults.Add(new MatchResultEntity<TDataSource>(group.FirstOrDefault(), result));
+                        matchedRowKeys.Add(result.RowKey);
+                    }
+                    remainingDataSource = remainingDataSource.Where(c => matchedRowKeys.Contains(c.RowKey) == false);
+                }
             }
 
             Results = currResults;

@@ -27,7 +27,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
-        public static string SutTable { get; } = $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-Rules";
+        public static string SutTable { get; } = $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-{StorageTableNames.RuleTable}";
 
         public Persist_Rules_ActivityTests()
         {
