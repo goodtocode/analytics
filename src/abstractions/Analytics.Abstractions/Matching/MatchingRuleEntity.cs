@@ -20,6 +20,8 @@ namespace GoodToCode.Analytics.Abstractions
         [JsonInclude]
         public string RowKey  { get; set; }
         [JsonInclude]
+        public DateTimeOffset? Timestamp { get; set; }
+        [JsonInclude]
         public string MatchColumn  { get; set; }
         [JsonInclude]
         public string MatchResult  { get; set; }
@@ -57,7 +59,12 @@ namespace GoodToCode.Analytics.Abstractions
 
         public int CompareTo(MatchingRuleEntity compareItem)
         {
-            return compareItem == null ? 1 : RowKey.CompareTo(compareItem);
+            if (compareItem == null || Timestamp > compareItem.Timestamp)
+                return 1;
+            else if (Timestamp < compareItem.Timestamp)
+                return -1;
+            else
+                return 0;
         }
 
         public override int GetHashCode()
@@ -74,7 +81,7 @@ namespace GoodToCode.Analytics.Abstractions
 
         public bool Equals(MatchingRuleEntity other)
         {
-            return other != null && this.RowKey.Equals(other.RowKey);
+            return other != null && this.Timestamp.Equals(other.Timestamp);
         }
     }
 }

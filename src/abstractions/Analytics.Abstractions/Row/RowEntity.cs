@@ -23,8 +23,17 @@ namespace GoodToCode.Analytics.Abstractions
         [JsonInclude]
         public IEnumerable<ICellData> Cells { get; }
 
-        public RowEntity() { }
-        public RowEntity(Guid rowKey, ICellData cell) : this(rowKey.ToString(), cell) { }
+        public DateTimeOffset? Timestamp { get; }
+
+        public RowEntity() 
+        {
+            Timestamp = DateTime.UtcNow;
+        }
+
+        public RowEntity(Guid rowKey, ICellData cell) : this(rowKey.ToString(), cell) 
+        { 
+        }
+
         public RowEntity(string rowKey, ICellData cell)
         {
             RowKey = rowKey;

@@ -14,7 +14,9 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         [JsonInclude]
         public string PartitionKey { get { return _partitionKey; } set { _partitionKey = value; } }
         [JsonInclude]
-        public string RowKey { get; } = $"{Guid.NewGuid()}";
+        public string RowKey { get; } = Guid.NewGuid().ToString();
+        [JsonInclude]
+        public DateTimeOffset? Timestamp { get; set; } = DateTime.UtcNow;
         [JsonInclude]
         public string Address { get; }
         [JsonInclude]
