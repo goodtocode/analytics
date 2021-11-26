@@ -25,7 +25,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         private readonly StorageTablesServiceConfiguration configDestination;
         private readonly IExcelService excelService;
         private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-DataSource-Small.xlsx"; } }
-        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Multiple-Small.xlsx"; } }
+        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Multiple.xlsx"; } }
         public IEnumerable<string> RulePartitionKeys { get; private set; }
         public IWorkbookData SutRules { get; private set; }
         public IWorkbookData SutWorkbook { get; private set; }
