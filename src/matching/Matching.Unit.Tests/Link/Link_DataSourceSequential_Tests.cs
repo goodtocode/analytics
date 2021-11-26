@@ -26,7 +26,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         private readonly StorageTablesServiceConfiguration configDestination;
         private readonly IExcelService excelService;
         private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-DataSource-Small.xlsx"; } }
-        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential-Small.xlsx"; } }
+        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential.xlsx"; } }
         public IEnumerable<string> RulePartitionKeys { get; private set; }
         public IWorkbookData SutRules { get; private set; }
         public IWorkbookData SutWorkbook { get; private set; }
@@ -46,7 +46,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             configDestination = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
                 $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-{StorageTableNames.SequentialResultsTable}");
-            RulePartitionKeys = new List<string>() { "Invalid", "ByAddressAndH2", "ByAddressAndH1", "ByAddressAndTitle", "ByAddress" };
+            RulePartitionKeys = new List<string>() { "Invalid", "ByAddressAndH2", "ByAddressAndH1", "ByAddressAndTitle", "ByAddress-3", "ByAddress-2", "ByAddress-1", "NotMatched" };
         }
 
         [TestMethod]

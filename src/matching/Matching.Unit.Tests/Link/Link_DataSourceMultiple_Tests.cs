@@ -45,7 +45,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             configDestination = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
                 $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-{StorageTableNames.MultipleResultsTable}");
-            RulePartitionKeys = new List<string>() { "Invalid", "ByAddressAndH2", "ByAddressAndH1", "ByAddressAndTitle", "ByAddress", "ByAddress2" };
+            RulePartitionKeys = new List<string>() { "Invalid", "ByAddressAndH2", "ByAddressAndH1", "ByAddressAndTitle", "ByAddress-3", "ByAddress-2", "ByAddress-1", "NotMatched" };
         }
 
         [TestMethod]
