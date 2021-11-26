@@ -23,7 +23,7 @@ namespace GoodToCode.Analytics.Matching.Activities
             IEnumerable<TDataSource> remainingDataSource = dataSource;
             var matchedRowKeys = new List<string>();
 
-            var rulePartitions = filterRules.GroupBy(r => r.PartitionKey);
+            var rulePartitions = filterRules.OrderBy(o => o.Timestamp).GroupBy(r => r.PartitionKey);
             foreach (var partition in rulePartitions)
             {
                 var ruleGroups = partition.GroupBy(r => r.MatchResult);

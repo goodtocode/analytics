@@ -1,6 +1,5 @@
 ﻿using GoodToCode.Shared.Blob.Abstractions;
 using System;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace GoodToCode.Analytics.Abstractions
@@ -11,6 +10,8 @@ namespace GoodToCode.Analytics.Abstractions
         public string PartitionKey { get; private set; }
         [JsonInclude]
         public string RowKey { get; private set; }
+        [JsonInclude]
+        public DateTimeOffset? Timestamp { get; set; } = DateTime.UtcNow;
         public string WorkbookName { get; private set; }
         [JsonInclude]
         public string SheetName { get; private set; }

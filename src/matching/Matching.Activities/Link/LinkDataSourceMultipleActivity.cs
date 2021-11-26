@@ -20,7 +20,7 @@ namespace GoodToCode.Analytics.Matching.Activities
             var currResults = new List<IMatchResultEntity<TDataSource>>();
             IEnumerable<TDataSource> results;
             
-            var ruleGroups = filterRules.GroupBy(r => r.MatchResult);
+            var ruleGroups = filterRules.OrderBy(o => o.Timestamp).GroupBy(r => r.MatchResult);
             foreach(var group in ruleGroups)
             {
                 var expression = group.ToFilterExpression<TDataSource>();

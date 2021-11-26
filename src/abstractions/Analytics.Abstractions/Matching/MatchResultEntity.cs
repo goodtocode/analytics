@@ -11,6 +11,8 @@ namespace GoodToCode.Analytics.Abstractions
         [JsonInclude]
         public string RowKey  { get; set; }
         [JsonInclude]
+        public DateTimeOffset? Timestamp { get; set; }
+        [JsonInclude]
         public string MatchRuleRowKey  { get; set; }
         [JsonInclude]
         public string DataSourceRowKey  { get; set; }
