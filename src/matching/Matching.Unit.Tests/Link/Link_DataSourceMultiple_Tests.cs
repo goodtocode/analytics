@@ -30,7 +30,6 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         public IWorkbookData SutRules { get; private set; }
         public IWorkbookData SutWorkbook { get; private set; }
 
-
         public Link_DataSourceMultiple_Tests()
         {
             configuration = AppConfigurationFactory.Create();
@@ -38,14 +37,14 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             excelService = ExcelServiceFactory.GetInstance().CreateExcelService();
             configRule = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                Persist_Rules_ActivityTests.SutTable);
+                Persist_RulesMultiple_ActivityTests.SutTable);
             configDataSource = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
                 Persist_DataSource_ActivityTests.SutTable);
             configDestination = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-{StorageTableNames.MultipleResultsTable}");
-            RulePartitionKeys = new List<string>() { "Invalid", "ByAddressAndH2", "ByAddressAndH1", "ByAddressAndTitle", "ByAddress-3", "ByAddress-2", "ByAddress-1", "NotMatched" };
+                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-{StorageTableNames.ResultsMultipleTable}");
+            RulePartitionKeys = new List<string>() { "Invalid", "Attributes-Address", "Attributes-Title", "Attributes-H1", "Attributes-H2", "Categories-Address", "Categories-Title", "Categories-H1", "Categories-H2" };
         }
 
         [TestMethod]
@@ -149,7 +148,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         public async Task Link_HtmlScrapeMultiple_Storage()
         {            
             await new Persist_DataSource_ActivityTests().Ingress_DataSource_Orchestration();
-            await new Persist_Rules_ActivityTests().Ingress_Rules_Orchestration();
+            await new Persist_RulesMultiple_ActivityTests().Ingress_RulesMultiple_Orchestration();
             var rules = new List<MatchingRuleEntity>();
             foreach (var partitionKey in RulePartitionKeys)
                 rules.AddRange(new StorageTablesService<MatchingRuleEntity>(configRule).GetAndCastItems(r => r.PartitionKey == partitionKey));

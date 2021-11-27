@@ -16,23 +16,23 @@ using System.Threading.Tasks;
 namespace GoodToCode.Analytics.Matching.Unit.Tests
 {
     [TestClass]
-    public class Persist_Rules_ActivityTests
+    public class Persist_RulesMultiple_ActivityTests
     {
-        private readonly ILogger<Persist_Rules_ActivityTests> logItem;
+        private readonly ILogger<Persist_RulesMultiple_ActivityTests> logItem;
         private readonly IConfiguration configuration;
         private readonly StorageTablesServiceConfiguration configStorage;
         private readonly IExcelService excelService;
 
-        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential.xlsx"; } }
+        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Multiple.xlsx"; } }
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
-        public static string SutTable { get; } = $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-{StorageTableNames.RuleTable}";
+        public static string SutTable { get; } = $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-{StorageTableNames.RuleMultipleTable}";
 
-        public Persist_Rules_ActivityTests()
+        public Persist_RulesMultiple_ActivityTests()
         {
             configuration = AppConfigurationFactory.Create();
-            logItem = LoggerFactory.CreateLogger<Persist_Rules_ActivityTests>();
+            logItem = LoggerFactory.CreateLogger<Persist_RulesMultiple_ActivityTests>();
             excelService = ExcelServiceFactory.GetInstance().CreateExcelService();
             configStorage = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
@@ -40,7 +40,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         }
 
         [TestMethod]
-        public async Task Ingress_Rules_Orchestration()
+        public async Task Ingress_RulesMultiple_Orchestration()
         {
             Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 
