@@ -5,7 +5,6 @@ using GoodToCode.Shared.Blob.Excel;
 using GoodToCode.Shared.Persistence.StorageTables;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -39,13 +38,13 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             excelService = ExcelServiceFactory.GetInstance().CreateExcelService();
             configRule = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                Persist_Rules_ActivityTests.SutTable);
+                Persist_RulesSequential_ActivityTests.SutTable);
             configDataSource = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
                 Persist_DataSource_ActivityTests.SutTable);
             configDestination = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-{StorageTableNames.SequentialResultsTable}");
+                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-{StorageTableNames.ResultsSequentialTable}");
             RulePartitionKeys = new List<string>() { "Invalid", "ByAddressAndH2", "ByAddressAndH1", "ByAddressAndTitle", "ByAddress-3", "ByAddress-2", "ByAddress-1", "NotMatched" };
         }
 
@@ -150,7 +149,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         public async Task Link_HtmlScrapeSequential_Storage()
         {            
             await new Persist_DataSource_ActivityTests().Ingress_DataSource_Orchestration();
-            await new Persist_Rules_ActivityTests().Ingress_Rules_Orchestration();
+            await new Persist_RulesSequential_ActivityTests().Ingress_RulesSequential_Orchestration();
             var rules = new List<MatchingRuleEntity>();
             foreach (var partitionKey in RulePartitionKeys)
                 rules.AddRange(new StorageTablesService<MatchingRuleEntity>(configRule).GetAndCastItems(r => r.PartitionKey == partitionKey));

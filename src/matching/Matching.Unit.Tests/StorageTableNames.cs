@@ -2,9 +2,10 @@
 {
     public struct StorageTableNames
     {
-        public static string RuleTable { get; } = "Filter-Rules";
-        public static string DataSourceTable { get; } = "Filter-DataSource";
-        public static string SequentialResultsTable { get; } = "Filter-Results-Sequential";
-        public static string MultipleResultsTable { get; } = "Filter-Results-Multiple";
+        public static string RuleMultipleTable { get; } = "FilterRulesMultiple";
+        public static string RuleSequentialTable { get; } = "FilterRulesSequential";
+        public static string DataSourceTable { get; } = "FilterDataSource";
+        public static string ResultsSequentialTable { get; } = "FilterResultsSequential";
+        public static string ResultsMultipleTable { get; } = "FilterResultsMultiple";
     }
 }
