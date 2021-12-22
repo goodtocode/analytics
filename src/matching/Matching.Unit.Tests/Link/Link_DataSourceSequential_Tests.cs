@@ -148,24 +148,13 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         [TestMethod]
         public async Task Link_HtmlScrapeSequential_Storage()
         {
-            //await new Persist_DataSource_ActivityTests().Ingress_DataSource_Orchestration();
-            //await new Persist_RulesSequential_ActivityTests().Ingress_RulesSequential_Orchestration();
-
-            var configRulesLocal = new StorageTablesServiceConfiguration(
-                "DefaultEndpointsProtocol=https;AccountName=stssaasdev001;AccountKey=+JxJop8Zfv5rk1JL9NaYcaVHPn60klyePxLQYv1Gsl2jHVbsanW+GukaVVU0i47+TKewxaUdN3HRdKrpcAhUcw==;EndpointSuffix=core.windows.net",
-                StorageTableNames.RuleSequentialTable);
-            var configDataSourceLocal = new StorageTablesServiceConfiguration(
-                "DefaultEndpointsProtocol=https;AccountName=stssaasdev001;AccountKey=+JxJop8Zfv5rk1JL9NaYcaVHPn60klyePxLQYv1Gsl2jHVbsanW+GukaVVU0i47+TKewxaUdN3HRdKrpcAhUcw==;EndpointSuffix=core.windows.net",
-                StorageTableNames.DataSourceTable);
-            var configDestinationLocal = new StorageTablesServiceConfiguration(
-                "DefaultEndpointsProtocol=https;AccountName=stssaasdev001;AccountKey=+JxJop8Zfv5rk1JL9NaYcaVHPn60klyePxLQYv1Gsl2jHVbsanW+GukaVVU0i47+TKewxaUdN3HRdKrpcAhUcw==;EndpointSuffix=core.windows.net",
-                StorageTableNames.ResultsSequentialTable);
-
-            var rules = new StorageTablesService<MatchingRuleEntity>(configRulesLocal).GetAndCastItems(r => r.PartitionKey != "");
-            var dataSource = new StorageTablesService<DataSourceEntity>(configDataSourceLocal).GetAndCastItems(r => r.PartitionKey != "");
+            await new Persist_DataSource_ActivityTests().Ingress_DataSource_Orchestration();
+            await new Persist_RulesSequential_ActivityTests().Ingress_RulesSequential_Orchestration();
+            var rules = new StorageTablesService<MatchingRuleEntity>(configRule).GetAndCastItems(r => r.PartitionKey != "");
+            var dataSource = new StorageTablesService<DataSourceEntity>(configDataSource).GetAndCastItems(r => r.PartitionKey != "");
             var workflowLink = new LinkDataSourceSequentialActivity<DataSourceEntity>();
             var linkResults = workflowLink.Execute(rules, dataSource);
-            var workflowPersist = new PersistMatchResultActivity<DataSourceEntity>(configDestinationLocal);
+            var workflowPersist = new PersistMatchResultActivity<DataSourceEntity>(configDestination);
 
             var results = await workflowPersist.ExecuteAsync(linkResults);
             Assert.IsTrue(results.Any());

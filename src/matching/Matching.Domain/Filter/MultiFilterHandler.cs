@@ -24,7 +24,7 @@ namespace GoodToCode.Analytics.Matching.Domain
             foreach (var filter in Filters)
             {
                 filteredList = filteredList == null ? filterableList : finalList;
-                finalList = filteredList.Where(filter.Expression.Compile());
+                finalList = filteredList?.Where(filter.Expression.Compile());
             }
                 
             FilteredList = filteredList?.ToList() ?? new List<T>();

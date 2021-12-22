@@ -20,10 +20,8 @@ namespace GoodToCode.Analytics.Matching.Domain
 
         public IEnumerable<T> ApplyFilter(IEnumerable<T> filterableList)
         {
-            if (!filterableList.Any())
-                throw new ArgumentException("filterableList must not be empty. ChainableFilterHandler:ApplyFilter()", filterableList.GetType().Name);
-
-            FilteredList = filterableList.Where(Filter.Expression.Compile());
+            var filteredList = filterableList.Where(Filter.Expression.Compile());
+            FilteredList = filteredList?.ToList() ?? new List<T>();
             return FilteredList;
         }
     }
