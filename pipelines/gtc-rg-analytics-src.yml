@@ -27,7 +27,7 @@ variables:
 
 stages:
   - stage: development
-    condition: and(ne(variables['Build.SourceBranch'], 'refs/heads/main'), not(startsWith(variables['Build.SourceBranch'], 'refs/pull')), ne(variables['Build.Reason'], 'PullRequest'))
+    condition: ne(variables['Build.SourceBranch'], 'refs/heads/main')
     variables:
       - template: variables/development.yml
       
