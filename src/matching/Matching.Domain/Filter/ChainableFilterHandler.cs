@@ -1,4 +1,5 @@
 ﻿using GoodToCode.Analytics.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,7 +20,8 @@ namespace GoodToCode.Analytics.Matching.Domain
 
         public IEnumerable<T> ApplyFilter(IEnumerable<T> filterableList)
         {
-            FilteredList = filterableList.Where(Filter.Expression.Compile());
+            var filteredList = filterableList.Where(Filter.Expression.Compile());
+            FilteredList = filteredList?.ToList() ?? new List<T>();
             return FilteredList;
         }
     }

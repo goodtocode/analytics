@@ -147,17 +147,17 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
 
         [TestMethod]
         public async Task Link_HtmlScrapeSequential_Storage()
-        {            
+        {
             await new Persist_DataSource_ActivityTests().Ingress_DataSource_Orchestration();
             await new Persist_RulesSequential_ActivityTests().Ingress_RulesSequential_Orchestration();
-            var rules = new List<MatchingRuleEntity>();
-            foreach (var partitionKey in RulePartitionKeys)
-                rules.AddRange(new StorageTablesService<MatchingRuleEntity>(configRule).GetAndCastItems(r => r.PartitionKey == partitionKey));
+            var rules = new StorageTablesService<MatchingRuleEntity>(configRule).GetAndCastItems(r => r.PartitionKey != "");
             var dataSource = new StorageTablesService<DataSourceEntity>(configDataSource).GetAndCastItems(r => r.PartitionKey != "");
             var workflowLink = new LinkDataSourceSequentialActivity<DataSourceEntity>();
             var linkResults = workflowLink.Execute(rules, dataSource);
             var workflowPersist = new PersistMatchResultActivity<DataSourceEntity>(configDestination);
-            var Results = await workflowPersist.ExecuteAsync(linkResults);
+
+            var results = await workflowPersist.ExecuteAsync(linkResults);
+            Assert.IsTrue(results.Any());
         }
 
         [TestCleanup]

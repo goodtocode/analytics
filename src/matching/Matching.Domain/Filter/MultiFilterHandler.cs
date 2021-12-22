@@ -17,14 +17,14 @@ namespace GoodToCode.Analytics.Matching.Domain
         public IEnumerable<T> ApplyFilter(IEnumerable<T> filterableList)
         {
             if (!filterableList.Any())
-                throw new ArgumentException("filterableList must not be empty.", filterableList.GetType().Name);
+                throw new ArgumentException("filterableList must not be empty. MultiFilterHandler:ApplyFilter()", filterableList.GetType().Name);
 
             IEnumerable<T> filteredList = null;
             IEnumerable<T> finalList = null;
             foreach (var filter in Filters)
             {
                 filteredList = filteredList == null ? filterableList : finalList;
-                finalList = filteredList.Where(filter.Expression.Compile());
+                finalList = filteredList?.Where(filter.Expression.Compile());
             }
                 
             FilteredList = filteredList?.ToList() ?? new List<T>();

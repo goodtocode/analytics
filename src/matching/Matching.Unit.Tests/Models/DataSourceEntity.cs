@@ -14,31 +14,31 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         [JsonInclude]
         public string PartitionKey { get { return _partitionKey; } set { _partitionKey = value; } }
         [JsonInclude]
-        public string RowKey { get; } = Guid.NewGuid().ToString();
+        public string RowKey { get; set; } = Guid.NewGuid().ToString();
         [JsonInclude]
         public DateTimeOffset? Timestamp { get; set; } = DateTime.UtcNow;
         [JsonInclude]
-        public string Address { get; }
+        public string Address { get; set; }
         [JsonInclude]
-        public string ContentType { get; }
+        public string ContentType { get; set; }
         [JsonInclude]
-        public string StatusCode { get; }
+        public string StatusCode { get; set; }
         [JsonInclude]
-        public string Status { get; }
+        public string Status { get; set; }
         [JsonInclude]
-        public string Indexability { get; }
+        public string Indexability { get; set; }
         [JsonInclude]
-        public string IndexabilityStatus { get; }
+        public string IndexabilityStatus { get; set; }
         [JsonInclude]
-        public string Title1 { get; }
+        public string Title1 { get; set; }
         [JsonInclude]
-        public string H1_1 { get; }
+        public string H1_1 { get; set; }
         [JsonInclude]
-        public string H1_2 { get; }
+        public string H1_2 { get; set; }
         [JsonInclude]
-        public string H2_1 { get; }
+        public string H2_1 { get; set; }
         [JsonInclude]
-        public string H2_2 { get; }
+        public string H2_2 { get; set; }
 
         public DataSourceEntity() { }
         public DataSourceEntity(string partition)
