@@ -1,4 +1,5 @@
 ﻿using GoodToCode.Analytics.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,6 +20,9 @@ namespace GoodToCode.Analytics.Matching.Domain
 
         public IEnumerable<T> ApplyFilter(IEnumerable<T> filterableList)
         {
+            if (!filterableList.Any())
+                throw new ArgumentException("filterableList must not be empty. ChainableFilterHandler:ApplyFilter()", filterableList.GetType().Name);
+
             FilteredList = filterableList.Where(Filter.Expression.Compile());
             return FilteredList;
         }

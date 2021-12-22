@@ -1,7 +1,6 @@
 ﻿using GoodToCode.Analytics.Abstractions;
 using GoodToCode.Analytics.Matching.Domain;
 using GoodToCode.Shared.Persistence.Abstractions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
