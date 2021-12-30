@@ -20,8 +20,6 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
     {
         private readonly ILogger<Link_DataSourceMultiple_Tests> logItem;
         private readonly IConfiguration configuration;
-        private readonly StorageTablesServiceConfiguration configRule;
-        private readonly StorageTablesServiceConfiguration configDataSource;
         private readonly StorageTablesServiceConfiguration configDestination;
         private readonly IExcelService excelService;
         private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-DataSource-Small.xlsx"; } }
@@ -35,16 +33,9 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             configuration = AppConfigurationFactory.Create();
             logItem = LoggerFactory.CreateLogger<Link_DataSourceMultiple_Tests>();
             excelService = ExcelServiceFactory.GetInstance().CreateExcelService();
-            configRule = new StorageTablesServiceConfiguration(
-                configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                Persist_RulesMultiple_ActivityTests.SutTable);
-            configDataSource = new StorageTablesServiceConfiguration(
-                configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                Persist_DataSource_ActivityTests.SutTable);
             configDestination = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
                 $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-{StorageTableNames.ResultsMultipleTable}");
-            RulePartitionKeys = new List<string>() { "Invalid", "Attributes-Address", "Attributes-Title", "Attributes-H1", "Attributes-H2", "Categories-Address", "Categories-Title", "Categories-H1", "Categories-H2" };
         }
 
         [TestMethod]
@@ -80,7 +71,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         }
 
         [TestMethod]
-        public async Task Link_HtmlScrapeMultiple_Orchestration()
+        public async Task Link_HtmlScrapeMultiple_OrchestrationFake()
         {
             Assert.IsTrue(File.Exists(SutDataSourceFile), $"{SutDataSourceFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
             Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
@@ -142,21 +133,6 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 logItem.LogError(ex.Message, ex);
                 Assert.Fail(ex.Message);
             }
-        }
-
-        [TestMethod]
-        public async Task Link_HtmlScrapeMultiple_Storage()
-        {            
-            await new Persist_DataSource_ActivityTests().Ingress_DataSource_Orchestration();
-            await new Persist_RulesMultiple_ActivityTests().Ingress_RulesMultiple_Orchestration();
-            var rules = new List<MatchingRuleEntity>();
-            foreach (var partitionKey in RulePartitionKeys)
-                rules.AddRange(new StorageTablesService<MatchingRuleEntity>(configRule).GetAndCastItems(r => r.PartitionKey == partitionKey));
-            var dataSource = new StorageTablesService<DataSourceEntity>(configDataSource).GetAndCastItems(r => r.PartitionKey != "");
-            var workflowLink = new LinkDataSourceMultipleActivity<DataSourceEntity>();
-            var linkResults = workflowLink.Execute(rules, dataSource);
-            var workflowPersist = new PersistMatchResultActivity<DataSourceEntity>(configDestination);
-            var Results = await workflowPersist.ExecuteAsync(linkResults);
         }
 
         [TestCleanup]

@@ -20,8 +20,8 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         private readonly ILogger<Filter_SequentialFilter_ActivityTests> logItem;
         private readonly ExcelService excelService;
         private static string SutOpinionFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
-        private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-DataSource-Small.xlsx"; } }
-        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential.xlsx"; } }
+        private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/03-Matching-DataSource-Small.xlsx"; } }
+        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/03-Matching-Rule-Sequential.xlsx"; } }
         public RowEntity SutRow { get; private set; }
         public IEnumerable<ICellData> SutCells { get; private set; }
         public IEnumerable<FilterExpression<ICellData>> SutFilters { get; private set; }
@@ -48,37 +48,8 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var workflow = new SequentialFilterActivity<ICellData>(SutFilters);
                 var results = workflow.Execute(SutCells);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
-                foreach (var result in results)
-                    Assert.IsTrue(!string.IsNullOrWhiteSpace(result.CellValue), "No results from filter service.");
-            }
-            catch (Exception ex)
-            {
-                logItem.LogError(ex.Message, ex);
-                Assert.Fail(ex.Message);
-            }
-        }
-
-        [TestMethod]
-        public async Task SequentialFilter_Activity_Invalid()
-        {
-            Assert.IsTrue(File.Exists(SutDataSourceFile), $"{SutDataSourceFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
-            Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
-
-            SutFilters = new List<FilterExpression<ICellData>>() { 
-                new FilterExpression<ICellData>(x => x.ColumnName == "Status" && x.CellValue != "OK"),
-                new FilterExpression<ICellData>(x => x.ColumnName == "Content Type" && x.CellValue != "text/html; charset=utf-8")
-            };
-
-            try
-            {
-                var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile);
-                Stream itemToAnalyze = new MemoryStream(bytes);
-                SutCells = excelService.GetSheet(itemToAnalyze, 0).Cells;
-                var workflow = new SequentialFilterActivity<ICellData>(SutFilters);
-                var results = workflow.Execute(SutCells);
-                Assert.IsTrue(results.Any(), "No results from filter service.");
-                foreach (var result in results)
-                    Assert.IsTrue(!string.IsNullOrWhiteSpace(result.CellValue), "No results from filter service.");
+                var nonBlanks = results.Where(x => string.IsNullOrWhiteSpace(x.CellValue) == false);
+                Assert.IsTrue(nonBlanks.Any(), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -94,7 +65,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 
             SutFilters = new List<FilterExpression<ICellData>>() {
-                new FilterExpression<ICellData>(x => x.ColumnName == "Address" && x.CellValue.Contains("/bulk-discounts")),
+                new FilterExpression<ICellData>(x => x.ColumnName == "Address" && x.CellValue.Contains("/bulk-discounts") == false),
                 new FilterExpression<ICellData>(x => x.ColumnName == "H2-1" && x.CellValue == "Certification Discounts")
             };
 
@@ -106,8 +77,8 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var workflow = new SequentialFilterActivity<ICellData>(SutFilters);
                 var results = workflow.Execute(SutCells);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
-                foreach (var result in results)
-                    Assert.IsTrue(!string.IsNullOrWhiteSpace(result.CellValue), "No results from filter service.");
+                var nonBlanks = results.Where(x => string.IsNullOrWhiteSpace(x.CellValue) == false);
+                Assert.IsTrue(nonBlanks.Any(), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -123,8 +94,8 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 
             SutFilters = new List<FilterExpression<ICellData>>() { 
-                new FilterExpression<ICellData>(x => x.ColumnName == "Address" && x.CellValue.Contains("/newsroom/clinical-voices")),
-                new FilterExpression<ICellData>(x => x.ColumnName == "H1-1" && x.CellValue.StartsWith("Clinical Voices"))
+                new FilterExpression<ICellData>(x => x.ColumnName == "Address" && x.CellValue.Contains("/newsroom/clinical-voices") == false),
+                new FilterExpression<ICellData>(x => x.ColumnName == "H1-1" && x.CellValue.StartsWith("Clinical Voices") == false)
             };
 
             try
@@ -135,8 +106,8 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var workflow = new SequentialFilterActivity<ICellData>(SutFilters);
                 var results = workflow.Execute(SutCells);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
-                foreach(var result in results)
-                    Assert.IsTrue(!string.IsNullOrWhiteSpace(result.CellValue), "No results from filter service.");
+                var nonBlanks = results.Where(x => string.IsNullOrWhiteSpace(x.CellValue) == false);
+                Assert.IsTrue(nonBlanks.Any(), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -152,8 +123,8 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 
             SutFilters = new List<FilterExpression<ICellData>>() {
-                new FilterExpression<ICellData>(x => x.ColumnName == "Address" && x.CellValue.Contains("/education/webinar-series")),
-                new FilterExpression<ICellData>(x => x.ColumnName == "H1-1" && x.CellValue.StartsWith("Nurse"))
+                new FilterExpression<ICellData>(x => x.ColumnName == "Address" && x.CellValue.Contains("/education/webinar-series") == false),
+                new FilterExpression<ICellData>(x => x.ColumnName == "H1-1" && x.CellValue.StartsWith("Nurse") == false)
             };
 
             try
@@ -164,8 +135,8 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var workflow = new SequentialFilterActivity<ICellData>(SutFilters);
                 var results = workflow.Execute(SutCells);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
-                foreach (var result in results)
-                    Assert.IsTrue(!string.IsNullOrWhiteSpace(result.CellValue), "No results from filter service.");
+                var nonBlanks = results.Where(x => string.IsNullOrWhiteSpace(x.CellValue) == false);
+                Assert.IsTrue(nonBlanks.Any(), "No results from filter service.");
             }
             catch (Exception ex)
             {
@@ -181,7 +152,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 
             SutFilters = new List<FilterExpression<ICellData>>() {
-                new FilterExpression<ICellData>(x => x.ColumnName == "Address" && x.CellValue.Contains("/education/webinar-series"))
+                new FilterExpression<ICellData>(x => x.ColumnName == "Address" && x.CellValue.Contains("/education/webinar-series") == false)
             };
 
             try
@@ -192,8 +163,8 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var workflow = new SequentialFilterActivity<ICellData>(SutFilters);
                 var results = workflow.Execute(SutCells);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
-                foreach (var result in results)
-                    Assert.IsTrue(!string.IsNullOrWhiteSpace(result.CellValue), "No results from filter service.");
+                var nonBlanks = results.Where(x => string.IsNullOrWhiteSpace(x.CellValue) == false);
+                Assert.IsTrue(nonBlanks.Any(), "No results from filter service.");
             }
             catch (Exception ex)
             {
