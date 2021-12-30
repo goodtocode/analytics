@@ -23,7 +23,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         private readonly StorageTablesServiceConfiguration configStorage;
         private readonly IExcelService excelService;
 
-        private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-DataSource-Small.xlsx"; } }
+        private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/03-Matching-DataSource-Small.xlsx"; } }
         public RowEntity SutRow { get; private set; }
         public IEnumerable<RowEntity> SutRows { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
@@ -40,7 +40,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         }
 
         [TestMethod]
-        public async Task Ingress_DataSource_Orchestration()
+        public async Task Ingress_DataSource_OrchestrationFake()
         {
             Assert.IsTrue(File.Exists(SutDataSourceFile), $"{SutDataSourceFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 

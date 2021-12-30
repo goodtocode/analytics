@@ -24,12 +24,11 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         private readonly StorageTablesServiceConfiguration configDataSource;
         private readonly StorageTablesServiceConfiguration configDestination;
         private readonly IExcelService excelService;
-        private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-DataSource-Small.xlsx"; } }
-        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential.xlsx"; } }
+        private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/03-Matching-DataSource-Small.xlsx"; } }
+        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/03-Matching-Rule-Sequential.xlsx"; } }
         public IEnumerable<string> RulePartitionKeys { get; private set; }
         public IWorkbookData SutRules { get; private set; }
         public IWorkbookData SutWorkbook { get; private set; }
-
 
         public Link_DataSourceSequential_Tests()
         {
@@ -44,8 +43,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 Persist_DataSource_ActivityTests.SutTable);
             configDestination = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-{StorageTableNames.ResultsSequentialTable}");
-            RulePartitionKeys = new List<string>() { "Invalid", "ByAddressAndH2", "ByAddressAndH1", "ByAddressAndTitle", "ByAddress-3", "ByAddress-2", "ByAddress-1", "NotMatched" };
+                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-{StorageTableNames.ResultsSequentialTable}");            
         }
 
         [TestMethod]
@@ -81,7 +79,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         }
 
         [TestMethod]
-        public async Task Link_HtmlScrapeSequential_Orchestration()
+        public async Task Link_HtmlScrapeSequential_OrchestrationFake()
         {
             Assert.IsTrue(File.Exists(SutDataSourceFile), $"{SutDataSourceFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
             Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
@@ -148,8 +146,8 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         [TestMethod]
         public async Task Link_HtmlScrapeSequential_Storage()
         {
-            await new Persist_DataSource_ActivityTests().Ingress_DataSource_Orchestration();
-            await new Persist_RulesSequential_ActivityTests().Ingress_RulesSequential_Orchestration();
+            await new Persist_DataSource_ActivityTests().Ingress_DataSource_OrchestrationFake();
+            await new Persist_RulesSequential_ActivityTests().Ingress_RulesSequential_OrchestrationFake();
             var rules = new StorageTablesService<MatchingRuleEntity>(configRule).GetAndCastItems(r => r.PartitionKey != "");
             var dataSource = new StorageTablesService<DataSourceEntity>(configDataSource).GetAndCastItems(r => r.PartitionKey != "");
             var workflowLink = new LinkDataSourceSequentialActivity<DataSourceEntity>();

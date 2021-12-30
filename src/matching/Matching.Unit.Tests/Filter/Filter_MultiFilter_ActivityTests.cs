@@ -20,8 +20,8 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         private readonly ILogger<Filter_MultiFilter_ActivityTests> logItem;
         private readonly ExcelService excelService;
         private static string SutOpinionFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
-        private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-DataSource-Small.xlsx"; } }
-        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Sequential.xlsx"; } }
+        private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/03-Matching-DataSource-Small.xlsx"; } }
+        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/03-Matching-Rule-Sequential.xlsx"; } }
         public RowEntity SutRow { get; private set; }
         public IEnumerable<ICellData> SutSheet { get; private set; }
         public IEnumerable<FilterExpression<ICellData>> SutFilters { get; private set; }
