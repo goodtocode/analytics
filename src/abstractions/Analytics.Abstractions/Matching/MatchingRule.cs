@@ -13,6 +13,8 @@ namespace GoodToCode.Analytics.Matching.Domain
         public string MatchValue { get; private set; }
         [JsonInclude]
         public string MatchResult { get; private set; }
+        [JsonInclude]
+        public int Order { get; set; }
 
         public MatchingRule() { }
 

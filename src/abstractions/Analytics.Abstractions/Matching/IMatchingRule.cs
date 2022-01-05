@@ -6,5 +6,6 @@
         string MatchResult { get; }
         string MatchType { get; }
         string MatchValue { get; }
+        int Order { get; }
     }
 }

@@ -16,34 +16,37 @@ namespace GoodToCode.Analytics.Abstractions
         }
         
         [JsonInclude]
-        public string PartitionKey  { get; set; }
+        public string PartitionKey { get; set; }
         [JsonInclude]
-        public string RowKey  { get; set; }
+        public string RowKey { get; set; }
         [JsonInclude]
         public DateTimeOffset? Timestamp { get; set; }
         [JsonInclude]
-        public string MatchColumn  { get; set; }
+        public string MatchColumn { get; set; }
         [JsonInclude]
-        public string MatchResult  { get; set; }
+        public string MatchResult { get; set; }
         [JsonInclude]
-        public string MatchType  { get; set; }
+        public string MatchType { get; set; }
         [JsonInclude]
-        public string MatchValue  { get; set; }
+        public string MatchValue { get; set; }
+        [JsonInclude]
+        public int Order { get; set; }
 
         public MatchingRuleEntity() { }
 
-        public MatchingRuleEntity(IRowData row)
+        public MatchingRuleEntity(IRowData row, int index)
         {
             var cells = row.Cells;
             if (!cells.Any())
                 throw new ArgumentException("Argument list is empty.", cells.GetType().Name);
 
             PartitionKey = cells.FirstOrDefault().SheetName;
-            RowKey = Guid.NewGuid().ToString();
+            RowKey = Guid.NewGuid().ToString();            
             MatchColumn = cells.Where(c => c.ColumnName == Columns.MatchColumn).FirstOrDefault().CellValue;
             MatchType = cells.Where(c => c.ColumnName == Columns.MatchType).FirstOrDefault().CellValue;
             MatchValue = cells.Where(c => c.ColumnName == Columns.MatchValue).FirstOrDefault().CellValue;
             MatchResult = cells.Where(c => c.ColumnName == Columns.MatchResult).FirstOrDefault().CellValue;
+            Order = index;
         }
 
         public override string ToString()
