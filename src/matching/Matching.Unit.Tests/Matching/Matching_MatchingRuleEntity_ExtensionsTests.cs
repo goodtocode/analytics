@@ -90,6 +90,27 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             }
         }
 
+        [TestMethod]
+        public async Task Matching_WorkbookData_Order()
+        {
+            Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
+            try
+            {
+                var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutRuleFile);
+                Stream itemToAnalyze = new MemoryStream(bytes);
+                SutWorkbook = excelService.GetWorkbook(itemToAnalyze);
+                var matchingEntity = SutWorkbook.ToMatchingRule();
+                Assert.IsTrue(matchingEntity.Any());
+                Assert.IsTrue(matchingEntity.FirstOrDefault().MatchColumn != null);
+                Assert.IsTrue(matchingEntity.FirstOrDefault().Order < matchingEntity.LastOrDefault().Order);
+            }
+            catch (Exception ex)
+            {
+                logItem.LogError(ex.Message, ex);
+                Assert.Fail(ex.Message);
+            }
+        }
+
         [TestCleanup]
         public void Cleanup()
         {
