@@ -12,8 +12,8 @@ namespace GoodToCode.Analytics.Abstractions
         
         public static FilterExpression<T> ToFilterExpression<T>(this MatchingRuleEntity rule)
         {
-            // Check if property exists
             var matchColumn = rule.MatchColumn;
+
             if (typeof(T).GetProperty(matchColumn) == null)
             {
                 matchColumn = rule.MatchColumn.ToIdentifier();
