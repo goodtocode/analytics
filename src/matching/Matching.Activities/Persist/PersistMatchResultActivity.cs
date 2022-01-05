@@ -25,9 +25,9 @@ namespace GoodToCode.Analytics.Matching.Activities
         {
             var returnData = new List<TableEntity>();
             
-            await servicePersist.DeletePartitionsAsync(entities.Select(c => c.PartitionKey).Distinct());
             foreach (var row in entities)
                 returnData.Add(await ExecuteAsync(row));
+
             return returnData;
         }
 

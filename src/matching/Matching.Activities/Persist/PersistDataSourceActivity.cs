@@ -2,7 +2,6 @@
 using GoodToCode.Shared.Persistence.Abstractions;
 using GoodToCode.Shared.Persistence.StorageTables;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace GoodToCode.Analytics.Matching.Activities
@@ -19,7 +18,6 @@ namespace GoodToCode.Analytics.Matching.Activities
 
         public async Task<IEnumerable<TableEntity>> ExecuteAsync(IEnumerable<TDataSource> dataSource)
         {
-            await servicePersist.DeletePartitionsAsync(dataSource.Select(c => c.PartitionKey).Distinct());
             return await servicePersist.AddItemsAsync(dataSource);
         }
     }
