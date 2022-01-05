@@ -19,8 +19,6 @@ namespace GoodToCode.Analytics.Matching.Activities
 
         public async Task<IEnumerable<TableEntity>> ExecuteAsync(IEnumerable<MatchingRuleEntity> dataSource)
         {
-            await servicePersist.DeletePartitionsAsync(dataSource.Select(c => c.PartitionKey).Distinct());
-
             return await servicePersist.AddItemsAsync(dataSource);
         }
     }
