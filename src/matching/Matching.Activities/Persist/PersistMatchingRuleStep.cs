@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace GoodToCode.Analytics.Matching.Activities
 {
-    public class PersistMatchingRuleActivity
+    public class PersistMatchingRuleStep
     {
         public IEnumerable<TableEntity> Results;
         private readonly IStorageTablesService<MatchingRuleEntity> servicePersist;
 
-        public PersistMatchingRuleActivity(StorageTablesServiceConfiguration configStorage)
+        public PersistMatchingRuleStep(StorageTablesServiceConfiguration configStorage)
         {
             servicePersist = new StorageTablesService<MatchingRuleEntity>(configStorage);
         }

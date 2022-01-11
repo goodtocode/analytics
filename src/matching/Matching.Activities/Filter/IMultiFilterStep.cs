@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GoodToCode.Analytics.Matching.Activities
 {
-    public interface IMultiFilterActivity<T>
+    public interface IMultiFilterStep<T>
     {
         MultiFilterHandler<T> Handler { get; }
         IEnumerable<T> Results { get; }

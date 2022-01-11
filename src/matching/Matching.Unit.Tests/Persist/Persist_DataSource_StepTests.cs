@@ -16,9 +16,9 @@ using System.Threading.Tasks;
 namespace GoodToCode.Analytics.Matching.Unit.Tests
 {
     [TestClass]
-    public class Persist_DataSource_ActivityTests
+    public class Persist_DataSource_StepTests
     {
-        private readonly ILogger<Persist_DataSource_ActivityTests> logItem;
+        private readonly ILogger<Persist_DataSource_StepTests> logItem;
         private readonly IConfiguration configuration;
         private readonly StorageTablesServiceConfiguration configStorage;
         private readonly IExcelService excelService;
@@ -29,10 +29,10 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         public Dictionary<string, StringValues> SutReturn { get; private set; }
         public static string SutTable { get; } = $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-{StorageTableNames.DataSourceTable}";
 
-        public Persist_DataSource_ActivityTests()
+        public Persist_DataSource_StepTests()
         {
             configuration = AppConfigurationFactory.Create();
-            logItem = LoggerFactory.CreateLogger<Persist_DataSource_ActivityTests>();
+            logItem = LoggerFactory.CreateLogger<Persist_DataSource_StepTests>();
             excelService = ExcelServiceFactory.GetInstance().CreateExcelService();
             configStorage = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
@@ -49,7 +49,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
                 var ruleSheet = excelService.GetSheet(itemToAnalyze, 0);
-                var workflow = new PersistDataSourceActivity<DataSourceEntity>(configStorage);
+                var workflow = new PersistDataSourceStep<DataSourceEntity>(configStorage);
                 var results = await workflow.ExecuteAsync(ruleSheet.ToDataSourceEntity());
                 Assert.IsTrue(results.Any(), "No results from Excel service.");
             }

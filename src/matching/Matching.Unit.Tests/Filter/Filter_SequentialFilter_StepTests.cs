@@ -15,9 +15,9 @@ using System.Threading.Tasks;
 namespace GoodToCode.Analytics.Matching.Unit.Tests
 {
     [TestClass]
-    public class Filter_SequentialFilter_ActivityTests
+    public class Filter_SequentialFilter_StepTests
     {
-        private readonly ILogger<Filter_SequentialFilter_ActivityTests> logItem;
+        private readonly ILogger<Filter_SequentialFilter_StepTests> logItem;
         private readonly ExcelService excelService;
         private static string SutOpinionFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/OpinionFile.xlsx"; } }
         private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/03-Matching-DataSource-Small.xlsx"; } }
@@ -27,9 +27,9 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         public IEnumerable<FilterExpression<ICellData>> SutFilters { get; private set; }
         public Dictionary<string, StringValues> SutReturn { get; private set; }
 
-        public Filter_SequentialFilter_ActivityTests()
+        public Filter_SequentialFilter_StepTests()
         {
-            logItem = LoggerFactory.CreateLogger<Filter_SequentialFilter_ActivityTests>();
+            logItem = LoggerFactory.CreateLogger<Filter_SequentialFilter_StepTests>();
             excelService = ExcelServiceFactory.GetInstance().CreateExcelService();
         }
 
@@ -45,7 +45,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutOpinionFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
                 SutCells = excelService.GetSheet(itemToAnalyze, 0).Cells;
-                var workflow = new SequentialFilterActivity<ICellData>(SutFilters);
+                var workflow = new SequentialFilterStep<ICellData>(SutFilters);
                 var results = workflow.Execute(SutCells);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
                 var nonBlanks = results.Where(x => string.IsNullOrWhiteSpace(x.CellValue) == false);
@@ -74,7 +74,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
                 SutCells = excelService.GetSheet(itemToAnalyze, 0).Cells;
-                var workflow = new SequentialFilterActivity<ICellData>(SutFilters);
+                var workflow = new SequentialFilterStep<ICellData>(SutFilters);
                 var results = workflow.Execute(SutCells);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
                 var nonBlanks = results.Where(x => string.IsNullOrWhiteSpace(x.CellValue) == false);
@@ -103,7 +103,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
                 SutCells = excelService.GetSheet(itemToAnalyze, 0).Cells;
-                var workflow = new SequentialFilterActivity<ICellData>(SutFilters);
+                var workflow = new SequentialFilterStep<ICellData>(SutFilters);
                 var results = workflow.Execute(SutCells);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
                 var nonBlanks = results.Where(x => string.IsNullOrWhiteSpace(x.CellValue) == false);
@@ -132,7 +132,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
                 SutCells = excelService.GetSheet(itemToAnalyze, 0).Cells;
-                var workflow = new SequentialFilterActivity<ICellData>(SutFilters);
+                var workflow = new SequentialFilterStep<ICellData>(SutFilters);
                 var results = workflow.Execute(SutCells);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
                 var nonBlanks = results.Where(x => string.IsNullOrWhiteSpace(x.CellValue) == false);
@@ -160,7 +160,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile);
                 Stream itemToAnalyze = new MemoryStream(bytes);
                 SutCells = excelService.GetSheet(itemToAnalyze, 0).Cells;
-                var workflow = new SequentialFilterActivity<ICellData>(SutFilters);
+                var workflow = new SequentialFilterStep<ICellData>(SutFilters);
                 var results = workflow.Execute(SutCells);
                 Assert.IsTrue(results.Any(), "No results from filter service.");
                 var nonBlanks = results.Where(x => string.IsNullOrWhiteSpace(x.CellValue) == false);

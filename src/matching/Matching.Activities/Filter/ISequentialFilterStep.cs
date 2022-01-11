@@ -3,10 +3,9 @@ using System.Collections.Generic;
 
 namespace GoodToCode.Analytics.Matching.Activities
 {
-    public interface ISingleFilterActivity<T>
+    public interface ISequentialFilterStep<T>
     {
-        SingleFilterHandler<T> Handler { get; }
-        IEnumerable<T> Results { get; }
+        List<ChainableFilterHandler<T>> Handlers { get; }
 
         IEnumerable<T> Execute(IEnumerable<T> listToFilter);
     }
