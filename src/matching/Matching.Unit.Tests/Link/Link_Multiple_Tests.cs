@@ -16,38 +16,30 @@ using System.Threading.Tasks;
 namespace GoodToCode.Analytics.Matching.Unit.Tests
 {
     [TestClass]
-    public class Link_DataSourceSequential_Tests
+    public class Link_Multiple_Tests
     {
-        private readonly ILogger<Link_DataSourceSequential_Tests> logItem;
+        private readonly ILogger<Link_Multiple_Tests> logItem;
         private readonly IConfiguration configuration;
-        private readonly StorageTablesServiceConfiguration configRule;
-        private readonly StorageTablesServiceConfiguration configDataSource;
         private readonly StorageTablesServiceConfiguration configDestination;
         private readonly IExcelService excelService;
-        private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/03-Matching-DataSource-Small.xlsx"; } }
-        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/04-Matching-Rule-Sequential.xlsx"; } }
+        private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-DataSource-Small.xlsx"; } }
+        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/Matching-Rule-Multiple.xlsx"; } }
         public IEnumerable<string> RulePartitionKeys { get; private set; }
         public IWorkbookData SutRules { get; private set; }
         public IWorkbookData SutWorkbook { get; private set; }
 
-        public Link_DataSourceSequential_Tests()
+        public Link_Multiple_Tests()
         {
             configuration = AppConfigurationFactory.Create();
-            logItem = LoggerFactory.CreateLogger<Link_DataSourceSequential_Tests>();
+            logItem = LoggerFactory.CreateLogger<Link_Multiple_Tests>();
             excelService = ExcelServiceFactory.GetInstance().CreateExcelService();
-            configRule = new StorageTablesServiceConfiguration(
-                configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                Persist_RulesSequential_StepTests.SutTable);
-            configDataSource = new StorageTablesServiceConfiguration(
-                configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                Persist_DataSource_StepTests.SutTable);
             configDestination = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-{StorageTableNames.ResultsSequentialTable}");
+                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-{StorageTableNames.ResultsMultipleTable}");
         }
 
         [TestMethod]
-        public async Task Link_DataSourceSequential_Activity()
+        public async Task Link_Multiple_LinkDataSourceMultipleStep()
         {
             Assert.IsTrue(File.Exists(SutDataSourceFile), $"{SutDataSourceFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
             Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
@@ -66,7 +58,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                     var dataSourceRecords = new List<DataSourceEntity>();
                     foreach (var row in sheet.Rows)
                         dataSourceRecords.Add(new DataSourceEntity(row));
-                    var workflowLink = new LinkDataSourceSequentialStep<DataSourceEntity>();
+                    var workflowLink = new LinkDataSourceMultipleStep<DataSourceEntity>();
                     var linkResults = workflowLink.Execute(matchingEntity, dataSourceRecords);
                     Assert.IsTrue(linkResults.Any(), "No results from filter service.");
                 }
@@ -79,39 +71,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         }
 
         [TestMethod]
-        public async Task Link_HtmlScrapeSequential_OrchestrationFake()
-        {
-            Assert.IsTrue(File.Exists(SutDataSourceFile), $"{SutDataSourceFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
-            Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
-
-            try
-            {
-                // Load rules
-                Stream ruleStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutRuleFile));
-                SutRules = excelService.GetWorkbook(ruleStream);
-                var matchingEntity = SutRules.ToMatchingRule();
-                // Load data source
-                Stream dataSourceStream = new MemoryStream(await FileFactoryService.GetInstance().ReadAllBytesAsync(SutDataSourceFile));
-                SutWorkbook = excelService.GetWorkbook(dataSourceStream, Path.GetFileName(SutRuleFile));
-                foreach (var sheet in SutWorkbook.Sheets)
-                {
-                    var dataSourceRecords = new List<DataSourceEntity>();
-                    foreach (var row in sheet.Rows)
-                        dataSourceRecords.Add(new DataSourceEntity(row));
-                    var workflowLink = new LinkDataSourceSequentialStep<DataSourceEntity>();
-                    var linkResults = workflowLink.Execute(matchingEntity, dataSourceRecords);
-                    Assert.IsTrue(linkResults.Any(), "No results from filter service.");
-                }
-            }
-            catch (Exception ex)
-            {
-                logItem.LogError(ex.Message, ex);
-                Assert.Fail(ex.Message);
-            }
-        }
-
-        [TestMethod]
-        public async Task Link_HtmlScrapeSequential_Persist()
+        public async Task Link_Multiple_PersistMatchResultStep()
         {
             Assert.IsTrue(File.Exists(SutDataSourceFile), $"{SutDataSourceFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
             Assert.IsTrue(File.Exists(SutRuleFile), $"{SutRuleFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
@@ -128,7 +88,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 foreach (var sheet in SutWorkbook.Sheets)
                 {
                     var dataSourceRecords = sheet.ToDataSourceEntity();
-                    var workflowLink = new LinkDataSourceSequentialStep<DataSourceEntity>();
+                    var workflowLink = new LinkDataSourceMultipleStep<DataSourceEntity>();
                     var linkResults = workflowLink.Execute(matchingEntity, dataSourceRecords);
                     Assert.IsTrue(linkResults.Any(), "No results from filter service.");
                     var workflowPersist = new PersistMatchResultStep<DataSourceEntity>(configDestination);
@@ -141,21 +101,6 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 logItem.LogError(ex.Message, ex);
                 Assert.Fail(ex.Message);
             }
-        }
-
-        [TestMethod]
-        public async Task Link_HtmlScrapeSequential_Storage()
-        {
-            await new Persist_DataSource_StepTests().Ingress_DataSource_OrchestrationFake();
-            await new Persist_RulesSequential_StepTests().Ingress_RulesSequential_OrchestrationFake();
-            var rules = new StorageTablesService<MatchingRuleEntity>(configRule).GetAndCastItems(r => r.PartitionKey != "");
-            var dataSource = new StorageTablesService<DataSourceEntity>(configDataSource).GetAndCastItems(r => r.PartitionKey != "");
-            var workflowLink = new LinkDataSourceSequentialStep<DataSourceEntity>();
-            var linkResults = workflowLink.Execute(rules, dataSource);
-            var workflowPersist = new PersistMatchResultStep<DataSourceEntity>(configDestination);
-
-            var results = await workflowPersist.ExecuteAsync(linkResults);
-            Assert.IsTrue(results.Any());
         }
 
         [TestCleanup]
