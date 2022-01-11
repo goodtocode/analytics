@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 namespace GoodToCode.Analytics.Matching.Activities
 {
-    public class SingleFilterActivity<T> : ISingleFilterActivity<T>
+    public class MultiFilterStep<T> : IMultiFilterStep<T>
     {
-        public SingleFilterHandler<T> Handler { get; }
+        public MultiFilterHandler<T> Handler { get; }
         public IEnumerable<T> Results { get; private set; }
 
-        public SingleFilterActivity(FilterExpression<T> filter)
+        public MultiFilterStep(IEnumerable<FilterExpression<T>> filters)
         {
-            Handler = new SingleFilterHandler<T>(filter);
+            Handler = new MultiFilterHandler<T>(filters);
         }
 
         public IEnumerable<T> Execute(IEnumerable<T> listToFilter)

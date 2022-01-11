@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace GoodToCode.Analytics.Matching.Activities
 {
-    public class PersistDataSourceActivity<TDataSource> where TDataSource : class, IEntity, new()
+    public class PersistDataSourceStep<TDataSource> where TDataSource : class, IEntity, new()
     {
         public IEnumerable<TableEntity> Results;
         private readonly IStorageTablesService<TDataSource> servicePersist;
 
-        public PersistDataSourceActivity(StorageTablesServiceConfiguration configStorage)
+        public PersistDataSourceStep(StorageTablesServiceConfiguration configStorage)
         {
             servicePersist = new StorageTablesService<TDataSource>(configStorage);
         }

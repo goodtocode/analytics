@@ -25,7 +25,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         private readonly StorageTablesServiceConfiguration configDestination;
         private readonly IExcelService excelService;
         private static string SutDataSourceFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/03-Matching-DataSource-Small.xlsx"; } }
-        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/03-Matching-Rule-Sequential.xlsx"; } }
+        private static string SutRuleFile { get { return @$"{PathFactory.GetProjectSubfolder("Assets")}/04-Matching-Rule-Sequential.xlsx"; } }
         public IEnumerable<string> RulePartitionKeys { get; private set; }
         public IWorkbookData SutRules { get; private set; }
         public IWorkbookData SutWorkbook { get; private set; }
@@ -37,13 +37,13 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
             excelService = ExcelServiceFactory.GetInstance().CreateExcelService();
             configRule = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                Persist_RulesSequential_ActivityTests.SutTable);
+                Persist_RulesSequential_StepTests.SutTable);
             configDataSource = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                Persist_DataSource_ActivityTests.SutTable);
+                Persist_DataSource_StepTests.SutTable);
             configDestination = new StorageTablesServiceConfiguration(
                 configuration[AppConfigurationKeys.StorageTablesConnectionString],
-                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-{StorageTableNames.ResultsSequentialTable}");            
+                $"UnitTest-{DateTime.UtcNow:yyyy-MM-dd}-{StorageTableNames.ResultsSequentialTable}");
         }
 
         [TestMethod]
@@ -66,7 +66,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                     var dataSourceRecords = new List<DataSourceEntity>();
                     foreach (var row in sheet.Rows)
                         dataSourceRecords.Add(new DataSourceEntity(row));
-                    var workflowLink = new LinkDataSourceSequentialActivity<DataSourceEntity>();
+                    var workflowLink = new LinkDataSourceSequentialStep<DataSourceEntity>();
                     var linkResults = workflowLink.Execute(matchingEntity, dataSourceRecords);
                     Assert.IsTrue(linkResults.Any(), "No results from filter service.");
                 }
@@ -98,7 +98,7 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                     var dataSourceRecords = new List<DataSourceEntity>();
                     foreach (var row in sheet.Rows)
                         dataSourceRecords.Add(new DataSourceEntity(row));
-                    var workflowLink = new LinkDataSourceSequentialActivity<DataSourceEntity>();
+                    var workflowLink = new LinkDataSourceSequentialStep<DataSourceEntity>();
                     var linkResults = workflowLink.Execute(matchingEntity, dataSourceRecords);
                     Assert.IsTrue(linkResults.Any(), "No results from filter service.");
                 }
@@ -128,10 +128,10 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
                 foreach (var sheet in SutWorkbook.Sheets)
                 {
                     var dataSourceRecords = sheet.ToDataSourceEntity();
-                    var workflowLink = new LinkDataSourceSequentialActivity<DataSourceEntity>();
+                    var workflowLink = new LinkDataSourceSequentialStep<DataSourceEntity>();
                     var linkResults = workflowLink.Execute(matchingEntity, dataSourceRecords);
                     Assert.IsTrue(linkResults.Any(), "No results from filter service.");
-                    var workflowPersist = new PersistMatchResultActivity<DataSourceEntity>(configDestination);
+                    var workflowPersist = new PersistMatchResultStep<DataSourceEntity>(configDestination);
                     var persistResults = await workflowPersist.ExecuteAsync(linkResults);
                     Assert.IsTrue(persistResults.Any(), "No results from filter service.");
                 }
@@ -146,13 +146,13 @@ namespace GoodToCode.Analytics.Matching.Unit.Tests
         [TestMethod]
         public async Task Link_HtmlScrapeSequential_Storage()
         {
-            await new Persist_DataSource_ActivityTests().Ingress_DataSource_OrchestrationFake();
-            await new Persist_RulesSequential_ActivityTests().Ingress_RulesSequential_OrchestrationFake();
+            await new Persist_DataSource_StepTests().Ingress_DataSource_OrchestrationFake();
+            await new Persist_RulesSequential_StepTests().Ingress_RulesSequential_OrchestrationFake();
             var rules = new StorageTablesService<MatchingRuleEntity>(configRule).GetAndCastItems(r => r.PartitionKey != "");
             var dataSource = new StorageTablesService<DataSourceEntity>(configDataSource).GetAndCastItems(r => r.PartitionKey != "");
-            var workflowLink = new LinkDataSourceSequentialActivity<DataSourceEntity>();
+            var workflowLink = new LinkDataSourceSequentialStep<DataSourceEntity>();
             var linkResults = workflowLink.Execute(rules, dataSource);
-            var workflowPersist = new PersistMatchResultActivity<DataSourceEntity>(configDestination);
+            var workflowPersist = new PersistMatchResultStep<DataSourceEntity>(configDestination);
 
             var results = await workflowPersist.ExecuteAsync(linkResults);
             Assert.IsTrue(results.Any());

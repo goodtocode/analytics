@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace GoodToCode.Analytics.Matching.Activities
 {
-    public class SequentialFilterActivity<T> : ISequentialFilterActivity<T>
+    public class SequentialFilterStep<T> : ISequentialFilterStep<T>
     {
         public List<ChainableFilterHandler<T>> Handlers { get; } = new List<ChainableFilterHandler<T>>();
         public IEnumerable<T> Results;
 
-        public SequentialFilterActivity(IEnumerable<FilterExpression<T>> filters)
+        public SequentialFilterStep(IEnumerable<FilterExpression<T>> filters)
         {
             ChainableFilterHandler<T> last = null;
             foreach (var filter in filters)

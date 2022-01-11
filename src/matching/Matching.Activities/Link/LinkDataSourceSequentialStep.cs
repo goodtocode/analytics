@@ -6,12 +6,12 @@ using System.Linq;
 
 namespace GoodToCode.Analytics.Matching.Activities
 {
-    public class LinkDataSourceSequentialActivity<TDataSource> where TDataSource : IEntity
+    public class LinkDataSourceSequentialStep<TDataSource> where TDataSource : IEntity
     {
         public List<ChainableFilterHandler<IMatchingRuleEntity>> Handlers { get; } = new List<ChainableFilterHandler<IMatchingRuleEntity>>();
         public IEnumerable<IMatchResultEntity<TDataSource>> Results;
 
-        public LinkDataSourceSequentialActivity()
+        public LinkDataSourceSequentialStep()
         {
         }
 
@@ -30,9 +30,9 @@ namespace GoodToCode.Analytics.Matching.Activities
                 {
                     var expression = group.ToFilterExpression<TDataSource>();
                     if (group.Count() > 1)
-                        filteredResults = new SequentialFilterActivity<TDataSource>(expression).Execute(remainingDataSource);
+                        filteredResults = new SequentialFilterStep<TDataSource>(expression).Execute(remainingDataSource);
                     else
-                        filteredResults = new SingleFilterActivity<TDataSource>(expression.FirstOrDefault()).Execute(remainingDataSource);
+                        filteredResults = new SingleFilterStep<TDataSource>(expression.FirstOrDefault()).Execute(remainingDataSource);
                     foreach (var result in filteredResults)
                     {
                         currResults.Add(new MatchResultEntity<TDataSource>(group.FirstOrDefault(), result));
