@@ -12,7 +12,7 @@ src | Analytics.Domain | Domain Entities for this solutions services.
 src | Analytics.Unit.Tests | Unit tests against fakes for cognitive services and text analytics.
 
 #### /infrastructure ARM Templates
-Path | Contents
+Path | File | Contents
 --- | --- | ---
 infrastructure | - | Contains Azure DevOps YML files, Windows PowerShell scripts, and variables to support Azure DevOps YML Pipelines.
 infrastructure | *.json | ARM template for that Azure resource.
