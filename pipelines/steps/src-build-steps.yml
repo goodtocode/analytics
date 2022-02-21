@@ -8,7 +8,7 @@ steps:
     displayName: 'Set-Version.ps1'
     inputs:
       filePath: '$(pipelinesPath)/scripts/Set-Version.ps1'
-      arguments: '-Path $(srcPath) -VersionToReplace 5.20.1 -Major 5'
+      arguments: '-Path $(srcPath) -VersionToReplace 6.22.1 -Major 6'
       workingDirectory: '$(pipelinesPath)/scripts'
 
   - task: DotNetCoreCLI@2

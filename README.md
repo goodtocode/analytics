@@ -9,7 +9,7 @@ Path | Item | Contents
 src | - | Contains the C# solution, project files and source code.
 src | Analytics.Activities | Workflow activities to be the steps of an Durable Function Orchestration
 src | Analytics.Domain | Domain Entities for this solutions services.
-src | Analytics.Unit.Tests | Unit tests against fakes for cognitive services and text analytics.
+src | Analytics.Tests | Tests against fakes and reals for cognitive services and text analytics.
 
 #### /infrastructure ARM Templates
 Path | Contents
