@@ -1,4 +1,6 @@
 # GoodToCode Analytics Library for Azure Cognitive Services
+[![Build Status](https://dev.azure.com/GoodToCode/GoodToCode.com/_apis/build/status/gtc-rg-analytics?branchName=main)](https://dev.azure.com/GoodToCode/GoodToCode.com/_build/latest?definitionId=65&branchName=main)
+
 <sup>GoodToCode Analytics supports file infrastructure (Excel), AI services (Azure Cognitive Services, Text Analytics) and persistence (Azure Storage Tables, CosmosDb) for Data Lake analytics workflows.</sup> <br>
 
 This is a simple, low-dependency library for managing Azure Cognitive Services and Text Analytics, and persisting the results to Azure Storage Tables and CosmosDb. These services rely on Azure Machine Learning and Artificial Intelligence in the [Azure Cognitive Services](https://azure.microsoft.com/en-us/services/cognitive-services/) suite. The APIs supported are text analytics and cognitive services, expanding to others such as computer vision, facial recognition, video indexing, etc.
