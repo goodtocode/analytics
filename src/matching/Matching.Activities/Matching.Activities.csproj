@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>GoodToCode.Analytics.Matching.Activities</AssemblyName>
     <RootNamespace>GoodToCode.Analytics.Matching</RootNamespace>
     <Product>GoodToCode.Analytics.Matching.Activities</Product>
-    <Version>5.20.1</Version>
+    <Version>6.22.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Company>GoodToCode</Company>
@@ -38,9 +38,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GoodToCode.Shared.Blob.Excel" Version="5.21.330.324" />
-    <PackageReference Include="GoodToCode.Shared.Persistence.StorageTables" Version="5.21.330.324" />
-    <PackageReference Include="GoodToCode.Shared.TextAnalytics.CognitiveServices" Version="5.21.330.324" />
+    <PackageReference Include="GoodToCode.Shared.Blob.Excel" Version="6.22.52.410" />
+    <PackageReference Include="GoodToCode.Shared.Persistence.StorageTables" Version="6.22.52.410" />
+    <PackageReference Include="GoodToCode.Shared.TextAnalytics.CognitiveServices" Version="6.22.52.410" />
   </ItemGroup>
 
   <ItemGroup>

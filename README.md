@@ -1,4 +1,6 @@
 # GoodToCode Analytics Library for Azure Cognitive Services
+[![Build Status](https://dev.azure.com/GoodToCode/GoodToCode.com/_apis/build/status/gtc-rg-analytics?branchName=main)](https://dev.azure.com/GoodToCode/GoodToCode.com/_build/latest?definitionId=65&branchName=main)
+
 <sup>GoodToCode Analytics supports file infrastructure (Excel), AI services (Azure Cognitive Services, Text Analytics) and persistence (Azure Storage Tables, CosmosDb) for Data Lake analytics workflows.</sup> <br>
 
 This is a simple, low-dependency library for managing Azure Cognitive Services and Text Analytics, and persisting the results to Azure Storage Tables and CosmosDb. These services rely on Azure Machine Learning and Artificial Intelligence in the [Azure Cognitive Services](https://azure.microsoft.com/en-us/services/cognitive-services/) suite. The APIs supported are text analytics and cognitive services, expanding to others such as computer vision, facial recognition, video indexing, etc.
@@ -9,10 +11,10 @@ Path | Item | Contents
 src | - | Contains the C# solution, project files and source code.
 src | Analytics.Activities | Workflow activities to be the steps of an Durable Function Orchestration
 src | Analytics.Domain | Domain Entities for this solutions services.
-src | Analytics.Unit.Tests | Unit tests against fakes for cognitive services and text analytics.
+src | Analytics.Tests | Tests against fakes and reals for cognitive services and text analytics.
 
 #### /infrastructure ARM Templates
-Path | File | Contents
+Path | Contents
 --- | --- | ---
 infrastructure | - | Contains Azure DevOps YML files, Windows PowerShell scripts, and variables to support Azure DevOps YML Pipelines.
 infrastructure | *.json | ARM template for that Azure resource.
