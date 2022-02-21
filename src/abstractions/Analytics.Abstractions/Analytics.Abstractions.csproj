@@ -32,8 +32,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GoodToCode.Shared.Blob.Abstractions" Version="5.21.330.324" />
-    <PackageReference Include="GoodToCode.Shared.Persistence.Abstractions" Version="5.21.330.324" />
+    <PackageReference Include="GoodToCode.Shared.Blob.Abstractions" Version="6.22.52.410" />
+    <PackageReference Include="GoodToCode.Shared.Persistence.Abstractions" Version="6.22.52.410" />
     <PackageReference Include="System.Text.Json" Version="6.0.2" />
   </ItemGroup>
 
