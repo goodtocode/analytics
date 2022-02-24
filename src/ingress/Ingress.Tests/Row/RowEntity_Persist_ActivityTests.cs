@@ -35,14 +35,12 @@ namespace GoodToCode.Analytics.Ingress.Tests
         }
 
         [TestMethod]
-        public async Task RowEntity_Persist_Activity()       
+        public async Task RowEntity_Persist_Fake()       
         {
             Assert.IsTrue(File.Exists(SutXlsxFile), $"{SutXlsxFile} does not exist. Executing: {Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}");
 
             try
             { 
-                var bytes = await FileFactoryService.GetInstance().ReadAllBytesAsync(SutXlsxFile);
-                Stream itemToAnalyze = new MemoryStream(bytes);
                 var workflow = new RowPersistActivity(configStorage);
                 var results = await workflow.ExecuteAsync(RowFactory.CreateRowData(), "Partition1");
                 Assert.IsTrue(results.Any(), "Failed to persist.");
