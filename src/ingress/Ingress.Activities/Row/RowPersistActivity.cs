@@ -28,7 +28,7 @@ namespace GoodToCode.Analytics.Ingress.Activities
         public async Task<TableEntity> ExecuteAsync(IRowData row, string paritionKey)
         {
             var entity = new RowEntity(paritionKey, Guid.NewGuid().ToString(), row.Cells);
-            return await servicePersist.AddItemAsync(entity);
+            return await servicePersist.AddItemAsync(entity.ToDictionary());
         }
     }
 }
