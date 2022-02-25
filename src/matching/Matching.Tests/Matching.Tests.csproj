@@ -14,9 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GoodToCode.Shared.Blob.Excel" Version="6.22.52.410" />
-    <PackageReference Include="GoodToCode.Shared.Persistence.StorageTables" Version="6.22.52.410" />
-    <PackageReference Include="GoodToCode.Shared.TextAnalytics.CognitiveServices" Version="6.22.52.410" />
+    <PackageReference Include="GoodToCode.Shared.Blob.Excel" Version="6.22.55.2150" />
+    <PackageReference Include="GoodToCode.Shared.Persistence.StorageTables" Version="6.22.55.2150" />
+    <PackageReference Include="GoodToCode.Shared.TextAnalytics.CognitiveServices" Version="6.22.55.2150" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
