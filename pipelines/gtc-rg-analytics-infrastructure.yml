@@ -16,7 +16,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 parameters:
-  - name: subscriptionService
+  - name: subscriptionService 
     type: string 
     default: "gtc-sandbox-001"
 
