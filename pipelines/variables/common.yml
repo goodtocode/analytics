@@ -1,8 +1,8 @@
 variables:
-  - name: appcsKey
-    value: 'AppSettingsConnection'
   - name: artifactsPath
     value: '$(Build.ArtifactStagingDirectory)'
+  - name: tempPath
+    value: '$(Agent.TempDirectory)/ymltemp'
   - name: archiveFile
     value: 'archive.zip'
   - name: pipelinesPath
@@ -11,9 +11,9 @@ variables:
     value: '$(System.DefaultWorkingDirectory)/infrastructure'
   - name: testsPath
     value: '$(System.DefaultWorkingDirectory)/tests'
+  - name: scriptsPath
+    value: '$(System.DefaultWorkingDirectory)/pipelines/scripts'
   - name: srcPath
     value: '$(System.DefaultWorkingDirectory)/src'
   - name: buildConfiguration
     value: 'Release'
-  - name: MSBUILDSINGLELOADCONTEXT
-    value: 1

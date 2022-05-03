@@ -1,4 +1,4 @@
- #-----------------------------------------------------------------------
+#-----------------------------------------------------------------------
 # Set-Version [-Path [<String>]] [-VersionToReplace [<String>]]
 #
 # Example: .\Set-Version -Path \\source\path -Major 1
@@ -31,8 +31,7 @@ Write-Host "*****************************"
 Write-Host "*** Starting: $ThisScript on $Now"
 Write-Host "*****************************"
 # Imports
-Import-Module ".\Helpers.Code.psm1"
-Import-Module ".\Helpers.System.psm1"
+Import-Module "./System.psm1"
 
 # ***
 # *** Validate and cleanse
@@ -60,6 +59,8 @@ Write-Host "LongVersion: $LongVersion ShortVersion: $ShortVersion"
 
 # Package.json version
 Update-LineByContains -Path $Path -Contains 'version' -Line """version"": ""$LongVersion""," -Include package.json
+# OpenApiConfigurationOptions.cs version
+Update-LineByContains -Path $Path -Contains 'Version' -Line "Version = ""$LongVersion""," -Include OpenApiConfigurationOptions.cs
 # *.csproj C# Project files
 Update-ContentsByTag -Path $Path -Value $LongVersion -Open '<Version>' -Close '</Version>' -Include *.csproj
 # *.nuspec NuGet packages
