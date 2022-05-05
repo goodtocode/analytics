@@ -4,22 +4,22 @@ variables:
   - name: rgEnvironment
     value: 'Development'
   - name: rgName
-    value: 'gtc-rg-analytics-dev-001'
+    value: 'gtc-rg-analytics-dev-225'
   - name: rgLocation
     value: 'West US 2'
   - name: 'appcsName'
-    value: 'appcs-analytics-dev-001'
+    value: 'appcs-analytics-dev-225'
   - name: 'appcsSku'
     value: 'free'
   - name: 'appiName'
-    value: 'appi-analytics-dev-001'
+    value: 'appi-analytics-dev-225'
   - name: 'kvName'
-    value: 'kv-analytics-dev-001'
+    value: 'kv-analytics-dev-225'
   - name: 'nugetFeeds'
     value: 'select'
   - name: 'nugetType'
     value: 'internal'
   - name: stName
-    value: 'stanalyticsdev001'
+    value: 'stanalyticsdev225'
   - name: workName
-    value: 'work-analytics-dev-001'
+    value: 'work-analytics-dev-225'
