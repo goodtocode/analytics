@@ -5,7 +5,7 @@ trigger:
     - '*'
   paths:
     include:
-    - infrastructure/*
+    - .azure/*
 
 pr:
   branches:
@@ -21,18 +21,18 @@ parameters:
     default: "gtc-sandbox-001"
 
 variables:
-  - template: variables/common.yml
+  - template: ../variables/common.yml
       
 stages:
   - stage: development
     condition: ne(variables['Build.SourceBranch'], 'refs/heads/main')
     variables:
-      - template: variables/development.yml
+      - template: ../variables/development.yml
 
     jobs:
       - job: deploy_landing_zone
         steps:
-          - template: steps/landingzone-infrastructure-steps.yml
+          - template: ../steps/landingzone-infrastructure-steps.yml
             parameters:
               armPath: '$(infrastructurePath)'
               subscriptionId: '$(subscriptionId)'
@@ -47,7 +47,7 @@ stages:
       - job: deploy_appcs_infrastructure
         dependsOn: deploy_landing_zone
         steps:
-          - template: steps/appcs-infrastructure-steps.yml
+          - template: ../steps/appcs-infrastructure-steps.yml
             parameters:
               armPath: '$(infrastructurePath)'
               subscriptionId: '$(subscriptionId)'
@@ -60,12 +60,12 @@ stages:
   - stage: production
     condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
     variables:
-      - template: variables/production.yml
+      - template: ../variables/production.yml
 
     jobs:
       - job: deploy_landing_zone
         steps:
-          - template: steps/landingzone-infrastructure-steps.yml
+          - template: ../steps/landingzone-infrastructure-steps.yml
             parameters:
               armPath: '$(infrastructurePath)'
               subscriptionId: '$(subscriptionId)'

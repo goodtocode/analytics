@@ -22,7 +22,7 @@ parameters:
     default: './ymltemp'
   - name: scriptsPath 
     type: string 
-    default: "./pipelines/scripts"
+    default: "../scripts"
   - name: versionToReplace
     type: string 
     default: "1.0.0"
@@ -45,7 +45,7 @@ steps:
     displayName: 'Set-Version.ps1'
     inputs:
       filePath: '${{ parameters.scriptsPath }}/Set-Version.ps1'
-      arguments: '-Path ${{ parameters.funcPath }} -VersionToReplace ${{ parameters.funcPath }}'
+      arguments: '-Path ${{ parameters.funcPath }}  -VersionToReplace ${{ parameters.versionToReplace }}'
       workingDirectory: '${{ parameters.scriptsPath }}'
 
   - task: DotNetCoreCLI@2

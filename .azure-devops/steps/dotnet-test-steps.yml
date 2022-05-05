@@ -2,10 +2,10 @@ parameters:
   - name: rgEnvironment
     type: string 
     default: "COMPANY-rg-PRODUCT-001"
-  - name: unitPath 
+  - name: testPath 
     type: string 
     default: "."
-  - name: unitProject
+  - name: testProject
     type: string 
     default: "*.csproj"
   - name: appcsConnection
@@ -37,8 +37,8 @@ steps:
     inputs:
       command: test
       projects: |
-        ${{ parameters.unitPath }}/**/${{ parameters.unitProject }}
-      arguments: $(arguments)
+        ${{ parameters.testPath }}/**/${{ parameters.testProject }}
+      arguments: ${{ parameters.arguments }}
     env:
       ${{ parameters.appcsEnvironmentVariable }}: ${{ parameters.appcsConnection }}
       ${{ parameters.stEnvironmentVariable }}: ${{ parameters.stConnection }}

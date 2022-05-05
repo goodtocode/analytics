@@ -16,10 +16,7 @@ parameters:
     default: "Release"
   - name: scriptsPath 
     type: string 
-    default: "./pipelines/scripts"
-  - name: versionToReplace
-    type: string 
-    default: "1.0.0"
+    default: "../scripts"
 
 steps:
   - task: UseDotNet@2
@@ -27,14 +24,7 @@ steps:
     inputs:
       packageType: 'sdk'
       version: '6.x'
-      includePreviewVersions: true
-      
-  - task: PowerShell@2
-    displayName: 'Set-Version.ps1'
-    inputs:
-      filePath: '${{ parameters.scriptsPath }}/Set-Version.ps1'
-      arguments: '-Path ${{ parameters.srcPath }} -VersionToReplace ${{ parameters.srcPath }}'
-      workingDirectory: '${{ parameters.scriptsPath }}'
+      includePreviewVersions: true   
 
   - task: DotNetCoreCLI@2
     displayName: 'dotnet restore'
@@ -52,9 +42,3 @@ steps:
       projects: |
         ${{ parameters.srcPath }}/**/${{ parameters.srcProject }}
       arguments: '--configuration ${{ parameters.buildConfiguration }}'
-
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Artifact: drop'
-    inputs:
-      pathToPublish: '${{ parameters.artifactsPath }}'
-      artifactName: drop
