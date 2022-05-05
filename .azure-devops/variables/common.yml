@@ -1,0 +1,19 @@
+variables:
+  - name: artifactsPath
+    value: '$(Build.ArtifactStagingDirectory)'
+  - name: tempPath
+    value: '$(Agent.TempDirectory)/ymltemp'
+  - name: archiveFile
+    value: 'archive.zip'
+  - name: infrastructurePath
+    value: '$(System.DefaultWorkingDirectory)/.azure'
+  - name: testsPath
+    value: '$(System.DefaultWorkingDirectory)/tests'
+  - name: scriptsPath
+    value: '$(System.DefaultWorkingDirectory)/.azure-devops/scripts'
+  - name: srcPath
+    value: '$(System.DefaultWorkingDirectory)/src'
+  - name: buildConfiguration
+    value: 'Release'
+  - name: versionToReplace
+    value: '6.22.1'

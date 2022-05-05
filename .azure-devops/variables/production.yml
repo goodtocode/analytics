@@ -1,0 +1,21 @@
+variables:
+  - group: gtc-rg-analytics-prod
+  - template: common.yml
+  - name: rgEnvironment
+    value: 'Production'
+  - name: rgName
+    value: 'gtc-rg-analytics-prod-225'
+  - name: rgLocation
+    value: 'West US 2'
+  - name: 'appiName'
+    value: 'appi-analytics-prod-225'
+  - name: 'kvName'
+    value: 'kv-analytics-prod-225'
+  - name: 'nugetFeeds'
+    value: 'select'
+  - name: 'nugetType'
+    value: 'internal'
+  - name: stName
+    value: 'stanalyticsprod225'
+  - name: workName
+    value: 'work-analytics-prod-225'
